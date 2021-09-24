@@ -1,0 +1,16 @@
+.header{
+    height:60px;
+    background: #ffffff!important;
+}
+
+.header-icon{
+    margin: 1em;
+    width:28px;
+    height:17px;
+}
+
+.log-out{
+    margin: 1em;
+    width: 20px;
+    height: 19px;
+}

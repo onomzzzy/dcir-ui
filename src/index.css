@@ -7,7 +7,112 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --primary-color:#464DF2;
+  --primary-dark-color:#221ED9;
+  --primary-light-color:#777BF1;
+  --body-color:rgba(119, 123, 241, 0.1);
+}
+
+/*background-color: var(--primary-color);*/
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: "Andika";
+  src: url(./font/Andika.ttf) format("truetype");
+  font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+input,
+textarea,
+button {
+  font-family: "Andika", sans-serif !important;
+}
+
+.active-icons svg {
+  fill: var(--primary-color) !important;
+}
+
+.add-cursor{
+  cursor: pointer;
+}
+
+.float-right{
+  float: right;
+}
+
+
+
+.sidenav {
+  height: 100%;
+  padding: 0;
+  width: 250px;
+  position: fixed;
+  border: 1px solid var(--body-color);
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.main-body{
+  height: 100vh;
+  padding: 16px;
+}
+
+hr{
+  height:0;
+  border-top:1px solid #bbb;
+}
+
+#main {
+  transition: margin-left .5s;
+  position: relative;
+  margin-left: 250px;
+  background: var(--body-color)
+}
+
+
+
+@media screen and (min-width: 765px) {
+  .mobile-screen{
+    display: none;
+  }
+  .desktop-screen{
+    display: block;
+  }
+  .sidenav {
+    width: 250px;
+  }
+  #main{
+    margin-left: 250px;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .mobile-screen{
+    display: block;
+  }
+  .desktop-screen{
+    display: none;
+  }
+  .sidenav {
+    width: 0;
+  }
+  #main{
+    margin-left: 0;
+  }
 }

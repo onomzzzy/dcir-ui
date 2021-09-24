@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React           from 'react';
+import ReactDOM        from 'react-dom';
 import './index.css';
-import App from './App';
+import 'primeflex/primeflex.css';
 import reportWebVitals from './reportWebVitals';
+import {MainApp}       from "./app/main-app/main-app";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MainApp/>
   </React.StrictMode>,
   document.getElementById('root')
 );

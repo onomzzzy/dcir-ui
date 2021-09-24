@@ -1,0 +1,112 @@
+
+.sider-icon{
+    margin: .9em 1em;
+    width: 15px;
+    height:15px;
+}
+
+.menu-pos-bottom{
+    margin-bottom:.5em;
+}
+
+.menu-pos{
+    margin-top:.2em;
+}
+
+.sub-menu-position{
+    margin-left:.5em;
+    margin-top: -1.6em;
+}
+.sub-menu-pos{
+    margin-left:1em;
+}
+
+.active-sider-nav{
+    background: var(--body-color);
+}
+
+.sider-active-text{
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 17px;
+    display: flex;
+    align-items: flex-end;
+    letter-spacing: 0.0126316em;
+    /* Primary Blue */
+    color: var(--primary-color);
+    mix-blend-mode: normal;
+}
+
+.inactive-sub-menu{
+    background: rgba(119, 123, 241, 0.1);
+}
+
+.sider-inactive-text-div:hover{
+   background:#5D7F8D;
+}
+
+.sider-inactive-text{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 14px;
+    /* identical to box height */
+    letter-spacing: 0.0126316em;
+    /* Header Text */
+    color: #5D7F8D;
+    mix-blend-mode: normal;
+}
+
+.sider-inactive-title{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    margin-left:1em;
+    line-height: 14px;
+    /* identical to box height */
+    letter-spacing: 0.0126316em;
+    /* Header Text */
+    color: #5D7F8D;
+    mix-blend-mode: normal;
+}
+
+.collapsible {
+    background-color: #ffffff;
+    font-style: normal;
+    font-weight: 600;
+    color: #5D7F8D;
+    cursor: pointer;
+    width: 100%;
+    padding:0;
+    font-size: 13px!important;
+    line-height: 14px;
+    letter-spacing: 0.0126316em;
+    transition: 0.5s;
+}
+
+.collapsible:hover {
+    color: var(--primary-color);
+    transition: 0.5s;
+}
+
+.collapsible-active{
+    color: var(--primary-color);
+    transition: 0.5s;
+    font-size: 13px!important;
+    line-height: 14px;
+    cursor: pointer;
+    width: 100%;
+    padding:0;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.0126316em;
+}
+
+#content {
+    padding: 0 18px;
+    overflow: hidden;
+    display: none;
+    transition: max-height 0.2s ease-out;
+}
+
