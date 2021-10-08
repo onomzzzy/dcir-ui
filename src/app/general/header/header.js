@@ -1,8 +1,19 @@
 import './header.css';
-import {Icon} from "../../shared/icons/icon";
+import {Icon}                  from "../../shared/icons/icon";
+import {useContext}            from "react";
+import {MainContext}           from "../../../App";
+import {useHistory}            from "react-router-dom";
+import {LOCAL_STORAGE_SERVICE} from "../../core/services/storage-service";
 
 
 export function Header () {
+    const mainContext = useContext(MainContext);
+    let history = useHistory();
+    function logout(){
+        mainContext.mainDispatch({ type: "LOG_OUT"});
+        LOCAL_STORAGE_SERVICE.CLEAR_STORAGE();
+        history.push("/login");
+    }
     function openNav (e) {
         e.preventDefault();
         const width = document.getElementById("mySidenav").style.width;
@@ -25,9 +36,16 @@ export function Header () {
            </div>
              <div className="p-col-8">
              <div className="float-right">
-             <div className="log-out add-cursor">
+             <div className="p-grid p-mr-2">
+             <div className="p-col-6">
+                 <div  className="log-out add-cursor">
+                 <Icon icon="profile"/>
+                 </div>
+             </div>
+             <div onClick={logout} className="p-col-6 log-out add-cursor">
                <Icon icon="log-out"/>
              </div>
+                 </div>
              </div>
              </div>
          </div>

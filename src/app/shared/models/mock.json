@@ -1,0 +1,427 @@
+{
+  "types": {
+    "success": true,
+    "result": [
+      "HOURLY",
+      "DAILY"
+    ],
+    "errors": []
+  },
+  "type": {
+    "success": true,
+    "result": [
+      {
+        "desc": "Flat Charge",
+        "code": "FLAT"
+      },
+      {
+        "desc": "Percentage to Maximum",
+        "code": "PERCENT_MAX_CAP"
+      },
+      {
+        "desc": "Percentage from Minimum",
+        "code": "PERCENT_MIN_CAP"
+      },
+      {
+        "desc": "Percentage from Min to Max",
+        "code": "PERCENT_MAX_MIN_CAP"
+      },
+      {
+        "desc": "Percentage Charge",
+        "code": "PERCENT_ALL"
+      }
+    ],
+    "errors": []
+  },
+  "settlement-participant": [
+    {
+      "accountName": "Idris",
+      "accountNumber": "0034567893",
+      "chargeType": "BN1234D",
+      "description": "Testing 3",
+      "global": false,
+      "name": "Solomon",
+      "id": 2
+    }
+  ],
+  "global": {
+    "content": [
+      {
+        "accountName": "Emeka Union",
+        "accountNumber": "0986543213",
+        "active": true,
+        "bankCode": "cnn",
+        "bankName": "union",
+        "chargeType": {
+          "active": true,
+          "chargeType": "FLAT",
+          "chargeTypeDesc": "flat charge",
+          "chargeTypeName": "flat",
+          "code": "DM3456",
+          "flat": 450,
+          "maximumCap": 400,
+          "minimumCap": 200,
+          "percentage": 2
+        },
+        "description": "Mock data for participant",
+        "globalCharge": true,
+        "name": "Onome",
+        "participantId": "3"
+      }
+    ],
+    "first": true,
+    "last": true,
+    "number": 0,
+    "numberOfElements": 1,
+    "size": 0,
+    "sort": {},
+    "totalElements": 1,
+    "totalPages": 1
+  },
+  "charge-model": [
+    {
+      "chargeCode": "BN1234D",
+      "chargeName": "BENW",
+      "chargeType": "FLAT",
+      "chargeTypeDesc": "Testing the app",
+      "flat": "500",
+      "maxCap": "500",
+      "minCap": "200",
+      "percent": "5",
+      "id": 1
+    },
+    {
+      "chargeCode": "BFU123",
+      "chargeName": "FUT",
+      "chargeType": "PERCENT_MAX_CAP",
+      "chargeTypeDesc": "Testing two .",
+      "flat": "600",
+      "maxCap": "4500",
+      "minCap": "2500",
+      "percent": "12",
+      "id": 2
+    }
+  ],
+  "merchant": [
+    {
+      "basicInfo": {
+        "merchantName": "Ade",
+        "mainEmail": "onomzzzy@gmail.com",
+        "phoneNumber": "08035826579",
+        "cardAcceptorId": "War",
+        "alternatePhoneNumber": "08035826579",
+        "supportEmail": "onomzzzy@gmail.com",
+        "settlementEmail": "onomzzzy@gmail.com",
+        "disputeEmail": "onomzzzy@gmail.com"
+      },
+      "settlementInfo": {
+        "accountName": "Ade",
+        "accountNumber": "0234567890",
+        "chargeType": {
+          "desc": "Percentage from Minimum",
+          "code": "PERCENT_MIN_CAP"
+        },
+        "participants": [
+          {
+            "desc": "3",
+            "code": "Onome"
+          }
+        ],
+        "settlementType": {
+          "decs": "DAILY",
+          "code": "DAILY"
+        }
+      },
+      "id": 1
+    },
+    {
+      "basicInfo": {
+        "merchantName": "Adeyoo",
+        "mainEmail": "raywzxy@gmail.com",
+        "phoneNumber": "08035826579",
+        "cardAcceptorId": "WEN12345678D",
+        "alternatePhoneNumber": "08035826579",
+        "supportEmail": "raywzxy@gmail.com",
+        "settlementEmail": "raywzxy@gmail.com",
+        "disputeEmail": "raywzxy@gmail.com"
+      },
+      "settlementInfo": {
+        "accountName": "Alabi",
+        "accountNumber": "0098765432",
+        "chargeType": {
+          "desc": "Percentage to Maximum",
+          "code": "PERCENT_MAX_CAP"
+        },
+        "participants": [
+          {
+            "desc": "3",
+            "code": "Onome"
+          }
+        ],
+        "settlementType": {
+          "decs": "DAILY",
+          "code": "DAILY"
+        }
+      },
+      "id": 2
+    },
+    {
+      "basicInfo": {
+        "merchantName": "Alien",
+        "mainEmail": "onomzzzy@gmail.com",
+        "phoneNumber": "08035826579",
+        "cardAcceptorId": "CN234",
+        "alternatePhoneNumber": "08035826579",
+        "supportEmail": "onomzzzy@gmail.com",
+        "settlementEmail": "onomzzzy@gmail.com",
+        "disputeEmail": "onomzzzy@gmail.com"
+      },
+      "settlementInfo": {
+        "accountName": "Ade",
+        "accountNumber": "0012345678",
+        "chargeType": {
+          "desc": "Flat Charge",
+          "code": "FLAT"
+        },
+        "participants": [
+          {
+            "desc": "3",
+            "code": "Onome"
+          }
+        ],
+        "settlementType": {
+          "decs": "HOURLY",
+          "code": "HOURLY"
+        }
+      },
+      "id": 3
+    }
+  ],
+  "non-global": {
+    "content": [
+      {
+        "accountName": "Ike UNA",
+        "accountNumber": "0116543213",
+        "active": true,
+        "bankCode": "una",
+        "bankName": "Una Bank",
+        "chargeType": {
+          "active": true,
+          "chargeType": "FLAT",
+          "chargeTypeDesc": "flat charge",
+          "chargeTypeName": "flat",
+          "code": "DM3456",
+          "flat": 450,
+          "maximumCap": 400,
+          "minimumCap": 200,
+          "percentage": 2
+        },
+        "description": "Mock data for participant",
+        "globalCharge": true,
+        "name": "Onome",
+        "participantId": "3"
+      }
+    ],
+    "first": true,
+    "last": true,
+    "number": 0,
+    "numberOfElements": 1,
+    "size": 0,
+    "sort": {},
+    "totalElements": 1,
+    "totalPages": 1
+  },
+  "dispute": {
+    "content": [
+      {
+        "comment": "Not treated yet",
+        "createdOn": "2021-10-07T09:46:02.204Z",
+        "customerAccountName": "Olaolu",
+        "customerAccountNumber": "0110234567",
+        "lastModifiedOn": "2021-10-07T09:46:02.204Z",
+        "logCode": "BNC337345678",
+        "loggedBy": "Idris",
+        "merchantId": "1",
+        "merchantName": "Ade",
+        "receiptData": "",
+        "refundTransaction": {
+          "amount": 0,
+          "attempts": 0,
+          "createdOn": "2021-10-07T09:46:02.204Z",
+          "destinationAccount": "0001234578",
+          "destinationAccountName": "Olaolu",
+          "lastUpdateTime": "2021-10-07T09:46:02.205Z",
+          "sourceAccount": "0234567891",
+          "sourceAccountName": "Alaye",
+          "status": "PENDING"
+        },
+        "resolutionStatus": "PENDING",
+        "resolvedBy": "Adebola",
+        "status": "PENDING",
+        "transactionAmount": 25000,
+        "transactionResponseCode": "91",
+        "transactionSearchKey": "Ojo123",
+        "transactionTime": "2021-10-07T09:46:02.205Z"
+      },
+      {
+        "comment": "Not treated yet",
+        "createdOn": "2021-10-06T09:46:02.204Z",
+        "customerAccountName": "Olaolu",
+        "customerAccountNumber": "0110234567",
+        "lastModifiedOn": "2021-10-07T09:46:02.204Z",
+        "logCode": "BNC122345670",
+        "loggedBy": "Idris",
+        "merchantId": "1",
+        "merchantName": "Ade",
+        "receiptData": "",
+        "refundTransaction": {
+          "amount": 0,
+          "attempts": 0,
+          "createdOn": "2021-10-06T09:46:02.204Z",
+          "destinationAccount": "0001234578",
+          "destinationAccountName": "Olaolu",
+          "lastUpdateTime": "2021-10-06T09:46:02.205Z",
+          "sourceAccount": "0234567891",
+          "sourceAccountName": "Alaye",
+          "status": "PENDING"
+        },
+        "resolutionStatus": "PENDING",
+        "resolvedBy": "Adebola",
+        "status": "PENDING",
+        "transactionAmount": 9000,
+        "transactionResponseCode": "91",
+        "transactionSearchKey": "alabi45",
+        "transactionTime": "2021-10-06T09:46:02.205Z"
+      },
+      {
+        "comment": "Resolved dispute by Ade",
+        "createdOn": "2021-11-07T09:46:02.204Z",
+        "customerAccountName": "Olaolu",
+        "customerAccountNumber": "0110234567",
+        "lastModifiedOn": "2021-11-07T09:46:02.204Z",
+        "logCode": "BQC122345678",
+        "loggedBy": "Idris",
+        "merchantId": "1",
+        "merchantName": "Ade",
+        "receiptData": "",
+        "refundTransaction": {
+          "amount": 56000,
+          "attempts": 1,
+          "createdOn": "2021-11-07T09:46:02.204Z",
+          "destinationAccount": "0001234578",
+          "destinationAccountName": "Olaolu",
+          "lastUpdateTime": "2021-11-07T09:46:02.205Z",
+          "sourceAccount": "0234567891",
+          "sourceAccountName": "Alaye",
+          "status": "RESOLVED"
+        },
+        "resolutionStatus": "ACCEPTED",
+        "resolvedBy": "Adebola",
+        "status": "RESOLVED",
+        "transactionAmount": 56000,
+        "transactionResponseCode": "51",
+        "transactionSearchKey": "buli7890",
+        "transactionTime": "2021-11-07T09:46:02.205Z"
+      },
+      {
+        "comment": "Declined dispute",
+        "createdOn": "2021-11-07T09:46:02.205Z",
+        "customerAccountName": "Adebola",
+        "customerAccountNumber": "0110234561",
+        "lastModifiedOn": "2021-11-07T09:46:02.205Z",
+        "logCode": "BRG137345671",
+        "loggedBy": "Idris",
+        "merchantId": "2",
+        "merchantName": "Bose",
+        "receiptData": "",
+        "refundTransaction": {
+          "amount": 0,
+          "attempts": 0,
+          "createdOn": "2021-9-07T09:42:02.204Z",
+          "destinationAccount": "0521234578",
+          "destinationAccountName": "Adeyemi",
+          "lastUpdateTime": "2021-11-07T09:46:02.205Z",
+          "sourceAccount": "0146568891",
+          "sourceAccountName": "Tolu",
+          "status": "RESOLVED"
+        },
+        "resolutionStatus": "DECLINED",
+        "resolvedBy": "Adebola",
+        "status": "RESOLVED",
+        "transactionAmount": 28000,
+        "transactionResponseCode": "51",
+        "transactionSearchKey": "alien-23",
+        "transactionTime": "2021-11-07T09:46:02.205Z"
+      }
+    ],
+    "first": true,
+    "last": true,
+    "number": 1,
+    "numberOfElements": 4,
+    "size": 1,
+    "sort": {},
+    "totalElements": 4,
+    "totalPages": 1
+  },
+  "disputable-codes": [
+  "91",
+  "75"
+  ],
+  "transaction": {
+  "content": [
+    {
+      "cardAcceptorId": "NBF123456",
+      "chargeAmount": 400,
+      "maskedPan": "*****1235**",
+      "processedForSettlement": true,
+      "requestTime": "2021-09-29T16:27:39.539Z",
+      "responseCode": "91",
+      "rrn": "BNG12345678967",
+      "settlementTime": "2021-09-29T16:27:39.539Z",
+      "stan": "DEN12345678",
+      "terminalId": "CN1456Y",
+      "transactionAmount": 25000,
+      "transactionSearchKey": "Boss124",
+      "transactionTime": "2021-09-29T16:27:39.539Z"
+    },
+    {
+      "cardAcceptorId": "CCB118406",
+      "chargeAmount": 2500,
+      "maskedPan": "*****0039**",
+      "processedForSettlement": true,
+      "requestTime": "2021-08-29T16:24:39.539Z",
+      "responseCode": "00",
+      "rrn": "SNG0005878967",
+      "settlementTime": "2021-08-29T16:24:39.539Z",
+      "stan": "DAN1008678",
+      "terminalId": "N120008R",
+      "transactionAmount": 88000,
+      "transactionSearchKey": "Sukuneh",
+      "transactionTime": "2021-08-29T16:24:39.539Z"
+    },
+    {
+      "cardAcceptorId": "REB008516",
+      "chargeAmount": 1200,
+      "maskedPan": "*****0008**",
+      "processedForSettlement": true,
+      "requestTime": "2021-05-29T16:23:35.539Z",
+      "responseCode": "51",
+      "rrn": "BQN0115278967",
+      "settlementTime": "2021-05-29T16:23:35.539Z",
+      "stan": "FES1008678",
+      "terminalId": "NB330001B",
+      "transactionAmount": 55000,
+      "transactionSearchKey": "Queensly",
+      "transactionTime": "2021-05-29T16:23:35.539Z"
+    }
+  ],
+  "first": true,
+  "last": true,
+  "number": 0,
+  "numberOfElements": 3,
+  "size": 1,
+  "sort": {},
+  "totalElements": 3,
+  "totalPages": 1
+ }
+}

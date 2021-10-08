@@ -9,4 +9,119 @@
 }
 
 
+/* AccordionDemo.css */
+
+.accordion-demo .accordion-custom i, .accordion-demo .accordion-custom span {
+    vertical-align: middle;
+}
+
+.accordion-demo .accordion-custom span {
+    margin: 0 .5rem;
+}
+
+.accordion-demo .p-accordion p {
+    line-height: 1.5;
+    margin: 0;
+}
+.p-accordion-content{
+    /*background: var(--body-color)!important;*/
+}
+
+.custom-tab-icon{
+    position: relative;
+    top:.1em;
+}
+
+.p-accordion-header,.p-accordion-content,.p-accordion .p-accordion-tab{
+    border: 0!important;
+    border-top: none!important;
+    border-bottom: none!important;
+    box-shadow: none!important;
+}
+
+.custom-tab-content{
+    margin: 0;
+    min-height:40px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    padding: 6px 20px;
+    user-select: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.p-accordion-header-link{
+    color:var(--primary-text-color);
+}
+
+.p-accordion, .p-accordion-tab, .p-accordion-header-link:hover{
+    color:var(--primary-custom-color)!important;
+}
+
+
+.p-accordion-header-text:hover{
+    color:var(--primary-custom-color)!important;
+}
+
+.p-accordion .p-accordion-tab.p-accordion-tab-active .p-accordion-header-link {
+    color:var(--primary-custom-color)!important;
+}
+
+.custom-tab-active{
+    background: var(--body-color-dark)!important;
+    color:var(--primary-custom-color)!important;
+}
+
+/*.p-accordion-tab, .p-accordion-header,.p-accordion-toggle-icon*/
+
+.custom-accordion-header:hover{
+  color:var(--primary-custom-color)!important;
+}
+
+/*.p-accordion .p-accordion-tab:not(.p-accordion-tab-active) .p-accordion-header-link:focus {*/
+/*    background: #f6f6f6;*/
+/*}*/
+
+.custom-tab-text{
+    position: relative;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 14px;
+    white-space: nowrap;
+    /*color:var(--primary-text-color);*/
+}
+
+.nav-profile-title{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12.9943px;
+    line-height: 15px;
+    color: var(--primary-text-color);
+}
+
+.nav-profile-subtitle{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12.9943px;
+    line-height: 19px;
+    color: #BFC5D2;
+}
+
+.nav-profile-text-container{
+position: relative;
+left:-1.25em
+}
+
+.nav-profile-container{
+    margin-left:35px;
+    margin-top:40px;
+    margin-bottom: 18px;
+}
+
 

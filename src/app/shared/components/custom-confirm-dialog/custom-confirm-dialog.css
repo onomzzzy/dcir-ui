@@ -1,0 +1,9 @@
+
+.confirm-text{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height */
+    color: var(--primary-text-color);
+}

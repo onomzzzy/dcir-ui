@@ -1,0 +1,66 @@
+.custom-upload-container{
+    background: var(--body-color);
+    padding: 11px 20px;
+    /* Stroke */
+    height: 60px;
+    cursor: pointer;
+    border: 0.75px solid #E1ECFD;
+    border-radius: 5px;
+}
+
+.upload-title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    /* Colors/LightBlue */
+    color: var(--primary-custom-color);
+}
+
+.upload-grid-position{
+    margin-left: -3.5em;
+}
+
+.upload-text{
+    position:relative;
+    top:-1.5em;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 20px;
+    /* identical to box height, or 205% */
+    letter-spacing: -0.025em;
+    /* Colors/DarkBlueGRey */
+    color: var(--primary-text-color);
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 765px) {
+    .upload-grid-position{
+        margin-left: -5.8em;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .upload-grid-position{
+        margin-left: -5em;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .upload-grid-position{
+        margin-left: -4.3em;
+    }
+}
+
+@media screen and (max-width: 527px) {
+    .upload-grid-position{
+        margin-left: -3.8em;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .upload-grid-position{
+        margin-left: -1.7em;
+    }
+}

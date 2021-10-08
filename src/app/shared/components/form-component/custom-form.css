@@ -1,0 +1,20 @@
+
+
+.p-error{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px!important;
+    line-height: 10px;
+    position: relative;
+    text-align: left;
+    top:-.2em;
+    font-family: var(--primary-font-family);
+}
+
+.validation-error{
+    border: 1px solid var(--error-color)!important;
+}
+.validation-error:focus{
+    border-color: var(--error-color)!important;
+    outline-color: var(--error-color)!important;
+}

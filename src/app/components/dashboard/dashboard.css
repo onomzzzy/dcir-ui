@@ -1,0 +1,12 @@
+
+.custom-breadcrumb-text-active{
+    color: var(--primary-custom-color);
+    position:relative!important;
+    text-align: left;
+    left:.25em!important;
+    /*margin-left:10px;*/
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+}

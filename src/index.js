@@ -1,13 +1,19 @@
-import React           from 'react';
-import ReactDOM        from 'react-dom';
+import React                       from 'react';
+import ReactDOM                                   from 'react-dom';
 import './index.css';
 import 'primeflex/primeflex.css';
-import reportWebVitals from './reportWebVitals';
-import {MainApp}       from "./app/main-app/main-app";
+import 'primereact/resources/themes/mdc-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import reportWebVitals                            from './reportWebVitals';
+import App                                        from "./App";
+
+
 
 ReactDOM.render(
+
   <React.StrictMode>
-    <MainApp/>
+   <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

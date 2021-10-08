@@ -1,0 +1,27 @@
+
+
+.pagination-active-nav{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    line-height: 15px;
+    /* Primary Blue */
+    color: var(--primary-custom-color);
+}
+
+.pagination-nav-position{
+    position: relative;
+    cursor: pointer;
+    top:.3em
+}
+
+.pagination-inactive-nav{
+    font-style: normal;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 15px;
+    /* Primary Blue */
+    color: rgba(70, 77, 242, 0.6);
+}

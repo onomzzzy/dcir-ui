@@ -1,0 +1,6 @@
+
+{
+  "/api/v1/backoffice/merchant/settlement/*": "/$1",
+  "/api/v1/backoffice/*": "/$1",
+  "/api/v1/backoffices/charge-model/*": "/$1"
+}

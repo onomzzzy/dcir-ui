@@ -1,0 +1,43 @@
+.details-label{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    position:relative;
+    top:.3em;
+    line-height: 15px;
+    /* identical to box height */
+    letter-spacing: 0.0115367em;
+    /* Header Text */
+    color: #5D7F8D;
+}
+.details-value{
+    font-style: normal;
+    font-weight: 600;
+    position:relative;
+    top:.3em;
+    font-size: 13px;
+    line-height: 15px;
+    /* identical to box height */
+    letter-spacing: 0.0115367em;
+    /* Text Blue */
+    color: var(--primary-text-color);
+}
+
+.dispute-title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0.0115367em;
+    /* Text Blue */
+    color: var(--primary-text-color);
+}
+
+.dcir-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.dcir-row{
+    border-bottom: 1px solid #E0E8F4!important;
+}

@@ -1,0 +1,29 @@
+.custom-breadcrumb-text{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    cursor: pointer;
+    /* identical to box height */
+    letter-spacing: 0.0126316em;
+    /* Text Blue */
+    color: var(--primary-text-color);
+    /*mix-blend-mode: normal;*/
+}
+.custom-breadcrumb-text-active{
+   color: var(--primary-custom-color);
+    position:relative!important;
+    left:-.5em!important;
+    /*margin-left:10px;*/
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+}
+.custom-breadcrumb-container{
+  width:280px;
+}
+.breadcrumb-position{
+    position:relative;
+    top:-.2em;
+}
