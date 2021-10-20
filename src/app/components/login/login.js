@@ -1,13 +1,11 @@
 import './login.css'
 import {Icon}                            from "../../shared/icons/icon";
-import {useState, useContext, useEffect} from "react";
+import {useState, useContext} from "react";
 import {MainContext}                     from "../../../App";
 import {SERVICES}                        from "../../core/services/services";
 import {CONFIG}                          from "../../shared/config/config";
 import {CustomToast}                     from "../../shared/components/alert/custom-toast";
-import {ProgressSpinner}                 from "primereact/progressspinner";
 import { useHistory }                    from "react-router-dom";
-import {LOCAL_STORAGE}                   from "../../shared/models/utilities";
 import {LOCAL_STORAGE_SERVICE}           from "../../core/services/storage-service";
 import {CustomLoader}                    from "../../shared/components/custom-loader/custom-loader";
 
@@ -37,11 +35,11 @@ export function Login(){
         roles:data.roles,
         isAuthenticated:true,
         name:data.name,
-
+        selectedSideNav:'Dashboard',
+        selectedSideNavIndex:0
     }
     mainContext.mainDispatch({ type: "PERSIST_LOGIN_DATA", loginData: loginData });
     LOCAL_STORAGE_SERVICE.SAVE_USER_CREDENTIAL(loginData);
-
     history.push("/dashboard");
 
    }

@@ -13,6 +13,8 @@ import {LOCAL_STORAGE} from "../../shared/models/utilities";
     localStorage.setItem(LOCAL_STORAGE.LAST_NAME,loginCredentials.lastName);
     localStorage.setItem(LOCAL_STORAGE.ROLES,JSON.stringify(loginCredentials.roles));
     localStorage.setItem(LOCAL_STORAGE.NAME,loginCredentials.name);
+     localStorage.setItem(LOCAL_STORAGE.CURRENT_PAGE_INDEX,loginCredentials.selectedSideNavIndex.toString());
+     localStorage.setItem(LOCAL_STORAGE.CURRENT_PAGE_STORAGE_NAME,loginCredentials.selectedSideNav);
 }
 
  function getUserCredentials(){
@@ -20,6 +22,7 @@ import {LOCAL_STORAGE} from "../../shared/models/utilities";
      authorities = authorities?JSON.parse(authorities):[];
      let roles = localStorage.getItem(LOCAL_STORAGE.ROLES);
      roles = roles?JSON.parse(roles):[];
+     const currentPageIndex = localStorage.getItem(LOCAL_STORAGE.CURRENT_PAGE_INDEX) || '0'
     return{
         username:localStorage.getItem(LOCAL_STORAGE.USER_NAME),
         selectedSideNav:localStorage.getItem(LOCAL_STORAGE.CURRENT_PAGE_STORAGE_NAME),
@@ -30,6 +33,7 @@ import {LOCAL_STORAGE} from "../../shared/models/utilities";
         firstName:localStorage.getItem(LOCAL_STORAGE.FIRST_NAME),
         lastName:localStorage.getItem(LOCAL_STORAGE.LAST_NAME),
         name:localStorage.getItem(LOCAL_STORAGE.NAME),
+        selectedSideNavIndex:parseInt(currentPageIndex),
         roles:roles
     }
 }
@@ -47,8 +51,21 @@ import {LOCAL_STORAGE} from "../../shared/models/utilities";
     return localStorage.getItem(LOCAL_STORAGE.TOKEN);
 }
 
+function storeCurrentPage(page,index){
+     localStorage.setItem(LOCAL_STORAGE.CURRENT_PAGE_STORAGE_NAME,page);
+     localStorage.setItem(LOCAL_STORAGE.CURRENT_PAGE_INDEX,index.toString())
+}
+
 function clearStorage(){
      localStorage.clear();
+}
+
+function getRoles(){
+     return JSON.parse(localStorage.getItem(LOCAL_STORAGE.ROLES));
+}
+
+function getAuthorities(){
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE.AUTHORITIES));
 }
 
 export const LOCAL_STORAGE_SERVICE = {
@@ -58,4 +75,7 @@ export const LOCAL_STORAGE_SERVICE = {
     IS_LOGIN:isLogin,
     CLEAR_STORAGE:clearStorage,
     IS_TOKEN_EXPIRE:isTokenExpire,
+    GET_ROLES:getRoles,
+    GET_AUTHORITIES:getAuthorities,
+    STORE_CURRENT_PAGE:storeCurrentPage
 }

@@ -12,6 +12,7 @@ import {ChargeTypeComponent}                      from "../components/charge-typ
 import {SettlementComponent}                      from "../components/settlement/settlement";
 import {Transaction}                              from "../components/transaction/transaction";
 import {Dispute}                                  from "../components/dispute/dispute";
+import {MerchantUser}                             from "../components/merchant-user/merchant-user";
 export const MainContext = React.createContext();
 
 export const MainApp = () => {
@@ -37,6 +38,7 @@ export const MainApp = () => {
                 <Route  path="/transactions" component={Transaction} />
                 <Route  path="/merchant" component={MerchantTable} />
                 <Route  path="/disputes" component={Dispute} />
+                <Route path="/merchant-user" component={MerchantUser} />
                 <Route path="/charge-type" component={ChargeTypeComponent}/>
                 <Route path="/settlement-participant" component={SettlementComponent}/>
                 <Route path="**" component={ErrorComponent} />

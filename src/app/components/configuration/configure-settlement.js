@@ -1,12 +1,13 @@
 
-import {useContext, useEffect, useState} from "react";
-import {ProgressSpinner}                 from "primereact/progressspinner";
-import {SERVICES}                        from "../../core/services/services";
-import {FormInput}                       from "../../shared/components/form-component/form-input";
-import {CUSTOM_VALIDATION}               from "../../shared/validation/validation";
-import {FormDropdown}                    from "../../shared/components/form-component/form-dropdown";
-import {FormMultiselect}                 from "../../shared/components/form-component/form-multiselect";
-import {CustomMessage}                   from "../../shared/components/alert/custom-message";
+import {useEffect, useState} from "react";
+import {ProgressSpinner}     from "primereact/progressspinner";
+import {SERVICES}            from "../../core/services/services";
+import {FormInput}           from "../../shared/components/form-component/form-input";
+import {CUSTOM_VALIDATION}   from "../../shared/validation/validation";
+import {FormDropdown}        from "../../shared/components/form-component/form-dropdown";
+import {FormMultiselect}     from "../../shared/components/form-component/form-multiselect";
+import {CustomMessage}       from "../../shared/components/alert/custom-message";
+import {HELPER}              from "../../shared/helper/helper";
 
 
 export function ConfigureSettlement(props){
@@ -41,7 +42,6 @@ export function ConfigureSettlement(props){
                 prefillForm();
                 getSettlementType();
                 getSettlementParticipantGlobal();
-                // getSettlementParticipantNonGlobal();
                 getChargeTypes();
             }
             return () => {
@@ -138,11 +138,16 @@ export function ConfigureSettlement(props){
     }
 
     function getSettlementParticipantGlobal(){
-     SERVICES.GET_SETTLEMENT_PARTICIPANT_GLOBAL()
+        const params = HELPER.TO_URL_STRING({
+            page:0,
+            size:10,
+            global:true
+        })
+     SERVICES.GET_SETTLEMENT_PARTICIPANT_GLOBAL(params)
          .then(data=>{
              let arr = []
-             data.content.forEach(e=>{
-                arr.push({desc:e.participantId,code:e.name})
+             data.result.content.forEach(e=>{
+                arr.push({desc:e.participantId,code:e.name,id:e.participantId})
              })
             setParticipates(arr)
          })
@@ -162,63 +167,74 @@ export function ConfigureSettlement(props){
     }
 
     function getChargeTypes(){
-      SERVICES.GET_CHARGE_TYPE()
+      SERVICES.GET_CHARGE_MODELS()
           .then(data=>{
-            setChargeTypes(data.result)
+              let arr = []
+              data?.result?.forEach(e=>{
+                 arr.push({desc:e.chargeTypeName,code:e.code});
+              })
+            setChargeTypes(arr);
           })
           .catch(error =>{
            
           })
     }
 
-    function upDateMerchant(){
-        setLoading(true);
-        let participants = []
-        if(Array.isArray(settlementInfo.participants))
-            settlementInfo.participants.forEach(e=>{
-                participants.push(e.desc);
-            })
-        setSettlementInfo({...settlementInfo,'participants':participants});
-        const payload = {
-            basicInfo:props.basicInfo,
-            id:props.merchantId,
-            settlementInfo:settlementInfo
-        }
-        SERVICES.UPDATE_PARTICIPANT(payload)
-            .then(data=>{
-                setSuccessMessage('Merchant updated successfully');
-                setCurrentIndex(1)
-                setLoading(false);
-            })
-            .catch(error=>{
-                props.callAlert(error.error,error.error_description);
-                setLoading(false);
-            })
-    }
+    // function upDateMerchant(){
+    //     setLoading(true);
+    //     let participants = []
+    //     if(Array.isArray(settlementInfo.participants))
+    //         settlementInfo.participants.forEach(e=>{
+    //             participants.push(e.desc);
+    //         })
+    //     setSettlementInfo({...settlementInfo,'participants':participants});
+    //     const payload = {
+    //         basicInfo:props.basicInfo,
+    //         id:props.merchantId,
+    //         settlementInfo:settlementInfo
+    //     }
+    //     SERVICES.UPDATE_PARTICIPANT(payload)
+    //         .then(data=>{
+    //             setSuccessMessage('Merchant updated successfully');
+    //             setCurrentIndex(1)
+    //             setLoading(false);
+    //         })
+    //         .catch(error=>{
+    //             props.callAlert(error.error,error.error_description);
+    //             setLoading(false);
+    //         })
+    // }
 
     function submit(){
         setLoading(true);
         let participants = []
-        if(Array.isArray(settlementInfo.participants))
-        settlementInfo.participants.forEach(e=>{
-          participants.push(e.desc);
+        let settlementInformation = {...settlementInfo}
+        if(Array.isArray(settlementInformation.participants))
+         settlementInformation.participants.forEach(e=>{
+          participants.push(e.id);
         })
-        setSettlementInfo({...settlementInfo,'participants':participants});
+        settlementInformation = {...settlementInformation,participants:participants,
+            settlementType:settlementInformation?.settlementType?.code
+            ,chargeType:settlementInformation?.chargeType?.code};
         const payload = {
             basicInfo:props.basicInfo,
-            settlementInfo:settlementInfo
+            settlementInfo:settlementInformation
         }
         SERVICES.CREATE_MERCHANT(payload)
             .then(data=>{
+              console.log('Merchant created successfully',data)
               setSuccessMessage('Merchant created successfully');
+              props.offTitle();
               setCurrentIndex(1)
               setLoading(false);
             })
             .catch(error=>{
-              props.callAlert(error.error,error.error_description);
+              props.callAlert('Error',HELPER.PROCESS_ERROR(error));
               setLoading(false);
             })
     }
+
+
 
     const customBackButton = () => {
         if(!loading){
@@ -267,15 +283,7 @@ export function ConfigureSettlement(props){
         if(currentIndex){
             return (
                 <div>
-                <CustomMessage messageType="success"/>
-                 <div>
-                     <p className="success-message-text">{successMessage}</p>
-                 </div>
-                 <div className="success-message-btn-container">
-                     <button onClick={()=>{
-                         props.closeModal(true)
-                     }} className="primary-button success-message-btn">Close</button>
-                 </div>
+                <CustomMessage close={true}  closeModal={props.closeModal} message={successMessage} messageType="success"/>
                 </div>
             )
         }
@@ -290,21 +298,21 @@ export function ConfigureSettlement(props){
                                           options={settlementTypes} placeholder="Select a Settlement type"/>
                         </div>
                     </div>
-                    <div className="p-col-12">
+                    <div className="p-col-6">
                         <div className="p-mt-1">
                             <FormInput value={settlementInfo['accountNumber']} required={true} field="accountNumber"
                                        type="NUBAN" error={settlementErrorForm['accountNumber']} fn={fillForm}
                                        loading={loading} placeholder="Account number"/>
                         </div>
                     </div>
-                    <div className="p-col-12">
+                    <div className="p-col-6">
                         <div className="p-mt-2">
                             <FormInput value={settlementInfo['accountName']} required={true} field="accountName"
                                        type="NAME" error={settlementErrorForm['accountName']} fn={fillForm}
                                        loading={loading} placeholder="Account name"/>
                         </div>
                     </div>
-                    <div className="p-col-12">
+                    <div className="p-col-6">
                         <div className="p-mt-2">
                             <FormDropdown required={true} field="chargeType" error={settlementErrorForm['chargeType']}
                                           disabled={loading} label="code" value={settlementInfo['chargeType']}
@@ -312,7 +320,7 @@ export function ConfigureSettlement(props){
                                           placeholder="Select a charge type"/>
                         </div>
                     </div>
-                    <div className="p-col-12">
+                    <div className="p-col-6">
                         <div className="p-mt-2">
                             <FormMultiselect required={true} error={settlementErrorForm["participants"]}
                                              field="participants" label="code" value={settlementInfo["participants"]}

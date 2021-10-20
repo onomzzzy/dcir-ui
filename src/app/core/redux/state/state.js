@@ -1,6 +1,7 @@
 //initial State
 export const initialState = {
-    selectedSideNav:'dashboard',
+    selectedSideNav:'Dashboard',
+    selectedSideNavIndex:0,
     showDialog:false,
     username:null,
     isAuthenticated:false,

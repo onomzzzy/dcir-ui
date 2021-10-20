@@ -28,7 +28,10 @@ export const SpecialLabelCases = [
     {case: 'responseCode',action:HELPER.RESPONSE_CODE_COLOR},
     {case: 'resolutionStatus',action:HELPER.RESPONSE_STATUS},
     {case: 'status',action:HELPER.RESPONSE_STATUS},
-    {case: 'createdOn',action:HELPER.FORMAT_DATE}
+    {case: 'createdOn',action:HELPER.FORMAT_DATE},
+    {case: 'active',action:HELPER.RESPONSE_STATUS},
+    {case: 'createdAt',action:HELPER.FORMAT_DATE}
+
 ]
 
 
@@ -42,6 +45,7 @@ const authoritiesStorageName = 'dcir_bo_aub84sriesrhor08';
 const nameStorageName = 'dcir_bo_rob84slesrm17';
 const firstNameStorageName = 'dcir_bo_firb84srore18';
 const lastNameStorageName = 'dcir_bo_lnb84slagerm23';
+const currentPageIndex = 'dcir_bo_pid14sleverm10'
 
 export const LOCAL_STORAGE = {
     TOKEN: `${tokenStorageName}`,
@@ -53,5 +57,6 @@ export const LOCAL_STORAGE = {
     NAME: `${nameStorageName}`,
     FIRST_NAME: `${firstNameStorageName}`,
     LAST_NAME: `${lastNameStorageName}`,
-    AUTHORITIES: `${authoritiesStorageName}`
+    AUTHORITIES: `${authoritiesStorageName}`,
+    CURRENT_PAGE_INDEX: `${currentPageIndex}`
 }

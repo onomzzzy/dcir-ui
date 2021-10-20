@@ -13,6 +13,8 @@ import {MainContext}                      from "../../../App";
 import {CUSTOM_VALIDATION}                from "../../shared/validation/validation";
 import {OverlayPanel}                     from "primereact/overlaypanel";
 import {CustomSettlementParticipantModel} from "../configuration/custom-settlement-participant-model";
+import {HELPER}                           from "../../shared/helper/helper";
+
 
 export function SettlementComponent (){
     const toast = useRef(null);
@@ -39,11 +41,18 @@ export function SettlementComponent (){
 
     const tableHeaders = [
         {label:'Name',value:'name'},
-        {label:'Account name',value:'accountName'},
+        {label:'Bank code',value:'bankCode'},
+        {label:'Bank name',value:'bankName'},
         {label:'Account number',value:'accountNumber'},
+        {label:'Account name',value:'accountName'},
         {label:'Charge type',value:'chargeType'},
         {label:'Global',value:'global'},
         {label:'Actions',value:'actions'}
+    ]
+
+    const participantAuthorities = [
+        {label:'UPDATE',value:'dcir_configure_participant'},
+        {label:'DELETE',value:'dcir_configure_participant'},
     ]
 
     const [details,setDetails] = useState([]);
@@ -79,27 +88,45 @@ export function SettlementComponent (){
 
     }
 
+    function viewParticipant(id,isMobile){
+        SERVICES.VIEW_PARTICIPANT(id)
+            .then(data => {
+                const e = data?.result;
+                let arr = [];
+                setDetails([]);
+                arr.push({label: 'Participant id', value: e?.participantId});
+                arr.push({label: 'Name', value: e?.name});
+                arr.push({label: 'Account name', value: e?.accountName});
+                arr.push({label: 'Account number', value: e?.accountNumber});
+                arr.push({label: 'Bank code', value: e?.bankCode});
+                arr.push({label: 'Bank name', value: e?.bankName});
+                arr.push({label: 'Charge type code', value: e?.chargeType?.code});
+                arr.push({label: 'Charge type', value: e?.chargeType.chargeType.code});
+                arr.push({label: 'Flat', value: e?.chargeType?.flat});
+                arr.push({label: 'Minimum Cap', value: e?.chargeType?.minimumCap});
+                arr.push({label: 'Maximum Cap', value: e?.chargeType?.maximumCap});
+                arr.push({label: 'Percentage', value: e?.chargeType?.percentage});
+                arr.push({label: 'Description', value: e?.description});
+                arr.push({label: 'Global', value: e?.globalCharge?'GLOBAL':'NON GLOBAL'});
+                setDetails(arr);
+                setBreakDownTitle('Participant')
+                openModal(2,isMobile)
+            })
+            .catch(error=>{
+
+            })
+    }
+
     function openAction(e,action,isMobile){
         // eslint-disable-next-line default-case
         switch (action) {
             case 'VIEW': {
-                let arr = [];
-                setDetails([]);
-                console.log('e ',e)
-                arr.push({label: 'Name', value: e?.name});
-                arr.push({label: 'Account name', value: e?.accountName});
-                arr.push({label: 'Account number', value: e?.accountNumber});
-                arr.push({label: 'Charge Type', value: e?.chargeType});
-                arr.push({label: 'Description', value: e?.description});
-                arr.push({label: 'global', value: e?.global?'GLOBAL':'NON GLOBAL'});
-                setDetails(arr);
-                setBreakDownTitle('Participant')
-                openModal(2,isMobile)
+                viewParticipant(e.participantId,isMobile);
                 break;
             }
             case 'DELETE':
                 setModalLoadingText('Deleting participant...');
-                setItemIdForDelete(e?.id);//remember to change to chargeCode
+                setItemIdForDelete(e?.participantId);//remember to change to chargeCode
                 setConfirmText(`Are you sure you want to delete ${e?.name}?`);
                 openModal(3,isMobile)
                 break;
@@ -110,10 +137,10 @@ export function SettlementComponent (){
                     accountNumber:e?.accountNumber,
                     chargeType:e?.chargeType,
                     description:e?.description,
-                    global:e?.global=== 'Global'?{desc:'GLOBAL',code:'GLOBAL',isGlobal:true}:{desc:'NON_GLOBAL',code:'NON_GLOBAL',isGlobal:false},
-                    id:e?.id
+                    global:e?.globalCharge,
+                    id:e?.participantId
                 }
-                setParticipantForEdit(participantModel );
+                setParticipantForEdit(participantModel);
                 openModal(4,isMobile)
         }
     }
@@ -121,17 +148,24 @@ export function SettlementComponent (){
 
     function getParticipants(){
         setParticipants([]);
-        SERVICES.GET_PARTICIPANTS()
+        let params ={
+            page:0,
+            size:10,
+            global:true
+        }
+        params = HELPER.TO_URL_STRING(params);
+        SERVICES.GET_PARTICIPANTS(params)
             .then(data=>{
-                if(!data.length){
+                const result = data?.result?.content
+                if(!result?.length){
                     setEmptyText('No settlement participant yet ...')
                 }
                 else{
                     let arr = [];
-                    setTotalItems(data.length);//need adjustment
-                    setTotalPages(1);//need adjustment
-                    data.forEach(e=>{
-                        arr.push({...e,global:(e.global?'GLOBAL':'NON GLOBAL'),actions:'CRUD',detailsFunction:openAction});
+                    setTotalItems(data?.result?.totalElements);
+                    setTotalPages(data?.result?.totalPages);
+                    result?.forEach(e=>{
+                        arr.push({...e,global:e.global?'GLOBAL':'NON GLOBAL',chargeType:e.chargeType?.code,actions:'CRUD',detailsFunction:openAction});
                     })
                     setParticipants(arr)
                 }
@@ -206,7 +240,7 @@ export function SettlementComponent (){
                     </div>
                 )
             case 1:
-                return <CustomTable totalPages={totalPages} totalItems={totalItems} currentPage={currentPage} range={range}  emptyText={emptyText} search={search} reload={reload} error={error} items={participants} headers={tableHeaders}/>
+                return <CustomTable authorities={participantAuthorities} totalPages={totalPages} totalItems={totalItems} currentPage={currentPage} range={range}  emptyText={emptyText} search={search} reload={reload} error={error} items={participants} headers={tableHeaders}/>
             case 2:
                 return(
                     <div className="mobile-modal-container">
@@ -225,30 +259,31 @@ export function SettlementComponent (){
         setVisible(false);
         setLoading(true);
         setParticipants([]);
-        const params = CUSTOM_VALIDATION.TO_URL_STRING(e);
+        const params = HELPER.TO_URL_STRING(e);
         SERVICES.SEARCH_PARTICIPANT(params)
             .then(data=>{
-                if(!data.length){
+                const result = data?.result?.content;
+                if(!result.length){
                     setEmptyText('No charge type model yet ...')
                     setSearch(true);
                     setLoading(false);
                 }
                 else{
                     let arr = [];
-                    setTotalItems(data.length);//need adjustment
-                    setTotalPages(1);//need adjustment
-                    data.forEach(e=>{
-                        arr.push({...e,global:(e.global?'GLOBAL':'NON GLOBAL'),actions:'CRUD',detailsFunction:openAction});
+                    setTotalItems(data.result?.totalElements);
+                    setTotalPages(data.result?.totalPages);
+                    result?.forEach(e=>{
+                        arr.push({...e,global:e.global?'GLOBAL':'NON GLOBAL',chargeType:e.chargeType.code,actions:'CRUD',detailsFunction:openAction});
                     })
                     setParticipants(arr)
                     setError(null);
-                    // setCurrentIndex(1);
+                    setCurrentIndex(1);
                     setLoading(false)
                 }
             })
             .catch(error=>{
                 setError('Unable to get request');
-                // setCurrentIndex(1);
+                setCurrentIndex(1);
                 setLoading(false)
             })
 
@@ -294,16 +329,18 @@ export function SettlementComponent (){
                     <div className="p-col-5">
                         <div className="p-grid">
                             <div className="p-col-6">
+                                {/*<button disabled={(loading||participants?.length === 0)} onClick={()=>openModal(1,false)} className="primary-button">*/}
+                                {/*    <i className="pi pi-filter"/>*/}
+                                {/*    <span className="hide-btn-text"> Filter</span>*/}
+                                {/*</button>*/}
+                            </div>
+                            <div className="p-col-6">
+                                <div className={HELPER.HAS_AUTHORITY('dcir_configure_participant')?'dcir-show':'dcir-hide'}>
                                 <button disabled={loading} onClick={()=>openModal(0,false)} className="primary-button hide-btn-text">
                                     <i className="pi pi-plus"/>
                                     <span className="hide-btn-text"> New participant</span>
                                 </button>
-                            </div>
-                            <div className="p-col-6">
-                                <button disabled={(loading||participants?.length === 0)} onClick={()=>openModal(1,false)} className="primary-button">
-                                    <i className="pi pi-filter"/>
-                                    <span className="hide-btn-text"> Filter</span>
-                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -316,13 +353,14 @@ export function SettlementComponent (){
                     </div>
                     <div className="p-col-3">
                         <div className="floating-mobile-buttons add-cursor">
-
+                            <div className={HELPER.HAS_AUTHORITY('dcir_configure_participant')?'dcir-show':'dcir-hide'}>
                             <i onClick={(e) => op.current.toggle(e)} className="pi pi-ellipsis-v" style={{'fontSize': '1.5em','color':'#464DF2'}}/>
                             <OverlayPanel ref={op} id="overlay_panel" style={{width: '100px'}} className="overlaypanel-demo">
 
                                 <div className="p-mb-3 p-ml-1"><span onClick={()=>openModal(0,true)} className="custom-over-flow-text"><i className="pi pi-plus"/> New</span></div>
-                                <div className="p-mb-2 p-ml-1"><span onClick={()=>openModal(1,true)} className="custom-over-flow-text"><i className="pi pi-filter"/> Filter</span></div>
+                                {/*<div className="p-mb-2 p-ml-1"><span onClick={()=>openModal(1,true)} className="custom-over-flow-text"><i className="pi pi-filter"/> Filter</span></div>*/}
                             </OverlayPanel>
+                            </div>
                         </div>
                     </div>
                 </div>

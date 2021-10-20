@@ -1,16 +1,18 @@
 import './transaction.css';
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {CustomBreadcrumb}      from "../../shared/components/custom-breadcrumb/custom-breadcrumb";
-import {CustomTable}                      from "../../shared/components/custom-table/custom-table";
-import {SERVICES}                         from "../../core/services/services";
-import {CustomLoader}                     from "../../shared/components/custom-loader/custom-loader";
-import {CustomModal}                      from "../../shared/components/custom-modal/custom-modal";
-import {DetailsBreakDown}                 from "../../shared/components/details-break-down/details-break-down";
-import {Toast}                            from "primereact/toast";
-import {MainContext}                      from "../../../App";
-import {CUSTOM_VALIDATION}                from "../../shared/validation/validation";
-import {OverlayPanel}                     from "primereact/overlaypanel";
-import {SearchTransaction}                from "./search-transaction";
+import {CustomBreadcrumb}  from "../../shared/components/custom-breadcrumb/custom-breadcrumb";
+import {CustomTable}       from "../../shared/components/custom-table/custom-table";
+import {SERVICES}          from "../../core/services/services";
+import {CustomLoader}      from "../../shared/components/custom-loader/custom-loader";
+import {CustomModal}       from "../../shared/components/custom-modal/custom-modal";
+import {DetailsBreakDown}  from "../../shared/components/details-break-down/details-break-down";
+import {Toast}             from "primereact/toast";
+import {MainContext}       from "../../../App";
+import {CUSTOM_VALIDATION} from "../../shared/validation/validation";
+import {OverlayPanel}      from "primereact/overlaypanel";
+import {SearchTransaction} from "./search-transaction";
+import {HELPER}            from "../../shared/helper/helper";
+import {AccessDenied}      from "../access-denied/access-denied";
 
 export function Transaction (){
     const toast = useRef(null);
@@ -88,29 +90,27 @@ export function Transaction (){
         setDetails(arr);
         setBreakDownTitle('Transaction')
         openModal(2,isMobile)
-        // SERVICES.GET_TRANSACTION()
-        // .then(data =>{
-        //  // const e = data.content[0];//rework;
-        //
-        // })
-        // .catch(error=>{
-        //
-        // })
     }
 
 
     function getTransactions(){
         setTransactions([]);
-        SERVICES.GET_TRANSACTION()
+        let params = {
+            page:0,
+            size:10
+        }
+        params = HELPER.TO_URL_STRING(params);
+        SERVICES.GET_TRANSACTION( params )
             .then(data=>{
-                if(!data?.content.length){
+                const result = data?.result?.content;
+                if(!result.length){
                     setEmptyText('No transaction yet ...')
                 }
                 else{
                     let arr = [];
-                    setTotalItems(data?.content.length);//need adjustment
-                    setTotalPages(data?.totalPages);//need adjustment
-                    data.content.forEach(e=>{
+                    setTotalItems(data?.result.totalItems);//need adjustment
+                    setTotalPages(data?.result.totalPages);//need adjustment
+                    result.forEach(e=>{
                         arr.push({...e,actions:'CR',detailsFunction:openAction});
                     })
                     setTransactions(arr)
@@ -166,7 +166,7 @@ export function Transaction (){
             case 1:
                 return <SearchTransaction searchFunction={searchTransaction} closeModal={closeModal}/>
             case 2:
-                return <DetailsBreakDown transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
+                return <DetailsBreakDown mobile={true} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
         }
     }
 
@@ -180,7 +180,7 @@ export function Transaction (){
                     </div>
                 )
             case 1:
-                return <CustomTable totalPages={totalPages} totalItems={totalItems} currentPage={currentPage} range={range}  emptyText={emptyText} search={search} reload={reload} error={error} items={transactions} headers={tableHeaders}/>
+                return <CustomTable isReload={true} totalPages={totalPages} totalItems={totalItems} currentPage={currentPage} range={range}  emptyText={emptyText} search={search} reload={reload} error={error} items={transactions} headers={tableHeaders}/>
             case 2:
                 return(
                     <div className="mobile-modal-container">
@@ -199,19 +199,24 @@ export function Transaction (){
         setVisible(false);
         setLoading(true);
         setTransactions([]);
-        const params = CUSTOM_VALIDATION.TO_URL_STRING(e);
-        SERVICES.SEARCH_TRANSACTIONS(params)
+        const params = e;
+        const pageParam = HELPER.TO_URL_STRING( {
+            page: 0,
+            size:1
+        });
+        SERVICES.SEARCH_TRANSACTIONS(params,pageParam)
             .then(data=>{
-                if(!data.length){
+                const result = data.result.content;
+                if(!result.length){
                     setEmptyText('No charge type model yet ...')
                     setSearch(true);
                     setLoading(false);
                 }
                 else{
                     let arr = [];
-                    setTotalItems(data.content.length);//need adjustment
-                    setTotalPages(1);//need adjustment
-                    data.content.forEach(e=>{
+                    setTotalItems(data.result.totalItems);
+                    setTotalPages(data.result.totalPages);
+                    result.forEach(e=>{
                         arr.push({...e,actions:'CR',detailsFunction:openAction});
                     })
                     setTransactions(arr)
@@ -228,13 +233,20 @@ export function Transaction (){
 
     }
 
+
+
+    function modalFooter(footer){
+
+    }
+
+
     const modalContent = () =>{
         // eslint-disable-next-line default-case
         switch (currentModalIndex){
             case 1:
                 return <SearchTransaction searchFunction={searchTransaction} closeModal={closeModal}/>
             case 2:
-                return <DetailsBreakDown transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
+                return <DetailsBreakDown footer={modalFooter} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
         }
     }
 
@@ -268,10 +280,12 @@ export function Transaction (){
                                 {/*</button>*/}
                             </div>
                             <div className="p-col-6">
+                                <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-show':'dcir-hide'}>
                                 <button disabled={(loading||transactions?.length === 0)} onClick={()=>openModal(1,false)} className="primary-button">
                                     <i className="pi pi-filter"/>
                                     <span className="hide-btn-text"> Filter</span>
                                 </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -284,19 +298,23 @@ export function Transaction (){
                     </div>
                     <div className="p-col-3">
                         <div className="floating-mobile-buttons add-cursor">
-
+                            <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-show':'dcir-hide'}>
                             <i onClick={(e) => op.current.toggle(e)} className="pi pi-ellipsis-v" style={{'fontSize': '1.5em','color':'#464DF2'}}/>
                             <OverlayPanel ref={op} id="overlay_panel" style={{width: '100px'}} className="overlaypanel-demo">
 
-                                <div className="p-mb-3 p-ml-1"><span onClick={()=>openModal(0,true)} className="custom-over-flow-text"><i className="pi pi-plus"/> New</span></div>
+                                {/*<div className="p-mb-3 p-ml-1"><span onClick={()=>openModal(0,true)} className="custom-over-flow-text"><i className="pi pi-plus"/> New</span></div>*/}
                                 <div className="p-mb-2 p-ml-1"><span onClick={()=>openModal(1,true)} className="custom-over-flow-text"><i className="pi pi-filter"/> Filter</span></div>
                             </OverlayPanel>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
+            <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-show':'dcir-hide'}>
                 {chargeTypeView()}
+            </div>
+            <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-hide':'dcir-show'}>
+               <AccessDenied/>
             </div>
         </div>
     )

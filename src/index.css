@@ -66,6 +66,13 @@ code {
   margin-right: .5rem;
 }
 
+.dcir-show{
+ display: inline;
+}
+.dcir-hide{
+display:none;
+}
+
 @media screen and (max-width: 960px) {
   .toast-demo button {
     width: 100%;
@@ -303,13 +310,13 @@ button {
 
 .login-icon-position{
   position:relative;
-  top:.7em;
+  top:.6em;
 }
 
 
 
 .log-icon-top-container-modal{
-  max-width:496px!important;
+  max-width:800px!important;
   height:60px;
   border-top-left-radius:8px;
   border-top-right-radius:8px;
@@ -318,19 +325,41 @@ button {
   background: var(--primary-custom-color);
 }
 
+
+.p-dialog-header{
+  padding:0!important;
+  border-radius: 8px!important;
+  /*background: var(--primary-custom-color);*/
+}
+
 .custom-modal-content{
-  padding: 13px 45px 40px;
+  padding: 13px 20px!important;
   padding-bottom:15px!important;
 }
+
 .custom-modal-item{
   margin-top:-.1em
 }
 
 .p-dialog,.p-dialog-content{
-  max-width:496px!important;
-  max-height:900px!important;
+  max-width:550px!important;
+  max-height:800px!important;
   padding:0!important;
-  border-radius: 8px!important;
+  border-bottom-left-radius:8px;
+  border-bottom-right-radius:8px;
+  /*overflow-x: hidden;*/
+}
+
+.close-modal{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+  letter-spacing: 0.0126316em;
+  /* Primary Blue */
+  color: var(--primary-custom-color);
+  mix-blend-mode: normal;
 }
 
 .custom-mobile-table-card{
@@ -616,9 +645,10 @@ hr{
   #main{
     margin-left: 0;
   }
-  .custom-modal-content{
-    padding: 32px 20px 15px;
-  }
+
+  /*.custom-modal-content{*/
+  /*  padding: 32px 20px 15px;*/
+  /*}*/
 }
 
 @media screen and (max-width: 899px) {

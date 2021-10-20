@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {CustomLoader}        from "../../shared/components/custom-loader/custom-loader";
 import {FormInput}           from "../../shared/components/form-component/form-input";
 import {CUSTOM_VALIDATION}   from "../../shared/validation/validation";
+import moment                from "moment";
 
 export function SearchTransaction(props){
     const [loading,setLoading] = useState(false);
@@ -12,22 +13,23 @@ export function SearchTransaction(props){
     const [transaction,setTransaction] = useState(
         {
             cardAcceptorId: null,
-            chargeAmount: null,
-            requestTime: null,
-            terminalId: null,
-            transactionAmount: null,
-            transactionTime: null,
+            endDate: moment().format('YYYY-MM-DD'),
+            maskedPan: null,
+            rrn: null,
+            startDate:moment().subtract(6, 'days').format('YYYY-MM-DD'),
+            terminalId: null
         }
+
     )
 
     const [transactionError,setTransactionError] = useState(
         {
             cardAcceptorId: null,
-            chargeAmount: null,
-            requestTime: null,
-            terminalId: null,
-            transactionAmount: null,
-            transactionTime: null,
+            endDate: null,
+            maskedPan: null,
+            rrn: null,
+            startDate:null,
+            terminalId: null
         }
     )
 
@@ -64,22 +66,22 @@ export function SearchTransaction(props){
         let payload ={}
 
         if(transaction['cardAcceptorId']){
-            payload.chargeCode = transaction['cardAcceptorId'];
+            payload.cardAcceptorId = transaction['cardAcceptorId'];
         }
-        if(transaction['chargeAmount']){
-            payload.chargeCode = transaction['chargeAmount'];
+        if(transaction['endDate']){
+            payload.endDate = transaction['endDate'];
         }
-        if(transaction['requestTime']){
-            payload.chargeType = transaction['requestTime'];
+        if(transaction['maskedPan']){
+            payload.maskedPan = transaction['maskedPan'];
+        }
+        if(transaction['rrn']){
+            payload.rrn = transaction['rrn'];
+        }
+        if(transaction['startDate']){
+            payload.startDate = transaction['startDate'];
         }
         if(transaction['terminalId']){
-            payload.chargeType = transaction['terminalId'];
-        }
-        if(transaction['transactionAmount']){
-            payload.chargeType = transaction['transactionAmount'];
-        }
-        if(transaction['transactionTime']){
-            payload.chargeType = transaction['transactionTime'];
+            payload.terminalId = transaction['terminalId'];
         }
 
         return payload;
@@ -157,22 +159,22 @@ export function SearchTransaction(props){
                 </div>
                 <div className="p-grid">
                     <div className="p-col-12">
-                        <FormInput value={transaction['cardAcceptorId']} required={false} field="cardAcceptorId" type="" error={transactionError['cardAcceptorId']} fn={validateForm} loading={loading}  placeholder="Card acceptor id"/>
+                        <FormInput value={transaction['cardAcceptorId']} required={false} field="cardAcceptorId" type="INPUT" error={transactionError['cardAcceptorId']} fn={validateForm} loading={loading}  placeholder="Card acceptor id"/>
                     </div>
                     <div className="p-col-12">
-                        <FormInput value={transaction['chargeAmount']} required={true} field="chargeAmount" type="CASH_INPUT" error={transactionError['chargeAmount']} fn={validateForm} loading={loading}  placeholder="Charge amount"/>
+                        <FormInput value={transaction['maskedPan']} required={true} field="maskedPan" type="INPUT" error={transactionError['maskedPan']} fn={validateForm} loading={loading}  placeholder="Masked Pan"/>
                     </div>
                     <div className="p-col-12">
-                        <FormInput value={transaction['transactionAmount']} required={true} field="transactionAmount" type="CASH_INPUT" error={transactionError['transactionAmount']} fn={validateForm} loading={loading}  placeholder="Transaction amount"/>
+                        <FormInput value={transaction['rrn']} required={true} field="rrn" type="INPUT" error={transactionError['rrn']} fn={validateForm} loading={loading}  placeholder="Rrn"/>
                     </div>
                     <div className="p-col-12">
-                        <FormInput value={transaction['terminalId']} required={false} field="terminalId" type="" error={transactionError['terminalId']} fn={validateForm} loading={loading}  placeholder="Terminal id"/>
+                        <FormInput value={transaction['terminalId']} required={false} field="terminalId" type="INPUT" error={transactionError['terminalId']} fn={validateForm} loading={loading}  placeholder="Terminal id"/>
                     </div>
                     <div className="p-col-6">
-                        <FormInput value={transaction['requestTime']} required={false} field="requestTime" type="" error={transactionError['requestTime']} fn={validateForm} loading={loading}  placeholder="Start date"/>
+                        <FormInput inputType="date" value={transaction['startDate']} required={false} field="startDate" type="INPUT" error={transactionError['startDate']} fn={validateForm} loading={loading}  placeholder="Start date"/>
                     </div>
                     <div className="p-col-6">
-                        <FormInput value={transaction['transactionTime']} required={false} field="transactionTime" type="" error={transactionError['transactionTime']} fn={validateForm} loading={loading}  placeholder="End date"/>
+                        <FormInput inputType="date" value={transaction['endDate']} required={false} field="endDate" type="INPUT" error={transactionError['endDate']} fn={validateForm} loading={loading}  placeholder="End date"/>
                     </div>
                     <div className="p-col-12">
                         <div className="p-mt-5">

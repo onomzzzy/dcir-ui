@@ -37,6 +37,10 @@
     border-top: none!important;
     border-bottom: none!important;
     box-shadow: none!important;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 17px;
+    letter-spacing: 0.0126316em;
 }
 
 .custom-tab-content{
@@ -90,11 +94,18 @@
 
 .custom-tab-text{
     position: relative;
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 14px;
+    top:-.25em;
+    left:.8em;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 17px;
+    letter-spacing: 0.0126316em;
     white-space: nowrap;
-    /*color:var(--primary-text-color);*/
+}
+.custom-tab-title{
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 17px;
 }
 
 .nav-profile-title{
@@ -123,5 +134,32 @@ left:-1.25em
     margin-top:40px;
     margin-bottom: 18px;
 }
+
+.singleNavContainer{
+    width: 250px;
+    padding:15px 24px;
+    cursor:pointer;
+    height: 51px;
+}
+.singleNavContainer-active{
+  background: var(--body-color);
+}
+.singleNavContainer-text{
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 17px;
+    letter-spacing: 0.0126316em;
+}
+.adjust-single-nav{
+    position:relative;
+    top:.15em;
+    left:-3.5em;
+}
+.singleNavContainer-icon{
+    width: 21px;
+    height: 23px;
+}
+
 
 

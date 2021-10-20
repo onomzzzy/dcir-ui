@@ -10,7 +10,6 @@ import {CustomToast}         from "../../shared/components/alert/custom-toast";
 
 export function CustomSettlementParticipantModel(props){
     const [loading,setLoading] = useState(false);
-    const [chargeType,setChangeType] = useState([]);
     const [validForm,setValidForm] = useState(false);
     const [messageTitle,setMessageTitle] = useState(null);
     const [chargeTypes,setChargeTypes] = useState([])
@@ -27,6 +26,11 @@ export function CustomSettlementParticipantModel(props){
             name: null
         }
     )
+    const participantTypes = [
+        {desc:'GLOBAL',code:'GLOBAL',isGlobal:true},
+        {desc:'NON_GLOBAL',code:'NON_GLOBAL',isGlobal:false},
+    ]
+
     const [participantError,setParticipantError] = useState(
         {
             accountName: null,
@@ -38,12 +42,16 @@ export function CustomSettlementParticipantModel(props){
         }
     )
 
+    function getGlobalCharge(global){
+       if(global){
+           return {desc:'GLOBAL',code:'GLOBAL',isGlobal:true}
+       }
+       return {desc:'NON_GLOBAL',code:'NON_GLOBAL',isGlobal:false}
+    }
+
     useEffect(() => {
             let mounted = true
             if(mounted) {
-                if(props.isUpdate){
-                    setParticipant(props.editParticipant);
-                }
                 getChargeType();
             }
             return () => {
@@ -56,17 +64,24 @@ export function CustomSettlementParticipantModel(props){
         setChargeTypes([]);
         SERVICES.GET_CHARGE_MODELS()
             .then(data=>{
-               setChargeTypes(data);
+                let arr = []
+                data.result.forEach(e=>{
+                  arr.push(e);
+                })
+               setChargeTypes(arr);
                 if(props.isUpdate) {
-                    data?.forEach(e => {
-                        if (e.chargeCode === props?.editParticipant?.chargeType) {
+                    const global = getGlobalCharge(props?.editParticipant?.global);
+                    data?.result.forEach(e => {
+                        if (e.code === props?.editParticipant?.chargeType) {
                             setParticipant({...props.editParticipant,chargeType: e});
                         }
                     })
+                    setParticipant({...participant,global:global});
                 }
               setLoading(false)
             })
             .catch(error=>{
+                console.log('error ',error);
                 setLoading(false)
             })
     }
@@ -88,10 +103,7 @@ export function CustomSettlementParticipantModel(props){
         setValidForm(validForm && validErrorForm);
     }
 
-    const participantTypes = [
-        {desc:'GLOBAL',code:'GLOBAL',isGlobal:true},
-        {desc:'NON_GLOBAL',code:'NON_GLOBAL',isGlobal:false},
-    ]
+
 
 
     function updateParticipant(){
@@ -99,21 +111,22 @@ export function CustomSettlementParticipantModel(props){
         const payload ={
             accountName: participant['accountName'],
             accountNumber: participant['accountNumber'],
-            chargeType: participant['chargeType']?.chargeCode,
+            chargeType: participant['chargeType']?.code,
             description: participant['description'],
-            global: participant['global'],
+            global: participant['global']?.isGlobal,
             name: participant['name'],
             id:props?.editParticipant?.id
         }
         SERVICES.UPDATE_PARTICIPANT(payload)
             .then(data=>{
+                console.log('success ',data)
                 setMessageTitle(null)
                 setSuccessMessage('Charge Model updated successfully')
                 setCurrentIndex(1);
                 setLoading(false);
             })
             .catch(error=>{
-                setMessageTitle('Error');
+                setMessageTitle('Error',error);
                 setMessage('An error occur when updating charge model');
                 setLoading(false);
             })
@@ -136,15 +149,35 @@ export function CustomSettlementParticipantModel(props){
        }
     }
 
+    const titleView = () =>{
+      if(props.isUpdate){
+        return 'Update Participant';
+      }
+      else if(props.isSearch){
+        return 'Filter';
+      }
+      return 'New Participant'
+    }
+
+    const subTitleView = () =>{
+        if(props.isUpdate){
+            return 'Update the form below';
+        }
+        else if(props.isSearch){
+            return 'Fill the form below to create participant';
+        }
+        return ''
+    }
+
     const participantFormView = () =>{
        return(
            <div>
                <div>
                    <div className="custom-modal-title p-text-left">
-                       {props.isUpdate?'Update charge participant':(props.isSearch?'Filter':'New charge participant')}
+                       {titleView()}
                    </div>
                    <div className="custom-dialog-subtitle-container p-mb-5">
-                       <p className="custom-dialog-subtitle">{props.isUpdate?'Update the form below':(props.isSearch?'':'Fill the form below to create participant')}</p>
+                       <p className="custom-dialog-subtitle">{subTitleView()}</p>
                    </div>
                </div>
                <div className="p-pb-1">
@@ -161,7 +194,7 @@ export function CustomSettlementParticipantModel(props){
                    </div>
                    <div className="p-col-6">
                        <div className="p-mt-1">
-                           <FormDropdown required={true} label="chargeCode" field="chargeType"
+                           <FormDropdown required={true} label="code" field="chargeType"
                            error={participantError['chargeType']} disabled={loading}
                            value={participant['chargeType']} fn={validateDropdown}
                            options={chargeTypes} placeholder="Select a charge type"/>
@@ -258,7 +291,7 @@ export function CustomSettlementParticipantModel(props){
         const payload ={
             accountName: participant['accountName'],
             accountNumber: participant['accountNumber'],
-            chargeType: participant['chargeType']?.chargeCode,
+            chargeType: participant['chargeType']?.code,
             description: participant['description'],
             global: participant['global'].isGlobal,
             name: participant['name'],
@@ -266,13 +299,14 @@ export function CustomSettlementParticipantModel(props){
 
         SERVICES.CREATE_PARTICIPANT(payload)
             .then(data=>{
+                console.log('success',data);
                 setMessageTitle(null)
                 setSuccessMessage('Participant created successfully');
                 setCurrentIndex(1);
                 setLoading(false);
             })
             .catch(error=>{
-                setMessageTitle('Error');
+                setMessageTitle('Error',error);
                 setMessage('An error occur when creating participant');
                 setLoading(false);
             })

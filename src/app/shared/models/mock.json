@@ -91,14 +91,14 @@
       "id": 1
     },
     {
-      "chargeCode": "BFU123",
-      "chargeName": "FUT",
-      "chargeType": "PERCENT_MAX_CAP",
-      "chargeTypeDesc": "Testing two .",
-      "flat": "600",
-      "maxCap": "4500",
-      "minCap": "2500",
-      "percent": "12",
+      "chargeCode": "BN5909",
+      "chargeName": "Onome",
+      "chargeType": "PERCENT_MIN_CAP",
+      "chargeTypeDesc": "My charge type",
+      "flat": "200",
+      "maxCap": "20",
+      "minCap": "300",
+      "percent": "11",
       "id": 2
     }
   ],
@@ -195,6 +195,55 @@
         }
       },
       "id": 3
+    },
+    {
+      "basicInfo": {
+        "merchantName": "Onome",
+        "mainEmail": "onomzzzy@gmail.com",
+        "phoneNumber": "08035826579",
+        "cardAcceptorId": "EW1234567",
+        "alternatePhoneNumber": "08035826579",
+        "supportEmail": "onomzzzy@gmail.com",
+        "settlementEmail": "onomzzzy@gmail.com",
+        "disputeEmail": "onomzzzy@gmail.com"
+      },
+      "settlementInfo": {
+        "accountName": "Ade",
+        "accountNumber": "1908786547",
+        "chargeType": {
+          "desc": "Flat Charge",
+          "code": "FLAT"
+        },
+        "participants": [
+          {
+            "desc": "3",
+            "code": "Onome"
+          }
+        ],
+        "settlementType": {
+          "decs": "HOURLY",
+          "code": "HOURLY"
+        }
+      },
+      "id": 4
+    }
+  ],
+  "merchant-user": [
+    {
+      "firstname": "Samuel",
+      "lastname": "Ojumah-Ineye",
+      "email": "onomzzzy@gmail.com",
+      "name": "Samuel Onome Ojumah-Ineye",
+      "merchantId": 1,
+      "id": 1
+    },
+    {
+      "firstname": "Samuel",
+      "lastname": "Ojumah-Ineye",
+      "email": "onoomzzzy@gmail.com",
+      "name": "Samuel Onome Ojumah-Ineye",
+      "merchantId": 4,
+      "id": 2
     }
   ],
   "non-global": {
@@ -364,64 +413,64 @@
     "totalPages": 1
   },
   "disputable-codes": [
-  "91",
-  "75"
+    "91",
+    "75"
   ],
   "transaction": {
-  "content": [
-    {
-      "cardAcceptorId": "NBF123456",
-      "chargeAmount": 400,
-      "maskedPan": "*****1235**",
-      "processedForSettlement": true,
-      "requestTime": "2021-09-29T16:27:39.539Z",
-      "responseCode": "91",
-      "rrn": "BNG12345678967",
-      "settlementTime": "2021-09-29T16:27:39.539Z",
-      "stan": "DEN12345678",
-      "terminalId": "CN1456Y",
-      "transactionAmount": 25000,
-      "transactionSearchKey": "Boss124",
-      "transactionTime": "2021-09-29T16:27:39.539Z"
-    },
-    {
-      "cardAcceptorId": "CCB118406",
-      "chargeAmount": 2500,
-      "maskedPan": "*****0039**",
-      "processedForSettlement": true,
-      "requestTime": "2021-08-29T16:24:39.539Z",
-      "responseCode": "00",
-      "rrn": "SNG0005878967",
-      "settlementTime": "2021-08-29T16:24:39.539Z",
-      "stan": "DAN1008678",
-      "terminalId": "N120008R",
-      "transactionAmount": 88000,
-      "transactionSearchKey": "Sukuneh",
-      "transactionTime": "2021-08-29T16:24:39.539Z"
-    },
-    {
-      "cardAcceptorId": "REB008516",
-      "chargeAmount": 1200,
-      "maskedPan": "*****0008**",
-      "processedForSettlement": true,
-      "requestTime": "2021-05-29T16:23:35.539Z",
-      "responseCode": "51",
-      "rrn": "BQN0115278967",
-      "settlementTime": "2021-05-29T16:23:35.539Z",
-      "stan": "FES1008678",
-      "terminalId": "NB330001B",
-      "transactionAmount": 55000,
-      "transactionSearchKey": "Queensly",
-      "transactionTime": "2021-05-29T16:23:35.539Z"
-    }
-  ],
-  "first": true,
-  "last": true,
-  "number": 0,
-  "numberOfElements": 3,
-  "size": 1,
-  "sort": {},
-  "totalElements": 3,
-  "totalPages": 1
- }
+    "content": [
+      {
+        "cardAcceptorId": "NBF123456",
+        "chargeAmount": 400,
+        "maskedPan": "*****1235**",
+        "processedForSettlement": true,
+        "requestTime": "2021-09-29T16:27:39.539Z",
+        "responseCode": "91",
+        "rrn": "BNG12345678967",
+        "settlementTime": "2021-09-29T16:27:39.539Z",
+        "stan": "DEN12345678",
+        "terminalId": "CN1456Y",
+        "transactionAmount": 25000,
+        "transactionSearchKey": "Boss124",
+        "transactionTime": "2021-09-29T16:27:39.539Z"
+      },
+      {
+        "cardAcceptorId": "CCB118406",
+        "chargeAmount": 2500,
+        "maskedPan": "*****0039**",
+        "processedForSettlement": true,
+        "requestTime": "2021-08-29T16:24:39.539Z",
+        "responseCode": "00",
+        "rrn": "SNG0005878967",
+        "settlementTime": "2021-08-29T16:24:39.539Z",
+        "stan": "DAN1008678",
+        "terminalId": "N120008R",
+        "transactionAmount": 88000,
+        "transactionSearchKey": "Sukuneh",
+        "transactionTime": "2021-08-29T16:24:39.539Z"
+      },
+      {
+        "cardAcceptorId": "REB008516",
+        "chargeAmount": 1200,
+        "maskedPan": "*****0008**",
+        "processedForSettlement": true,
+        "requestTime": "2021-05-29T16:23:35.539Z",
+        "responseCode": "51",
+        "rrn": "BQN0115278967",
+        "settlementTime": "2021-05-29T16:23:35.539Z",
+        "stan": "FES1008678",
+        "terminalId": "NB330001B",
+        "transactionAmount": 55000,
+        "transactionSearchKey": "Queensly",
+        "transactionTime": "2021-05-29T16:23:35.539Z"
+      }
+    ],
+    "first": true,
+    "last": true,
+    "number": 0,
+    "numberOfElements": 3,
+    "size": 1,
+    "sort": {},
+    "totalElements": 3,
+    "totalPages": 1
+  }
 }

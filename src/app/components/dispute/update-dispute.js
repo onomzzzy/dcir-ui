@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import {FormInput}           from "../../shared/components/form-component/form-input";
 import {CUSTOM_VALIDATION}   from "../../shared/validation/validation";
 import {CustomUpload}        from "../../shared/components/custom-upload/custom-upload";
 import {CustomLoader}        from "../../shared/components/custom-loader/custom-loader";
@@ -7,7 +6,6 @@ import {SERVICES}            from "../../core/services/services";
 import {CustomMessage}       from "../../shared/components/alert/custom-message";
 import {CustomToast}         from "../../shared/components/alert/custom-toast";
 import {FormDropdown}        from "../../shared/components/form-component/form-dropdown";
-import {InputTextarea}       from "primereact/inputtextarea";
 import {FormTextArea}        from "../../shared/components/form-component/form-text-area";
 
 export function UpdateDispute(props){

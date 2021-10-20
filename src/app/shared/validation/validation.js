@@ -14,24 +14,6 @@ function validUsername(val) {
     return !isNaN(param) && param.length >= 11 && param.length <= 16;
 }
 
-function toTitleCase(str: string): string {
-    if (str) {
-        return str.toLowerCase().split(' ').map((word) => {
-            return (word.charAt(0).toUpperCase() + word.slice(1));
-        }).join(' ');
-    }
-    return str;
-}
-
-function decodeJWT(token: string) {
-
-    const base64Url = token.split('.')[1];
-    if (base64Url) {
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-    } else { return undefined; }
-}
-
 function validateObjectModel(obj, totalProperty) {
     let totalCurrentProperties = 0;
     for (const property in obj) {
@@ -86,16 +68,6 @@ function validText(param) {
 function validSecret(param: string) {
     const isValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
     return validText(param) && isValid.test(param);
-}
-
-function generateRandomString(length) {
-    let text = '';
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return text;
 }
 
 
@@ -186,21 +158,30 @@ function generateRandomString(length) {
         return !isNullOrEmpty(param) && !isNaN(param) && parseFloat(param) > 0;
     }
 
-   function toUrlString(obj){
-    let urlString = '';
-    for (const prop in obj) {
-        if (obj.hasOwnProperty(prop)) {
-            if (obj[prop] != null && obj[prop].constructor === Array) {
-                obj[prop].forEach(i => {
-                    urlString += `${prop}=${i}&`;
-                });
-            } else {
-                urlString += prop + '=' + obj[prop] + '&';
-            }
-        }
+   function validInput(param) {
+    if (isNullOrEmpty(param)) {
+        return false;
     }
-    return urlString.substr(0, urlString.length - 1);
-}
+
+    return !isNullOrEmpty(param) &&  param.length > 2;
+  }
+
+   function validDescription(param) {
+    if (isNullOrEmpty(param)) {
+        return false;
+    }
+
+    return !isNullOrEmpty(param) &&  param.length > 5;
+   }
+
+
+    function validCardAcceptanceId(param) {
+    if (isNullOrEmpty(param)) {
+        return false;
+    }
+
+    return !isNullOrEmpty(param) &&  param.length === 15;
+   }
 
 
     function removeEmptyValues(obj) {
@@ -233,6 +214,12 @@ function generateRandomString(length) {
          return validPercentage(input);
          case 'CASH_INPUT':
          return validCashInput(input)
+         case 'DESCRIPTION':
+         return validDescription(input)
+         case 'INPUT':
+         return validInput(input)
+         case 'CARD_ACCEPTANCE_ID':
+         return validCardAcceptanceId(input)
          default:
           return true;//No validation
      }
@@ -243,7 +230,6 @@ export const CUSTOM_VALIDATION ={
     IS_EMPTY:isNullOrEmptyOrUndefined,
     VALID_OBJ:validateObjectModel,
     VALID_OBJ_ANY: validateObjectModelAny,
-    TO_URL_STRING:toUrlString
 }
 
 

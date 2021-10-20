@@ -4,6 +4,7 @@ import {Divider}           from "primereact/divider";
 import {NewTable}          from "./new-table";
 import {CustomPagination}  from "../custom-pagination/custom-pagination";
 import {SpecialLabelCases} from "../../models/utilities";
+import {HELPER}            from "../../helper/helper";
 
 export function CustomTable(props) {
 
@@ -13,10 +14,16 @@ export function CustomTable(props) {
           return(
               <div>
                   <div className="raiseTable desktop-screen">
-                      <NewTable isMobile={false} totalPages={props.totalPages} totalItems={props.totalItems} currentPage={props.currentPage} range={props.range} items={props.items} headers={props.headers} columns={props?.headers?.length}/>
+                      <NewTable authorities={props.authorities} reload={props.reload} isReload={props.isReload} isMobile={false} totalPages={props.totalPages} totalItems={props.totalItems} currentPage={props.currentPage} range={props.range} items={props.items} headers={props.headers} columns={props?.headers?.length}/>
                   </div>
                   <div className="mobile-screen">
                       <div className="custom-mobile-table-card mobile-table p-shadow-1">
+                          <div style={{display:props?.isReload?'block':'none',top:'-2em'}} onClick={()=>props?.reload()} className="custom-table-refresh">
+                          <span>
+                          <i className="pi pi-refresh p-px-1"/>
+                          <span className="p-px-1">Reset</span>
+                          </span>
+                          </div>
                           {mobileTable()}
                           <div className="p-text-center">
                               <CustomPagination totalPages={props.totalPages} totalItems={props.totalItems} currentPage={props.currentPage} range={props.range} />
@@ -51,7 +58,7 @@ export function CustomTable(props) {
                 <div className="empty-container">
                     <Icon icon="error-message-icon"/>
                     <div>
-                        <p className="empty-text">{props.error}</p>
+                        <p dangerouslySetInnerHTML={ {__html: props.error} }  className="empty-text"/>
                     </div>
                     <div className="p-mt-3">
                         <button onClick={()=>props.reload()} className="primary-button">Reload</button>
@@ -98,7 +105,7 @@ export function CustomTable(props) {
     const mobileTable = () =>{
        return( props.items.map((item, index) => {
                return  <div key={index.toString()}>{mobileTableContent(item)}<div>
-                                   <Divider/></div></div>
+               <Divider/></div></div>
         })
        )
     }
@@ -125,7 +132,7 @@ export function CustomTable(props) {
                 }
             })
         }
-        return result;
+        return result?result:'___';
     }
 
     const checkIfAction = (item,e,label?) =>{
@@ -133,17 +140,29 @@ export function CustomTable(props) {
             case 'CRUD' :
                 return (
                     <span className="dcir-tb-action-position">
+                  <span className={HELPER.HAS_AUTHORITY(props?.authorities['DELETE']?.value)?'dcir-show':'dcir-hide'}>
                  <span onClick={() => item?.detailsFunction(item, 'DELETE', true)}
-                       className="add-cursor table-action-icon-delete"><i className="pi pi-trash"/></span>
+                       className="add-cursor table-action-icon-delete"><i className="pi pi-trash"/></span></span>
+                 <span className={HELPER.HAS_AUTHORITY(props?.authorities['UPDATE']?.value)?'dcir-show':'dcir-hide'}>
                  <span onClick={() => item?.detailsFunction(item, 'UPDATE', true)}
-                       className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-pencil"/></span>
+                       className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-pencil"/></span></span>
+                 </span>
+                )
+            case 'CRD' :
+                return (
+                    <span className="dcir-tb-action-position">
+                     <span className={HELPER.HAS_AUTHORITY(props?.authorities['DELETE']?.value)?'dcir-show':'dcir-hide'}>
+                 <span onClick={() => item?.detailsFunction(item, 'DELETE', true)}
+                       className="add-cursor table-action-icon-delete"><i className="pi pi-trash"/></span></span>
                  </span>
                 )
             case  'CRU':
                     return (
-                        <span className="dcir-tb-action-position">
+                 <span className="dcir-tb-action-position">
+                      <span className={HELPER.HAS_AUTHORITY(props?.authorities['UPDATE']?.value)?'dcir-show':'dcir-hide'}>
                  <span onClick={() => item?.detailsFunction(item, 'UPDATE', true)}
                        className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-pencil"/></span>
+                      </span>
                  </span>
                     )
             case 'CR':
@@ -153,7 +172,7 @@ export function CustomTable(props) {
 
             default:
                     return (
-                        <span className="mobile-table-value">{transformView(label, e)}</span>
+                     <span className="mobile-table-value">{transformView(label, e)}</span>
                     )
 
         }
@@ -175,7 +194,7 @@ export function CustomTable(props) {
         return (
             props.headers.map((header, index) => {
                     return (
-                        <div key={index.toString()} className="p-grid">
+                        <div key={`${header.label}`} className="p-grid">
                             <div className="p-col-12">
                                   <span className="p-grid">
                                   <span className="p-col-4">

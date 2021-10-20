@@ -1,16 +1,21 @@
+//
+//
+// const cosmos = 'https://cosmos.development.teamapt.com';
+const cosmos = 'http://localhost:8085';
 
+// const dcir = 'http://localhost:8000';
 
-const cosmos = 'https://cosmos.development.teamapt.com';
+const dcir = 'http://localhost:6011';
 
-const dcir = 'http://localhost:8000';
-
-const authUserName = 'monnify-agency-banking-frontoffice';
+// const authUserName = 'monnify-agency-banking-frontoffice';//
+const authUserName = 'dcir-management-service'
 
 const authPassword = 'secret';
 
 const grant_type = 'password';
 
-const authenticationDomain = 'monnify';
+// const authenticationDomain = 'DCIR-BACKOFFICE';
+const authenticationDomain = 'DCIR-MANAGEMENT-SERVICE';
 
 const app_data = "mock";
 

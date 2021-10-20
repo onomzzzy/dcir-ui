@@ -1,0 +1,12 @@
+
+Mjavascript:S1128"1Remove this unused import of 'CUSTOM_VALIDATION'.(»Õù
+bjavascript:S1481"ARemove the declaration of the unused 'modalLoadingText' variable.(çÏÏ­øÿÿÿÿ
+_javascript:S1854">Remove this useless assignment to variable "modalLoadingText".(çÏÏ­øÿÿÿÿ
+Ujavascript:S1481!"9Remove the declaration of the unused 'setRange' variable.(¥¨‘î
+Rjavascript:S1854!"6Remove this useless assignment to variable "setRange".(¥¨‘î
+?javascript:S125O"Remove this commented out code.(ƒ‹„çúÿÿÿÿ
+Ajavascript:S1186j" Unexpected empty arrow function.(œİÈ…ûÿÿÿÿ
+Ejavascript:S1186©"#Unexpected empty function 'onHide'.(Ğÿà˜şÿÿÿÿ
+;javascript:S125"Remove this commented out code.(êá–œ
+;javascript:S125“"Remove this commented out code.(êá–œ
+Ejavascript:S1186©"#Unexpected empty function 'onHide'.(Ğÿà˜şÿÿÿÿ

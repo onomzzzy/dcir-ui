@@ -15,6 +15,23 @@
     margin-top:-.8em;
 }
 
+.custom-table-refresh{
+  position:absolute;
+  cursor:pointer;
+  right:.1em;
+}
+.custom-table-refresh i{
+    font-weight:600;
+    color: var(--primary-custom-color)
+}
+.custom-table-refresh span{
+  color: var(--primary-custom-color)
+}
+
+/*.custom-table-refresh-icon i{*/
+/*    font-size:1.5rem;*/
+/*}*/
+
 
 
 table {
@@ -85,6 +102,7 @@ table td{
 }
 
 .mobile-table{
+    position:relative;
     margin-top: 60px;
 }
 

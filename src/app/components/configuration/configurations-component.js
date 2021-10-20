@@ -1,4 +1,4 @@
-import {BreadCrumb}                       from "primereact/breadcrumb";
+
 import {Divider}                          from "primereact/divider";
 import {Icon}                             from "../../shared/icons/icon";
 import './charge-type.css';

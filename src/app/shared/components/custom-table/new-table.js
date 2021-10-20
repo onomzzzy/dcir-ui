@@ -1,8 +1,10 @@
 import './new-table.css'
+import './custom-table.css'
 import {useEffect}         from "react";
 import {CustomPagination}  from "../custom-pagination/custom-pagination";
 import {Icon}              from "../../icons/icon";
 import {SpecialLabelCases} from "../../models/utilities";
+import {HELPER}            from "../../helper/helper";
 
 
 
@@ -28,15 +30,26 @@ export function NewTable(props) {
             case 'CRUD':
              return (
                  <span className="dcir-tb-action-position">
-                 <span onClick={()=>item?.detailsFunction(item,'DELETE',props.isMobile)} className="add-cursor table-action-icon-delete"><i className="pi pi-trash"/></span>
-                 <span onClick={()=>item?.detailsFunction(item,'UPDATE',props.isMobile)} className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-pencil"/></span>
+                  <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'DELETE')?'dcir-show table-action-icon-delete':'dcir-hide'}>
+                      <span onClick={()=>item?.detailsFunction(item,'DELETE',props.isMobile)} className="add-cursor"><i className="pi pi-trash"/></span></span>
+                      <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'UPDATE')?'dcir-show table-action-icon':'dcir-hide'}>
+                          <span onClick={()=>item?.detailsFunction(item,'UPDATE',props.isMobile)} className="p-ml-4 add-cursor"><i className="pi pi-pencil"/></span></span>
                  <span onClick={()=>item?.detailsFunction(item,'VIEW',props.isMobile)} className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-eye"/></span>
                  </span>
              )
+            case 'CRD':
+                return (
+                    <span className="dcir-tb-action-position">
+                         <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'DELETE')?'dcir-show table-action-icon-delete':'dcir-hide'}>
+                             <span onClick={()=>item?.detailsFunction(item,'DELETE',props.isMobile)} className="add-cursor"><i className="pi pi-trash"/></span></span>
+                 <span onClick={()=>item?.detailsFunction(item,'VIEW',props.isMobile)} className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-eye"/></span>
+                 </span>
+                )
             case 'CRU':
                 return (
                     <span className="dcir-tb-action-position">
-                 <span onClick={()=>item?.detailsFunction(item,'UPDATE',props.isMobile)} className="add-cursor table-action-icon"><i className="pi pi-pencil"/></span>
+                         <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'UPDATE')?'dcir-show':'dcir-hide'}>
+                             <span onClick={()=>item?.detailsFunction(item,'UPDATE',props.isMobile)} className="add-cursor table-action-icon"><i className="pi pi-pencil"/></span></span>
                  <span onClick={()=>item?.detailsFunction(item,'VIEW',props.isMobile)} className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-eye"/></span>
                  </span>
                 )
@@ -55,11 +68,13 @@ export function NewTable(props) {
         return (
             props.headers.map((item, index) => {
                 return (
+                    <div key={index.toString()}>
                     <>
-                        <div key={index.toString()} className="dcir-column">
+                        <div className="dcir-column">
                             <p>{item.label}</p>
                         </div>
                     </>
+                    </div>
 
                 )
             })
@@ -75,13 +90,13 @@ export function NewTable(props) {
                 }
             })
         }
-        return result;
+        return result?result:'___';
     }
 
     const tableContent = (item, label) => {
         if(label === 'actions'){
             return(
-                <div className="dcir-column">
+                <div key={(`${item.id} ${label}`)} className="dcir-column">
                     {tableAction(item[label],item)}
                 </div>
             )
@@ -103,7 +118,9 @@ export function NewTable(props) {
                             <>
                                 {props.headers.map((headerContent, index) => {
                                     return (
-                                        tableContent(item, headerContent.value)
+                                        <div key={index.toString()}>
+                                            {tableContent(item, headerContent.value)}
+                                        </div>
                                     )
                                 })}
                             </>
@@ -111,7 +128,7 @@ export function NewTable(props) {
                     )
                 }
             )
-        )
+        );
     }
 
 
@@ -125,9 +142,15 @@ export function NewTable(props) {
     }
 
     return(
-        <div>
-    <div className="table-container">
-       <div className="table-card">
+        <div style={{position:'relative'}}>
+        <div style={{display:props?.isReload?'block':'none'}} onClick={()=>props?.reload()} className="custom-table-refresh">
+            <span>
+                <i className="pi pi-refresh p-px-1"/>
+                <span className="p-px-1">Reset</span>
+            </span>
+            </div>
+       <div className="table-container">
+       <div style={{marginTop:props.isReload?'1.4em':'0'}} className="table-card">
            <div className="dcir-row table-header">
                {headers()}
            </div>

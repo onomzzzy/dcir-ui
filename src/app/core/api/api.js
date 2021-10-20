@@ -1,16 +1,19 @@
 const login = '/oauth/token';
 const create_merchant = '/api/v1/backoffice/merchant';
+const create_merchant_user ='/api/v1/backoffice/merchant-user';
 const create_charge_type_model = '/api/v1/backoffice/charge-model';
 const get_charge_model = '/api/v1/backoffice/charge-model';
-const delete_charge_model = '/api/v1/backoffice/charge-model/remove/';
-const get_charge_type = '/api/v1/backoffices/charge-model/type';//remember to remove the s from backoffice
+const delete_charge_model = '/api/v1/backoffice/charge-model/remove';
+const get_charge_type = '/api/v1/backoffice/charge-model/types';//remember to remove the s from backoffice
 const get_settlement_type = '/api/v1/backoffice/merchant/settlement/types';
 const create_settlement = '/api/v1/backoffice/settlement-participant';
+const delete_settlement = '/api/v1/backoffice/settlement-participant/remove';
 const create_dispute = '/api/v1/backoffice/dispute';
 const get_transactions = '/api/v1/backoffice/transaction';
-const get_dispute_codes = '/api/v1/backoffice/disputable-codes';//api/v1/backoffice/dispute/disputable-codes
+const search_transactions = '/api/v1/backoffice/transaction/filter';
+const get_dispute_codes = '/api/v1/backoffice/dispute/disputable-codes';
 const filter_transactions = '/api/v1/backoffice/transaction/filter';
-const get_settlement_participant_global = '/api/v1/backoffice/settlement-participant/all/global';
+const get_settlement_participant_global = '/api/v1/backoffice/settlement-participant';
 const get_settlement_participant_non_global = '/api/v1/backoffice/settlement-participant/all/non-global';
 
 
@@ -28,5 +31,8 @@ export const API = {
     GET_TRANSACTIONS: `${get_transactions}`,
     FILTER_TRANSACTIONS: `${filter_transactions}`,
     GET_DISPUTE_CODES: `${get_dispute_codes}`,
-    CREATE_DISPUTE: `${create_dispute}`
+    CREATE_DISPUTE: `${create_dispute}`,
+    GET_MERCHANT_USER: `${create_merchant_user}`,
+    SEARCH_TRANSACTION: `${search_transactions}`,
+    DELETE_PARTICIPANT: `${delete_settlement}`
 }

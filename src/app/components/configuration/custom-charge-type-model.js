@@ -1,8 +1,6 @@
 
-
-
 import {useEffect, useState} from "react";
-import {CustomLoader}        from "../../shared/components/custom-loader/custom-loader";
+import {CustomLoader}                from "../../shared/components/custom-loader/custom-loader";
 import {FormInput}           from "../../shared/components/form-component/form-input";
 import {SERVICES}            from "../../core/services/services";
 import {CustomToast}         from "../../shared/components/alert/custom-toast";
@@ -15,6 +13,7 @@ export function CustomChargeTypeModel(props){
     const [currentIndex,setCurrentIndex] = useState(0);
     const [messageTitle,setMessageTitle] = useState(null);
     const [message,setMessage] = useState(null);
+    const [chargeTypeCode,setChargeTypeCode] = useState('FLAT');
     const [validForm,setValidForm] = useState(false);
     const [successMessage,setSuccessMessage] = useState('')
     const [chargeTypeModel,setChargeTypeModel] = useState(
@@ -23,19 +22,20 @@ export function CustomChargeTypeModel(props){
             chargeName: null,
             chargeType: null,
             chargeTypeDesc: null,
-            flat: null,
             maxCap: null,
+            flat:null,
             minCap: null,
             percent: null
         }
     )
+
     const [chargeTypeErrorModel,setChargeTypeErrorModel] = useState(
         {
             chargeCode: null,
             chargeName: null,
             chargeType: null,
             chargeTypeDesc: null,
-            flat: null,
+            flat:null,
             maxCap: null,
             minCap: null,
             percent: null
@@ -82,6 +82,14 @@ export function CustomChargeTypeModel(props){
                         }
                     })
                 }
+                else{
+                    data?.result?.forEach(e => {
+                        if ( e.code === 'FLAT') {//initialize
+                            setChargeTypeModel({...chargeTypeModel,chargeType:e});
+                            setChargeTypeCode('FLAT');
+                        }
+                    })
+                }
             })
             .catch(error=>{
 
@@ -99,11 +107,55 @@ export function CustomChargeTypeModel(props){
         },[chargeTypeModel,chargeTypeErrorModel]
     );
 
+    useEffect(() => {
+            let mounted = true
+            if(mounted) {
+                resetChargeTypeForm();
+            }
+            return () => {
+                mounted = false;
+            }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        },[chargeTypeModel['chargeType']]
+    );
+
+    function resetChargeTypeForm (){
+        setChargeTypeModel({...chargeTypeModel,minCap:null,maxCap:null,flat:null,percent:null});
+        setChargeTypeErrorModel({...chargeTypeErrorModel,minCap:null,maxCap:null,flat:null,percent:null});
+        document.getElementById('minCap').value = '';
+        document.getElementById('maxCap').value = '';
+        document.getElementById('flat').value = '';
+        document.getElementById('percent').value = '';
+    }
 
     function checkValidForm(){
-        const validForm = CUSTOM_VALIDATION.VALID_OBJ(chargeTypeModel,props.isUpdate?9:8);
+        const validChargeType = validateChargeTypeField(chargeTypeCode);
+        const validRequiredInputs = validateChargeTypeField('');
         const validErrorForm = !CUSTOM_VALIDATION.VALID_OBJ_ANY(chargeTypeErrorModel);
-        setValidForm(validForm && validErrorForm);
+        setValidForm(validChargeType && validRequiredInputs && validErrorForm);
+    }
+
+    function validateChargeTypeField(chargeType){
+        switch (chargeType){
+            case 'FLAT':
+            return CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['flat'], 'CASH_INPUT');
+            case 'PERCENT_MAX_CAP':
+            return CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['maxCap'] , 'CASH_INPUT')
+                    && CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['percent'] , 'PERCENT');
+            case 'PERCENT_MIN_CAP':
+                return CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['minCap'] , 'CASH_INPUT')
+                    && CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['percent'] , 'PERCENT');
+            case 'PERCENT_MAX_MIN_CAP':
+                return CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['maxCap'] , 'CASH_INPUT')
+                    && CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['minCap'] , 'CASH_INPUT')
+                    && CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['percent'] , 'PERCENT');
+            case 'PERCENT_ALL':
+              return  CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['percent'] , 'PERCENT');
+             default :
+            return CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['chargeCode'] , 'INPUT')
+            && CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['chargeName'] , 'NAME')
+            && CUSTOM_VALIDATION.BASIC_VALIDATION(chargeTypeModel['chargeTypeDesc'] , 'DESCRIPTION')
+        }
     }
 
     function validateForm(e,name,type,refineName,required){
@@ -130,7 +182,6 @@ export function CustomChargeTypeModel(props){
 
     function filterSearch(){
             let payload ={}
-
             if(chargeTypeModel['chargeCode']){
               payload.chargeCode = chargeTypeModel['chargeCode'];
             }
@@ -180,10 +231,10 @@ export function CustomChargeTypeModel(props){
             chargeName: chargeTypeModel['chargeName'],
             chargeType: chargeTypeModel['chargeType']?.code,
             chargeTypeDesc: chargeTypeModel['chargeTypeDesc'],
-            flat: chargeTypeModel['flat'],
-            maxCap: chargeTypeModel['maxCap'],
-            minCap: chargeTypeModel['minCap'],
-            percent: chargeTypeModel['percent']
+            flat:chargeTypeModel['flat']?parseInt(chargeTypeModel['flat']):0,
+            maxCap: chargeTypeModel['maxCap']?parseInt(chargeTypeModel['maxCap']):0,
+            minCap: chargeTypeModel['minCap']?parseInt(chargeTypeModel['minCap']):0,
+            percent: chargeTypeModel['percent']?parseFloat(chargeTypeModel['percent']):0
         }
         SERVICES.CREATE_CHARGE_TYPE_MODEL(payload)
             .then(data=>{
@@ -218,8 +269,10 @@ export function CustomChargeTypeModel(props){
     function validateDropdown(e,name){
         const value = e.target.value
         if(value){
+            //reset field in chargeType changes;
             setChargeTypeErrorModel({...chargeTypeErrorModel,[name]:''});
             setChargeTypeModel({...chargeTypeModel,[name]:value});
+            setChargeTypeCode(value?.code);
         }
         else{
             let errorMessage = 'Select charge type';
@@ -287,20 +340,23 @@ export function CustomChargeTypeModel(props){
         return(
             <>
             <div className="p-col-12">
-                <FormInput value={chargeTypeModel['chargeTypeDesc']} required={true} field="chargeTypeDesc" type="NAME" error={chargeTypeErrorModel['chargeTypeDesc']} fn={validateForm} loading={loading}  placeholder="Charge type desc"/>
+                <FormInput value={chargeTypeModel['chargeTypeDesc']} required={true} field="chargeTypeDesc" type="DESCRIPTION" error={chargeTypeErrorModel['chargeTypeDesc']} fn={validateForm} loading={loading}  placeholder="Charge type desc"/>
             </div>
-           <div className="p-col-6">
+           <div style={{display:(chargeTypeCode === 'PERCENT_MAX_CAP' || chargeTypeCode === 'PERCENT_MAX_MIN_CAP')?'block':'none'}} className="p-col-6">
                <FormInput value={chargeTypeModel['maxCap']} required={true} field="maxCap" type="CASH_INPUT" error={chargeTypeErrorModel['maxCap']} fn={validateForm} loading={loading}  placeholder="Maximum cap"/>
            </div>
-           <div className="p-col-6">
+           <div style={{display:(chargeTypeCode === 'PERCENT_MIN_CAP' || chargeTypeCode === 'PERCENT_MAX_MIN_CAP')?'block':'none'}} className="p-col-6">
                <FormInput value={chargeTypeModel['minCap']} required={true} field="minCap" type="CASH_INPUT" error={chargeTypeErrorModel['minCap']} fn={validateForm} loading={loading}  placeholder="Minimum cap"/>
            </div>
-           <div className="p-col-6">
+           <div style={{display:chargeTypeCode === 'FLAT'?'block':'none'}} className="p-col-12">
                <FormInput value={chargeTypeModel['flat']} required={true} field="flat" type="CASH_INPUT" error={chargeTypeErrorModel['flat']} fn={validateForm} loading={loading}  placeholder="Flat"/>
            </div>
-           <div className="p-col-6">
-               <FormInput value={chargeTypeModel['percent']} required={true} field="percent" type="PERCENT" error={chargeTypeErrorModel['percent']} fn={validateForm} loading={loading}  placeholder="Percentage"/>
-           </div>
+            <div style={{display:(chargeTypeCode === 'PERCENT_ALL' || chargeTypeCode === 'PERCENT_MIN_CAP'||chargeTypeCode === 'PERCENT_MAX_CAP'||chargeTypeCode === 'PERCENT_MAX_MIN_CAP')?'block':'none'}}
+             className={(chargeTypeCode === 'PERCENT_ALL' || chargeTypeCode === 'PERCENT_MAX_MIN_CAP') ? 'p-col-12' : 'p-col-6'}>
+             <FormInput value={chargeTypeModel['percent']} required={true} field="percent" type="PERCENT"
+              error={chargeTypeErrorModel['percent']} fn={validateForm} loading={loading}
+              placeholder="Percentage"/>
+                </div>
             </>
         )
        }
@@ -326,7 +382,7 @@ export function CustomChargeTypeModel(props){
                                       options={chargeTypes} placeholder="Select a charge type"/>
                     </div>
                     <div className={props.isSearch?'p-col-12':'p-col-6'}>
-                        <FormInput value={chargeTypeModel['chargeCode']} required={true} field="chargeCode" type="" error={chargeTypeErrorModel['chargeCode']} fn={validateForm} loading={loading}  placeholder="Charge code"/>
+                        <FormInput value={chargeTypeModel['chargeCode']} required={true} field="chargeCode" type="INPUT" error={chargeTypeErrorModel['chargeCode']} fn={validateForm} loading={loading}  placeholder="Charge code"/>
                     </div>
                     <div className={props.isSearch?'p-col-12':'p-col-6'}>
                         <FormInput value={chargeTypeModel['chargeName']} required={true} field="chargeName" type="NAME" error={chargeTypeErrorModel['chargeName']} fn={validateForm} loading={loading}  placeholder="Charge type name"/>

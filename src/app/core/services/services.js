@@ -74,11 +74,11 @@ function searchParticipant(params){
     });
 }
 
-function searchTransactions(params){
-    const url = `${CONFIG.DCIR_HOST}${API.GET_TRANSACTIONS}?${params}`;
+function searchTransactions(params,pageParam){
+    const url = `${CONFIG.DCIR_HOST}${API.SEARCH_TRANSACTION}?${pageParam}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
-        axios.get(url,{headers:header})
+        axios.put(url,params,{headers:header}) //change to put
             .then(function (data) {
                 resolve(data.data);
             })
@@ -91,10 +91,10 @@ function searchTransactions(params){
 }
 
 function deleteChargeModel(e){
-    const url = `${CONFIG.DCIR_HOST}${API.GET_CHARGE_MODEL}/${e}`;//change to delete api
+    const url = `${CONFIG.DCIR_HOST}${API.DELETE_CHARGE_MODEL}/${e}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
-        axios.delete(url,{headers:header})//remember to change to put
+        axios.put(url,{headers:header})//remember to change to put
             .then(function (data) {
                 resolve(data.data);
             })
@@ -107,10 +107,10 @@ function deleteChargeModel(e){
 }
 
 function deleteParticipant(e){
-    const url = `${CONFIG.DCIR_HOST}${API.CREATE_PARTICIPANT}/${e}`;//change to delete api
+    const url = `${CONFIG.DCIR_HOST}${API.DELETE_PARTICIPANT}/${e}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
-        axios.delete(url,{headers:header})//remember to change to put
+        axios.put(url,{headers:header})
             .then(function (data) {
                 resolve(data.data);
             })
@@ -154,8 +154,8 @@ function getSettlementType(){
     });
 }
 
-function getSettlementParticipantGlobal(){
-    const url = `${CONFIG.DCIR_HOST}${API.GET_SETTLEMENT_PARTICIPANT_GLOBAL}`;
+function getSettlementParticipantGlobal(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_SETTLEMENT_PARTICIPANT_GLOBAL}?${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -202,8 +202,24 @@ function getChargeModels(){
     });
 }
 
-function getParticipants(){
-    const url = `${CONFIG.DCIR_HOST}${API.CREATE_PARTICIPANT}`;
+  function viewChargeModel(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_CHARGE_MODEL}/${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+  }
+
+function viewParticipant(params){
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_PARTICIPANT}/${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -218,8 +234,8 @@ function getParticipants(){
     });
 }
 
-function getTransactions(){
-    const url = `${CONFIG.DCIR_HOST}${API.GET_TRANSACTIONS}`;
+function geMerchantUsers(){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -234,8 +250,40 @@ function getTransactions(){
     });
 }
 
-function getDisputes(){
-    const url = `${CONFIG.DCIR_HOST}${API.CREATE_DISPUTE}`;
+function getParticipants(params){
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_PARTICIPANT}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function getTransactions(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_TRANSACTIONS}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function getDisputes(params){
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_DISPUTE}?${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -266,8 +314,8 @@ function getDisputeCodes(){
     });
 }
 
-function getMerchants(){
-    const url = `${CONFIG.DCIR_HOST}${API.CREATE_MERCHANT}`;
+function getMerchants(params){
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_MERCHANT}?${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -282,8 +330,40 @@ function getMerchants(){
     });
 }
 
+function getMerchantUsers(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function viewMerchantUser(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.put(url,params,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function getMerchant(e){
-    const url = `${CONFIG.DCIR_HOST}${API.CREATE_MERCHANT}?id=${e}`;
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_MERCHANT}/${e}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -316,7 +396,7 @@ function getMerchant(e){
 
 
 function updateMerchant(params){
-    const url = `${CONFIG.DCIR_HOST}${API.CREATE_MERCHANT}/${params.id}`;
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_MERCHANT}/${params.merchantId}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.put(url,params,{headers:header})
@@ -362,6 +442,24 @@ function createDispute(params){
             });
     });
 }
+
+function createMerchantUsers(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.post(url,params,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+
 
 function createChargeTypeModel(params){
     const url = `${CONFIG.DCIR_HOST}${API.CREATE_CHARGE_TYPE_MODEL}`;
@@ -413,10 +511,11 @@ function updateParticipant(params){//re work if needed
 
 const getBasicHeader = () =>{
     const token = LOCAL_STORAGE_SERVICE.GET_TOKEN();
-    const tokenBearer = `Bearer ${token}`
+    // const tokenBearer = `Bearer ${token}`
     return {
         'Content-Type': 'application/json',
-        'Authorization': tokenBearer
+         // Authorization: tokenBearer,
+        'Access-Control-Allow-Origin': '*',
     }
 }
 
@@ -433,6 +532,7 @@ export const SERVICES = {
   DELETE_CHARGE_MODEL: deleteChargeModel,
   SEARCH_CHARGE_MODEL: searchChargeType,
   GET_CHARGE_MODELS: getChargeModels,
+  VIEW_CHARGE_MODEL: viewChargeModel,
   GET_PARTICIPANTS: getParticipants,
   DELETE_PARTICIPANT: deleteParticipant,
   UPDATE_PARTICIPANT: updateParticipant,
@@ -445,5 +545,9 @@ export const SERVICES = {
   SEARCH_TRANSACTIONS: searchTransactions,
   GET_DISPUTE_CODES:getDisputeCodes,
   CREATE_DISPUTE: createDispute,
-  GET_DISPUTE: getDisputes
+  GET_DISPUTE: getDisputes,
+  GET_MERCHANT_USER: getMerchantUsers,
+  CREATE_MERCHANT_USER: createMerchantUsers,
+  VIEW_PARTICIPANT: viewParticipant,
+  VIEW_MERCHANT_USER: viewMerchantUser
 }

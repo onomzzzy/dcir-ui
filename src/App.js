@@ -27,9 +27,9 @@ function App() {
    let isAuthenticated = state.isAuthenticated;
   if(!isAuthenticated){
     isAuthenticated = LOCAL_STORAGE_SERVICE.IS_LOGIN();
-    console.log('isAuthenticated from local ',isAuthenticated);
     if(isAuthenticated){
       const credentials = LOCAL_STORAGE_SERVICE.GET_USER_CREDENTIALS();
+      console.log('credentials',credentials)
       dispatch({type:'PERSIST_LOGIN_DATA',loginData:credentials});
     }
   }

@@ -1,145 +1,20 @@
-// import React, {useContext, useEffect, useState} from "react";
-// import {BreadCrumb}                             from "primereact/breadcrumb";
-// import {Icon}                                   from "../../shared/icons/icon";
-// import {Divider}                                from "primereact/divider";
-// import {Dialog}                                 from "primereact/dialog";
-// import {CreateMerchantComponent}                from "./create-merchant-component";
-// import {MerchantSearch}                         from "./merchant-search";
-// import {CustomBreadcrumb}                       from "../../shared/components/custom-breadcrumb/custom-breadcrumb";
-// import {CustomTable}                            from "../../shared/components/custom-table/custom-table";
-// import {MainContext}                            from "../../../App";
-// import {CustomModal}                            from "../../shared/components/custom-modal/custom-modal";
-//
-//  export function MerchantTable (){
-//      const mainContext = useContext(MainContext);
-//     const [loading,setLoading] = useState(false)
-//      const [visible,setVisible] = useState(false)
-//      const [currentModalIndex,setCurrentModalIndex] = useState(0)
-//      const tableHeaders = [
-//          {label:'Merchant Name',value:'merchantName'},
-//          {label:'Email',value:'merchantName'},
-//          {label:'phone Number',value:'phoneNumber'},
-//          {label:'Support Email',value:'supportEmail'},
-//          {label:'Settlement Email',value:'settlementEmail'},
-//          {label:'Dispute Email',value:'disputeEmail'},
-//      ]
-//
-//      useEffect(() => {
-//              let mounted = true
-//              if(mounted) {
-//                setVisible(mainContext?.mainState?.showDialog)
-//              }
-//              return () => {
-//                  mounted = false;
-//              }
-//          },[mainContext?.mainState?.showDialog]
-//      );
-//
-//     const [merchants,setMerchants] = useState([
-//         {
-//         merchantName:"Teams",
-//         mainEmail:"info@teamapt.com",
-//         phoneNumber:"08030000000",
-//         cardAcceptorId:"CD12345",
-//         supportEmail:"support@teamapt.com",
-//         settlementEmail:"settle@teamapt.com",
-//         disputeEmail:"dispute@teamapt.com"
-//     },
-//         {
-//             merchantName:"Teamapt",
-//             mainEmail:"info@teamapt.com",
-//             phoneNumber:"08030000000",
-//             cardAcceptorId:"CD12345",
-//             supportEmail:"support@teamapt.com",
-//             settlementEmail:"settle@teamapt.com",
-//             disputeEmail:"dispute@teamapt.com"
-//         },
-//         {
-//             merchantName:"Moniepoint",
-//             mainEmail:"info@teamapt.com",
-//             phoneNumber:"08030000000",
-//             cardAcceptorId:"CD12345",
-//             supportEmail:"support@teamapt.com",
-//             settlementEmail:"settle@teamapt.com",
-//             disputeEmail:"dispute@teamapt.com"
-//         },
-//     ])
-//
-//
-//
-//     function onHide(){
-//
-//     }
-//
-//     function submit(){
-//         setLoading(true);
-//     }
-//     function openModal(index){
-//         setCurrentModalIndex(index);
-//         mainContext.mainDispatch( {type:'SHOW_DIALOG',showDialog:true});
-//     }
-//
-//     const home = { icon: 'pi pi-home', url: '/dashboard' }
-//
-//    const modalContent = () =>{
-//         if(currentModalIndex){
-//             return(<MerchantSearch/>)
-//         }
-//         else{
-//             return (
-//                 <CreateMerchantComponent/>
-//             )
-//         }
-//    }
-//
-//     return(
-//         <div>
-//             <div className="page-title p-text-left ">Merchant</div>
-//             <div className="p-mt-2">
-//                 <CustomBreadcrumb  page={'Manage merchants'}/>
-//             </div>
-//             <div>
-//                 <CustomModal modalContent={modalContent} visible={visible} onHide={onHide} />
-//             </div>
-//             <div className="floating-buttons">
-//                 <div className="p-grid">
-//                    <div className="p-col-7">
-//
-//                    </div>
-//                     <div className="p-col-5">
-//                      <div className="p-grid">
-//                          <div className="p-col-6">
-//                              <button onClick={()=>openModal(0)} className="primary-button"><i className="pi pi-user-plus"/> New Merchant</button>
-//                          </div>
-//                          <div className="p-col-6">
-//                              <button onClick={()=>openModal(1)} className="primary-button"><i className="pi pi-filter"/> Filter</button>
-//                          </div>
-//                      </div>
-//                     </div>
-//                 </div>
-//             </div>
-//             <div>
-//                 <CustomTable items={merchants} headers={tableHeaders}/>
-//             </div>
-//         </div>
-//     )
-// }
 
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {CustomBreadcrumb}      from "../../shared/components/custom-breadcrumb/custom-breadcrumb";
 import {CustomTable}           from "../../shared/components/custom-table/custom-table";
-import {SERVICES}                         from "../../core/services/services";
+import {SERVICES}                from "../../core/services/services";
 import './merchant.css'
-import {CustomLoader}                     from "../../shared/components/custom-loader/custom-loader";
-import {CustomModal}                      from "../../shared/components/custom-modal/custom-modal";
-import {DetailsBreakDown}                 from "../../shared/components/details-break-down/details-break-down";
-import {CustomConfirmDialog}              from "../../shared/components/custom-confirm-dialog/custom-confirm-dialog";
-import {Toast}                            from "primereact/toast";
-import {MainContext}                      from "../../../App";
-import {CUSTOM_VALIDATION}                from "../../shared/validation/validation";
-import {OverlayPanel}                     from "primereact/overlaypanel";
-import {CustomSettlementParticipantModel} from "../configuration/custom-settlement-participant-model";
-import {CreateMerchantComponent}          from "./create-merchant-component";
+import {CustomLoader}            from "../../shared/components/custom-loader/custom-loader";
+import {CustomModal}             from "../../shared/components/custom-modal/custom-modal";
+import {DetailsBreakDown}        from "../../shared/components/details-break-down/details-break-down";
+import {CustomConfirmDialog}     from "../../shared/components/custom-confirm-dialog/custom-confirm-dialog";
+import {Toast}                   from "primereact/toast";
+import {MainContext}             from "../../../App";
+import {CUSTOM_VALIDATION}       from "../../shared/validation/validation";
+import {OverlayPanel}            from "primereact/overlaypanel";
+import {CreateMerchantComponent} from "./create-merchant-component";
+import {HELPER}                  from "../../shared/helper/helper";
+import {AccessDenied}            from "../access-denied/access-denied";
 
 export function MerchantTable (){
     const toast = useRef(null);
@@ -165,14 +40,18 @@ export function MerchantTable (){
     const [currentModalIndex,setCurrentModalIndex] = useState(0)
 
     const tableHeaders = [
+         {label:'Merchant Id',value:'merchantId'},
          {label:'Merchant Name',value:'merchantName'},
          {label:'Email',value:'mainEmail'},
          {label:'phone Number',value:'phoneNumber'},
          {label:'Support Email',value:'supportEmail'},
-         {label:'Settlement Email',value:'settlementEmail'},
-         {label:'Dispute Email',value:'disputeEmail'},
         {label:'Actions',value:'actions'}
      ]
+
+    const merchantAuthorities = [
+        {label:'UPDATE',value:'dcir_update_merchants'},
+        {label:'DEACTIVATE',value:'dcir_deactivate_merchants'},
+    ]
 
     const [details,setDetails] = useState([]);
 
@@ -211,18 +90,11 @@ export function MerchantTable (){
         // eslint-disable-next-line default-case
         switch (action) {
             case 'VIEW': {
-                console.log(e ,'.... e')
-                getMerchantDetails(e?.id,isMobile);
+                getMerchantDetails(e?.merchantId,isMobile);
                 }
                 break;
-            // case 'DELETE':
-            //     setModalLoadingText('Deleting participant...');
-            //     setItemIdForDelete(e?.id);//remember to change to chargeCode
-            //     setConfirmText(`Are you sure you want to delete ${e?.name}?`);
-            //     openModal(3,isMobile)
-            //     break;
             case 'UPDATE':
-                getMerchantForEdit(e?.id,isMobile)
+                getMerchantForEdit(e?.merchantId,isMobile)
                 break;
         }
     }
@@ -230,8 +102,17 @@ export function MerchantTable (){
     function getMerchantForEdit(id,isMobile){
         SERVICES.GET_MERCHANT(id)
             .then(data=> {
-                const e = data[0];//change when connect to real api
-                setMerchantForEdit(e);
+                const e = data.result
+                const updateData ={
+                    disputeEmail: e?.disputeEmail,
+                    mainEmail: e?.mainEmail,
+                    merchantId: e?.merchantId,
+                    merchantName: e?.merchantName,
+                    phoneNumber: e?.phoneNumber,
+                    settlementEmail: e?.settlementEmail,
+                    supportEmail: e.supportEmail
+                }
+                setMerchantForEdit(updateData);
                 openModal(4,isMobile)
             })
             .catch(error =>{
@@ -244,22 +125,20 @@ export function MerchantTable (){
         setDetails([]);
         SERVICES.GET_MERCHANT(id)
             .then(data=>{
-                const e = data[0];//change when connect to real api
-                console.log('e ',e)
-                arr.push({label: 'Merchant Name', value: e?.basicInfo?.merchantName});
-                arr.push({label: 'email', value: e?.basicInfo?.mainEmail});
-                arr.push({label: 'Phone number', value: e?.basicInfo?.phoneNumber});
-                arr.push({label: 'Card acceptor id', value: e?.basicInfo?.cardAcceptorId});
-                arr.push({label: 'Other number', value: e?.basicInfo?.alternatePhoneNumber});
-                arr.push({label: 'Support email', value: e?.basicInfo?.supportEmail});
-                arr.push({label: 'Settlement email', value: e?.basicInfo?.settlementEmail});
-                arr.push({label: 'Dispute email', value: e?.basicInfo?.disputeEmail});
+                const e = data.result;
+                arr.push({label: 'Merchant Name', value: e?.merchantName});
+                arr.push({label: 'email', value: e?.mainEmail});
+                arr.push({label: 'Phone number', value: e?.phoneNumber});
+                arr.push({label: 'Card acceptor id', value: e?.cardAcceptorId});
+                arr.push({label: 'Other number', value: e?.alternatePhoneNumber});
+                arr.push({label: 'Support email', value: e?.supportEmail});
+                arr.push({label: 'Settlement email', value: e?.settlementEmail});
+                arr.push({label: 'Dispute email', value: e?.disputeEmail});
 
-                arr.push({label: 'Account name', value: e?.settlementInfo?.accountName});
-                arr.push({label: 'Account number', value: e?.settlementInfo?.accountNumber});
-                arr.push({label: 'Charge type', value: e?.settlementInfo?.chargeType?.code});
-                arr.push({label: 'Participants', value: e?.settlementInfo?.participants[0]?.code});
-                arr.push({label: 'Settlement type', value: e?.settlementInfo?.settlementType?.code});
+                arr.push({label: 'Account name', value: e?.accountName});
+                arr.push({label: 'Account number', value: e?.accountNumber});
+                arr.push({label: 'Charge type', value: e?.chargeType?.code});
+                arr.push({label: 'Settlement type', value: e?.settlementType?.code});
 
                 setDetails(arr);
                 setBreakDownTitle('Merchant')
@@ -273,17 +152,23 @@ export function MerchantTable (){
 
     function getMerchants(){
         setParticipants([]);
-        SERVICES.GET_MERCHANTS()
+       let params ={
+            page:0,
+            size:10
+        }
+        params = HELPER.TO_URL_STRING(params);
+        SERVICES.GET_MERCHANTS(params)
             .then(data=>{
-                if(!data.length){
+                const result = data?.result.content
+                if(!result.length){
                     setEmptyText('No merchant yet ...')
                 }
                 else{
                     let arr = [];
-                    setTotalItems(data.length);//need adjustment
-                    setTotalPages(1);//need adjustment
-                    data.forEach(e=>{
-                        arr.push({...e.basicInfo,id:e?.id,actions:'CRU',detailsFunction:openAction});
+                    setTotalItems(data?.result?.totalElements);
+                    setTotalPages(data?.result.totalPages);
+                    result.forEach(e=>{
+                        arr.push({...e,actions:'CRU',detailsFunction:openAction});
                     })
                     setParticipants(arr)
                 }
@@ -358,7 +243,7 @@ export function MerchantTable (){
                     </div>
                 )
             case 1:
-                return <CustomTable totalPages={totalPages} totalItems={totalItems} currentPage={currentPage} range={range}  emptyText={emptyText} search={search} reload={reload} error={error} items={participants} headers={tableHeaders}/>
+                return <CustomTable authorities={merchantAuthorities} totalPages={totalPages} totalItems={totalItems} currentPage={currentPage} range={range}  emptyText={emptyText} search={search} reload={reload} error={error} items={participants} headers={tableHeaders}/>
             case 2:
                 return(
                     <div className="mobile-modal-container">
@@ -377,7 +262,7 @@ export function MerchantTable (){
         setVisible(false);
         setLoading(true);
         setParticipants([]);
-        const params = CUSTOM_VALIDATION.TO_URL_STRING(e);
+        const params = HELPER.TO_URL_STRING(e);
         SERVICES.SEARCH_PARTICIPANT(params)
             .then(data=>{
                 if(!data.length){
@@ -446,16 +331,18 @@ export function MerchantTable (){
                     <div className="p-col-5">
                         <div className="p-grid">
                             <div className="p-col-6">
+                                {/*<button disabled={(loading||participants?.length === 0)} onClick={()=>openModal(1,false)} className="primary-button">*/}
+                                {/*    <i className="pi pi-filter"/>*/}
+                                {/*    <span className="hide-btn-text"> Filter</span>*/}
+                                {/*</button>*/}
+                            </div>
+                            <div className="p-col-6">
+                                <div className={HELPER.HAS_AUTHORITY('dcir_create_merchants')?'dcir-show':'dcir-hide'}>
                                 <button disabled={loading} onClick={()=>openModal(0,false)} className="primary-button hide-btn-text">
                                     <i className="pi pi-plus"/>
                                     <span className="hide-btn-text"> New merchant</span>
                                 </button>
-                            </div>
-                            <div className="p-col-6">
-                                <button disabled={(loading||participants?.length === 0)} onClick={()=>openModal(1,false)} className="primary-button">
-                                    <i className="pi pi-filter"/>
-                                    <span className="hide-btn-text"> Filter</span>
-                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -467,20 +354,25 @@ export function MerchantTable (){
 
                     </div>
                     <div className="p-col-3">
+                        <div className={HELPER.HAS_AUTHORITY('dcir_create_merchants')?'dcir-show':'dcir-hide'}>
                         <div className="floating-mobile-buttons add-cursor">
 
                             <i onClick={(e) => op.current.toggle(e)} className="pi pi-ellipsis-v" style={{'fontSize': '1.5em','color':'#464DF2'}}/>
                             <OverlayPanel ref={op} id="overlay_panel" style={{width: '100px'}} className="overlaypanel-demo">
 
                                 <div className="p-mb-3 p-ml-1"><span onClick={()=>openModal(0,true)} className="custom-over-flow-text"><i className="pi pi-plus"/> New</span></div>
-                                <div className="p-mb-2 p-ml-1"><span onClick={()=>openModal(1,true)} className="custom-over-flow-text"><i className="pi pi-filter"/> Filter</span></div>
+                                {/*<div className="p-mb-2 p-ml-1"><span onClick={()=>openModal(1,true)} className="custom-over-flow-text"><i className="pi pi-filter"/> Filter</span></div>*/}
                             </OverlayPanel>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
+            <div className={HELPER.HAS_AUTHORITY('dcir_view_merchants')?'dcir-show p-mt-2':'dcir-hide'}>
                 {chargeTypeView()}
+            </div>
+            <div className={HELPER.HAS_AUTHORITY('dcir_view_merchants')?'dcir-hide p-mt-2':'dcir-show'}>
+                <AccessDenied/>
             </div>
         </div>
     )

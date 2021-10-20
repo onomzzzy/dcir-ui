@@ -1,0 +1,19 @@
+
+Mjavascript:S1128"1Remove this unused import of 'CUSTOM_VALIDATION'.(»Õù
+\javascript:S1481"@Remove the declaration of the unused 'setModalLoading' variable.(èçÜ
+Yjavascript:S1854"=Remove this useless assignment to variable "setModalLoading".(èçÜ
+`javascript:S1481"?Remove the declaration of the unused 'setConfirmText' variable.(¼Ò’ÿÿÿÿÿ
+]javascript:S1854"<Remove this useless assignment to variable "setConfirmText".(¼Ò’ÿÿÿÿÿ
+^javascript:S1481"CRemove the declaration of the unused 'setItemIdForDelete' variable.(ÈĞ¼
+[javascript:S1854"@Remove this useless assignment to variable "setItemIdForDelete".(ÈĞ¼
+[javascript:S1481 "?Remove the declaration of the unused 'setCurrentPage' variable.(©‡Ö»
+Xjavascript:S1854 "<Remove this useless assignment to variable "setCurrentPage".(©‡Ö»
+Ujavascript:S1481!"9Remove the declaration of the unused 'setRange' variable.(¥¨‘î
+Rjavascript:S1854!"6Remove this useless assignment to variable "setRange".(¥¨‘î
+fjavascript:S1481#"ERemove the declaration of the unused 'setChargeTypeForEdit' variable.(åößüÿÿÿÿ
+cjavascript:S1854#"BRemove this useless assignment to variable "setChargeTypeForEdit".(åößüÿÿÿÿ
+Ijavascript:S1186F"-Unexpected empty function 'deleteChargeType'.(æµş­
+Ejavascript:S1186š"#Unexpected empty function 'onHide'.(Ğÿà˜şÿÿÿÿ
+;javascript:S125û"Remove this commented out code.(êá–œ
+;javascript:S125"Remove this commented out code.(êá–œ
+Ejavascript:S1186—"#Unexpected empty function 'onHide'.(Ğÿà˜şÿÿÿÿ

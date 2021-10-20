@@ -1,0 +1,19 @@
+
+Mjavascript:S1128"1Remove this unused import of 'CUSTOM_VALIDATION'.(»Õù
+Yjavascript:S1481"=Remove the declaration of the unused 'modalLoading' variable.(èçÜ
+Vjavascript:S1854":Remove this useless assignment to variable "modalLoading".(èçÜ
+\javascript:S1481"@Remove the declaration of the unused 'setModalLoading' variable.(èçÜ
+Yjavascript:S1854"=Remove this useless assignment to variable "setModalLoading".(èçÜ
+bjavascript:S1481"ARemove the declaration of the unused 'modalLoadingText' variable.(çÏÏ­øÿÿÿÿ
+_javascript:S1854">Remove this useless assignment to variable "modalLoadingText".(çÏÏ­øÿÿÿÿ
+ejavascript:S1481"DRemove the declaration of the unused 'setModalLoadingText' variable.(çÏÏ­øÿÿÿÿ
+bjavascript:S1854"ARemove this useless assignment to variable "setModalLoadingText".(çÏÏ­øÿÿÿÿ
+[javascript:S1481"?Remove the declaration of the unused 'setCurrentPage' variable.(©‡Ö»
+Xjavascript:S1854"<Remove this useless assignment to variable "setCurrentPage".(©‡Ö»
+Ujavascript:S1481"9Remove the declaration of the unused 'setRange' variable.(¥¨‘î
+Rjavascript:S1854"6Remove this useless assignment to variable "setRange".(¥¨‘î
+Ejavascript:S1186"#Unexpected empty function 'onHide'.(Ğÿà˜şÿÿÿÿ
+;javascript:S125à"Remove this commented out code.(êá–œ
+;javascript:S125æ"Remove this commented out code.(êá–œ
+Ejavascript:S1186î"(Unexpected empty function 'modalFooter'.(ÙŞ±Ë
+Ejavascript:S1186ı"#Unexpected empty function 'onHide'.(Ğÿà˜şÿÿÿÿ

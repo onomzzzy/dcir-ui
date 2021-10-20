@@ -6,6 +6,7 @@ import {CustomLoader}        from "../../shared/components/custom-loader/custom-
 import {SERVICES}            from "../../core/services/services";
 import {CustomMessage}       from "../../shared/components/alert/custom-message";
 import {CustomToast}         from "../../shared/components/alert/custom-toast";
+import {HELPER}              from "../../shared/helper/helper";
 
 export function NewDispute(props){
     const[loading,setLoading] = useState(false);
@@ -39,9 +40,8 @@ export function NewDispute(props){
     );
 
     function checkValidForm(){
-        const validForm = CUSTOM_VALIDATION.VALID_OBJ(dispute,4);
-        const validErrorForm = !CUSTOM_VALIDATION.VALID_OBJ_ANY(disputeError) && dispute['receiptDataBase64'] !== null;
-        console.log('validForm ',validForm, validErrorForm);
+        const validForm = CUSTOM_VALIDATION.VALID_OBJ(dispute,3);
+        const validErrorForm = !CUSTOM_VALIDATION.VALID_OBJ_ANY(disputeError);
         setValidForm(validForm && validErrorForm);
     }
 
@@ -86,11 +86,12 @@ export function NewDispute(props){
      const params = {
          customerAccountName: dispute['customerAccountName'],
          customerAccountNumber: dispute['customerAccountNumber'],
-         receiptDataBase64: dispute['receiptDataBase64'],
+         // receiptDataBase64: dispute['receiptDataBase64'],
          transactionSearchKey: dispute['transactionSearchKey']
      }
      SERVICES.CREATE_DISPUTE(params)
      .then(data=>{
+         console.log('Dispute created successfully',data)
          setMessageTitle(null)
          setSuccessMessage('Dispute created successfully')
          setCurrentIndex(1);
@@ -98,7 +99,7 @@ export function NewDispute(props){
      })
       .catch(error =>{
           setMessageTitle('Error');
-          setMessage('An error occur when creating dispute');
+          setMessage(HELPER.PROCESS_ERROR(error));
           setLoading(false);
       })
     }
@@ -125,7 +126,7 @@ export function NewDispute(props){
         }
         else{
             return(
-                <div className="pull-up-element-2">
+                <div className="p-mt-2 p-text-center">
                     <CustomLoader loadingText="Submitting..." />
                 </div>
             )
@@ -155,16 +156,16 @@ export function NewDispute(props){
                     <div className="p-col-12">
                         <FormInput value={dispute['customerAccountNumber']} required={true} field="customerAccountNumber" type="NUBAN" error={disputeError['customerAccountNumber']} fn={validateForm} loading={loading}  placeholder="Customer account number"/>
                     </div>
-                    <div className="p-col-12">
-                        <CustomUpload getUploadedFile={getUploadFile} title="Receipt"/>
-                    </div>
+                    {/*<div className="p-col-12">*/}
+                    {/*    <CustomUpload getUploadedFile={getUploadFile} title="Receipt"/>*/}
+                    {/*</div>*/}
                     <div className="p-col-12">
                         <div className="p-mt-4">
                             <div className="p-grid">
                                 <div className="p-col-6">
                                     {customCancelButton()}
                                 </div>
-                                <div className="p-col-6">
+                                <div className={loading?'p-col-12':'p-col-6'}>
                                     {customSubmitButton()}
                                 </div>
                             </div>

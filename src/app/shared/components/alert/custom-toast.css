@@ -52,7 +52,8 @@
 
 .icon-container{
     position:relative;
-    top:.3em
+    top:.3em;
+    left:.3em;
 }
 
 .icon-container-success{
@@ -82,13 +83,13 @@
 
 @media screen and (min-width: 1075px) {
     .error-toast-text-container{
-        margin-left: -5em;
+        margin-left: -2em;
     }
 }
 
 @media screen and (max-width: 1074px) and (min-width: 849px) {
     .error-toast-text-container{
-        margin-left: -3em;
+        margin-left: -1.5em;
     }
 }
 

@@ -8,14 +8,15 @@
 }
 
 .details-container{
-    min-width:350px;
-    max-height:800px;
+    width:500px;
+    position:relative;
     text-align: left;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 765px) {
     .details-container{
-        min-width:200px;
+        max-width:700px;
+        width:100%
     }
 }
 
@@ -59,14 +60,4 @@
     border-bottom: 1px solid #E0E8F4!important;
 }
 
-.close-modal{
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    /* identical to box height */
-    letter-spacing: 0.0126316em;
-    /* Primary Blue */
-    color: var(--primary-custom-color);
-    mix-blend-mode: normal;
-}
+

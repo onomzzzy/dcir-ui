@@ -12,6 +12,7 @@ import {CUSTOM_VALIDATION} from "../../shared/validation/validation";
 import {OverlayPanel}      from "primereact/overlaypanel";
 import {DisputeBreakdown}  from "./dispute-breakdown";
 import {DisputeSearch}     from "./dispute-search";
+import {HELPER}            from "../../shared/helper/helper";
 
 export function Dispute (){
     const toast = useRef(null);
@@ -83,16 +84,22 @@ export function Dispute (){
 
     function getDisputes(){
         setDisputes([]);
-        SERVICES.GET_DISPUTE()
+        const params = HELPER.TO_URL_STRING({
+            status:'PENDING',
+            page:0,
+            size:10
+        });
+        SERVICES.GET_DISPUTE(params)
             .then(data=>{
-                if(!data?.content.length){
-                    setEmptyText('No transaction yet ...')
+                const result = data.result.content;
+                if(!result.length){
+                    setEmptyText('No dispute yet ...')
                 }
                 else{
                     let arr = [];
-                    setTotalItems(data?.content.length);//need adjustment
-                    setTotalPages(data?.totalPages);//need adjustment
-                    data.content.forEach(e=>{
+                    setTotalItems(data?.result?.totalElements);
+                    setTotalPages(data?.result?.totalPages);
+                    result.forEach(e=>{
                         arr.push({
                             logCode:e.logCode,
                             customerName:e.customerAccountName,
@@ -111,7 +118,7 @@ export function Dispute (){
                 setLoading(false)
             })
             .catch(error=>{
-                setError('Unable to get request');
+                setError(HELPER.PROCESS_ERROR(error));
                 setCurrentIndex(1);
                 setLoading(false)
             })
@@ -194,7 +201,7 @@ export function Dispute (){
         setVisible(false);
         setLoading(true);
         setDisputes([]);
-        const params = CUSTOM_VALIDATION.TO_URL_STRING(e);
+        const params = HELPER.TO_URL_STRING(e);
         SERVICES.SEARCH_TRANSACTIONS(params)
             .then(data=>{
                 if(!data.length){
@@ -304,7 +311,6 @@ export function Dispute (){
             <div className="mobile-screen">
                 <div className="p-grid">
                     <div className="p-col-9">
-
                     </div>
                     <div className="p-col-3">
                         {viewMobileFilter()}
