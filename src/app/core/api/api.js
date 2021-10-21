@@ -10,6 +10,9 @@ const create_settlement = '/api/v1/backoffice/settlement-participant';
 const delete_settlement = '/api/v1/backoffice/settlement-participant/remove';
 const create_dispute = '/api/v1/backoffice/dispute';
 const get_transactions = '/api/v1/backoffice/transaction';
+const get_bulk_settlement = '/api/v1/backoffice/settlement/bulk';
+const get_bulk_settlement_transactions = '/api/v1/backoffice/settlement/';
+const get_payment_request = '/api/v1/backoffice/paymentrequest/';
 const search_transactions = '/api/v1/backoffice/transaction/filter';
 const get_dispute_codes = '/api/v1/backoffice/dispute/disputable-codes';
 const filter_transactions = '/api/v1/backoffice/transaction/filter';
@@ -34,5 +37,8 @@ export const API = {
     CREATE_DISPUTE: `${create_dispute}`,
     GET_MERCHANT_USER: `${create_merchant_user}`,
     SEARCH_TRANSACTION: `${search_transactions}`,
-    DELETE_PARTICIPANT: `${delete_settlement}`
+    DELETE_PARTICIPANT: `${delete_settlement}`,
+    GET_BULK_SETTLEMENT: `${get_bulk_settlement}`,
+    GET_BULK_SETTLEMENT_TRANSACTION: `${get_bulk_settlement_transactions}`,
+    GET_PAYMENT_REQUEST:`${get_payment_request}`
 }

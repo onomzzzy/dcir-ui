@@ -124,16 +124,15 @@ export function DisputeBreakdown(props){
     const disputeTabView = () =>{
         return(
             <div style={{backgroundColor:'#ffffff',paddingTop:'1em'}} className="p-shadow-1 p-pb-5">
-             <div className="p-text-left p-ml-3 p-mt-2">
+             <div className="p-text-left p-ml-3 p-mt-2 p-pb-3">
                  <span onClick={props.goBack} className="add-cursor"><span><Icon icon="go-back-icon"/></span></span>
-                 {/*<span className="add-cursor"><span><Icon icon="go-back-icon"/></span><span className="go-back-icon-text">Go Back</span></span>*/}
              </div>
             <TabView>
                 <TabPanel header={props.mobile?'D':'Details'}>
                     <div className="p-text-left">
-                        <div className="p-grid p-mt-2">
-                            <div className="p-col-8"/>
-                            <div className="p-col-4">
+                    <div className="p-grid p-mt-2">
+                     <div className="p-col-8"/>
+                      <div className="p-col-4">
                                 <div style={{width:'135px',float:'right'}}>
                                     {showResolvedButton()}
                                 </div>

@@ -230,7 +230,7 @@ export function CreateMerchantComponent(props){
                     <FormInput value={merchantForm['adminEmail']} required={true} field="adminEmail" type="EMAIL" error={merchantErrorForm['adminEmail']} fn={fillForm} loading={loading}  placeholder="Admin email"/>
                 </div>
                 <div style={{display:props.isUpdate?'none':'block'}}  className="p-col-6">
-                    <FormInput value={merchantForm['cardAcceptorId']} required={true} field="cardAcceptorId" type="" error={merchantErrorForm['cardAcceptorId']} fn={fillForm} loading={loading}  placeholder="Card acceptor id"/>
+                    <FormInput value={merchantForm['cardAcceptorId']} required={true} field="cardAcceptorId" type="CARD_ACCEPTANCE_ID" error={merchantErrorForm['cardAcceptorId']} fn={fillForm} loading={loading}  placeholder="Card acceptor id"/>
                 </div>
                 <div className={props.isUpdate?'p-col-12':'p-col-6'}>
                     <div  style={{display:props.isUpdate?'none':'block'}}>

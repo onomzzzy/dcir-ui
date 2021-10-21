@@ -1,18 +1,17 @@
 import './main-app.css'
 import {Header}                                   from "../general/header/header";
-import React, {useContext, useEffect}             from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Sider                                      from "../general/sider/sider";
-import {ErrorComponent}                           from "../components/error/error-component";
-import {CreateMerchantComponent}                  from "../components/merchant/create-merchant-component"
-import {ConfigurationsComponent}                  from "../components/configuration/configurations-component";
-import {DashboardComponent}                       from "../components/dashboard/dashboard-component";
-import {MerchantTable}                            from "../components/merchant/merchant-table";
-import {ChargeTypeComponent}                      from "../components/charge-type/charge-type";
-import {SettlementComponent}                      from "../components/settlement/settlement";
-import {Transaction}                              from "../components/transaction/transaction";
-import {Dispute}                                  from "../components/dispute/dispute";
-import {MerchantUser}                             from "../components/merchant-user/merchant-user";
+import React, {useContext}   from "react";
+import { Switch, Route }     from "react-router-dom";
+import Sider                 from "../general/sider/sider";
+import {ErrorComponent}      from "../components/error/error-component";
+import {DashboardComponent}  from "../components/dashboard/dashboard-component";
+import {MerchantTable}       from "../components/merchant/merchant-table";
+import {ChargeTypeComponent} from "../components/charge-type/charge-type";
+import {SettlementComponent} from "../components/settlement/settlement";
+import {Transaction}         from "../components/transaction/transaction";
+import {Dispute}             from "../components/dispute/dispute";
+import {MerchantUser}        from "../components/merchant-user/merchant-user";
+import {BulkSettlement}      from "../components/bulk-settlement/bulk-settlement";
 export const MainContext = React.createContext();
 
 export const MainApp = () => {
@@ -36,6 +35,7 @@ export const MainApp = () => {
                 <Route exact path="/dashboard" component={DashboardComponent} />
                 {/*<Route path="/dashboard/:id" component={DashboardComponent} />*/}
                 <Route  path="/transactions" component={Transaction} />
+                <Route  path="/bulk-settlement" component={BulkSettlement} />
                 <Route  path="/merchant" component={MerchantTable} />
                 <Route  path="/disputes" component={Dispute} />
                 <Route path="/merchant-user" component={MerchantUser} />

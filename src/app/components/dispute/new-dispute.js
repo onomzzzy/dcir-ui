@@ -19,7 +19,6 @@ export function NewDispute(props){
     const[dispute,setDispute] = useState({
         customerAccountName: null,
         customerAccountNumber: null,
-        receiptDataBase64: null,
         transactionSearchKey: props.transactionSearchKey
     })
 
@@ -188,7 +187,7 @@ export function NewDispute(props){
                     </div>
                     <div className="success-message-btn-container">
                         <button onClick={()=>{
-                            props.closeDisputeModal(true)
+                            props.closeDisputeModal()
                         }} className="primary-button p-mt-3">Close</button>
                     </div>
                 </div>

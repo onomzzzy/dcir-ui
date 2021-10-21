@@ -1,11 +1,12 @@
 
+
 import {useEffect, useState} from "react";
 import {CustomLoader}        from "../../shared/components/custom-loader/custom-loader";
 import {FormInput}           from "../../shared/components/form-component/form-input";
 import {CUSTOM_VALIDATION}   from "../../shared/validation/validation";
 import moment                from "moment";
 
-export function SearchTransaction(props){
+export function BulkSettlementSearch(props){
     const [loading,setLoading] = useState(false);
     const [currentIndex,setCurrentIndex] = useState(0);
     const [transaction,setTransaction] = useState(
@@ -45,19 +46,19 @@ export function SearchTransaction(props){
 
     function validateForm(e,name,type,refineName,required){
         let value = e?.target?.value
-            const isEmpty = CUSTOM_VALIDATION.IS_EMPTY(value);
-            const isValidInput = !isEmpty ? CUSTOM_VALIDATION.BASIC_VALIDATION(value, type) : false;
-            if (isValidInput) {
-                setTransaction({...transaction, [name]: value});
-                setTransactionError({...transactionError, [name]: null});
+        const isEmpty = CUSTOM_VALIDATION.IS_EMPTY(value);
+        const isValidInput = !isEmpty ? CUSTOM_VALIDATION.BASIC_VALIDATION(value, type) : false;
+        if (isValidInput) {
+            setTransaction({...transaction, [name]: value});
+            setTransactionError({...transactionError, [name]: null});
+        }
+        else {
+            let errorMessage = required && isEmpty ? `${refineName} is required` : null;
+            if (!isValidInput) {
+                errorMessage = `${refineName} is invalid`;
             }
-            else {
-                let errorMessage = required && isEmpty ? `${refineName} is required` : null;
-                if (!isValidInput) {
-                    errorMessage = `${refineName} is invalid`;
-                }
-                setTransaction({...transaction, [name]: errorMessage})
-            }
+            setTransaction({...transaction, [name]: errorMessage})
+        }
     }
 
     function filterSearch(){
@@ -115,7 +116,7 @@ export function SearchTransaction(props){
 
     const customSubmitButton = () => {
         if(!loading) {
-                return <button onClick={()=>props?.searchFunction(filterSearch())} className="primary-button">Filter</button>
+            return <button onClick={()=>props?.searchFunction(filterSearch())} className="primary-button">Filter</button>
         }
         else{
             return(

@@ -1,21 +1,21 @@
-import './transaction.css';
+import './bulk-settlement.css';
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {CustomBreadcrumb}  from "../../shared/components/custom-breadcrumb/custom-breadcrumb";
-import {CustomTable}       from "../../shared/components/custom-table/custom-table";
-import {SERVICES}             from "../../core/services/services";
-import {CustomLoader}         from "../../shared/components/custom-loader/custom-loader";
-import {CustomModal}          from "../../shared/components/custom-modal/custom-modal";
-import {DetailsBreakDown}     from "../../shared/components/details-break-down/details-break-down";
-import {Toast}                from "primereact/toast";
-import {MainContext}          from "../../../App";
-import {CUSTOM_VALIDATION}    from "../../shared/validation/validation";
-import {OverlayPanel}         from "primereact/overlaypanel";
-import {SearchTransaction}    from "./search-transaction";
-import {HELPER}               from "../../shared/helper/helper";
-import {AccessDenied}         from "../access-denied/access-denied";
-import {TransactionBreakdown} from "./transaction-breakdown";
+import {CustomBreadcrumb}     from "../../shared/components/custom-breadcrumb/custom-breadcrumb";
+import {CustomTable}             from "../../shared/components/custom-table/custom-table";
+import {SERVICES}                from "../../core/services/services";
+import {CustomLoader}            from "../../shared/components/custom-loader/custom-loader";
+import {CustomModal}             from "../../shared/components/custom-modal/custom-modal";
+import {DetailsBreakDown}        from "../../shared/components/details-break-down/details-break-down";
+import {Toast}                   from "primereact/toast";
+import {MainContext}             from "../../../App";
+import {OverlayPanel}            from "primereact/overlaypanel";
+import {HELPER}                  from "../../shared/helper/helper";
+import {AccessDenied}            from "../access-denied/access-denied";
+import {BulkSettlementSearch}    from "./bulk-settlement-search";
+import {BulkSettlementBreakDown} from "./bulk-settlement-break-down";
 
-export function Transaction (){
+
+export function BulkSettlement (){
     const toast = useRef(null);
     const op = useRef(null);
     const mainContext = useContext(MainContext);
@@ -24,8 +24,6 @@ export function Transaction (){
     const [currentIndex,setCurrentIndex] = useState(0);
     const [error,setError] = useState('');
     const [search,setSearch] = useState(false);
-    const [modalLoading,setModalLoading] = useState(false);
-    const [modalLoadingText,setModalLoadingText] = useState('');
     const [totalPages,setTotalPages] = useState(0);
     const [totalItems,setTotalItems] = useState(0);
     const [isMobileTransaction,setIsMobileTransaction] = useState(false);
@@ -34,28 +32,27 @@ export function Transaction (){
     const [breakDownTitle,setBreakDownTitle] = useState('')
     const [emptyText,setEmptyText] = useState('');
     const [currentModalIndex,setCurrentModalIndex] = useState(0);
-    const [transactionSearchKey,setTransactionSearchKey] = useState('');
+    const [bulkSettlementKey,setBulkSettlementKey] = useState('');
+    const [merchantDetails,setMerchantDetails] = useState([]);
+    const [details,setDetails] = useState([]);
+    const [transactions,setTransactions] = useState([])
 
     const tableHeaders = [
-        {label:'Time',value:'transactionTime'},
-        {label:'Masked pan',value:'maskedPan'},
-        {label:'Rrn',value:'rrn'},
-        {label:'Amount',value:'transactionAmount'},
-        {label:'Terminal id',value:'terminalId'},
-        {label:'Response code',value:'responseCode'},
+        {label:'Merchant Account',value:'merchantAccount'},
+        {label:'Transaction Amount',value:'transactionMerchantAmount'},
+        {label:'Settlement Type',value:'settlementType'},
+        {label:'Status',value:'status'},
+        {label:'Created On',value:'createdAt'},
+        {label:'Completed On',value:'completedAt'},
         {label: '',value: 'actions'}
 
     ]
-
-    const [details,setDetails] = useState([]);
-
-    const [transactions,setTransactions] = useState([])
 
 
     useEffect(() => {
             let mounted = true
             if(mounted) {
-                getTransactions();
+                getBulkSettlement();
             }
             return () => {
                 mounted = false;
@@ -67,51 +64,76 @@ export function Transaction (){
         // eslint-disable-next-line default-case
         switch (action) {
             case 'VIEW': {
-                getTransactionDetails(e,isMobile);
+                getSettlementDetails(e,isMobile);
                 break;
             }
         }
     }
 
 
-    function getTransactionDetails(e,isMobile){
+    function getSettlementDetails(e,isMobile){
         let arr = [];
+        setMerchantDetails([]);
         setDetails([]);
-        setTransactionSearchKey(e?.transactionSearchKey);
-        arr.push({label:'Card acceptor id',value:e?.cardAcceptorId});
-        arr.push({label:'Charge amount',value:e?.chargeAmount,itemCase:"chargeAmount"});
-        arr.push({label:'Masked pan',value:e?.maskedPan});
-        arr.push({label:'Response code',value:e?.responseCode,itemCase:"responseCode"});
-        arr.push({label:'Rrn',value:e?.rrn});
-        arr.push({label:'Stan',value:e?.stan});
-        arr.push({label:'Terminal id',value:e?.terminalId});
-        arr.push({label:'Transaction amount',value:e?.transactionAmount,itemCase:"transactionAmount"});
-        arr.push({label:'Transaction time',value:e?.transactionTime,itemCase:"transactionTime"});
+        console.log('e?.bulkSettlementKey)',e?.bulkSettlementKey)
+        setBulkSettlementKey(e?.bulkSettlementKey);
+        arr.push({label:'Bulk Settlement Key',value:e?.bulkSettlementKey});
+        arr.push({label:'Merchant Account',value:e?.merchantAccount});
+        arr.push({label:'Payment Request Attempt',value:e?.paymentRequestAttempt});
+        arr.push({label:'Report Generation Attempt',value:e?.reportGenerationAttempt});
+        arr.push({label:'Report Status',value:e?.reportStatus,itemCase:'status'});
+        arr.push({label:'Settlement Type',value:e?.settlementType});
+        arr.push({label:'Status',value:e?.status,itemCase:'status'});
+        arr.push({label:'Transaction Charge Amount',value:e?.transactionChargeAmount,itemCase:"transactionAmount"});
+        arr.push({label:'Transaction Count',value:e?.transactionCount});
+        arr.push({label:'Merchant Transaction Amount',value:e?.transactionMerchantAmount,itemCase:'transactionMerchantAmount'});
+        arr.push({label:'Transaction Total Amount',value:e?.transactionTotalAmount,itemCase:'transactionAmount'});
+        arr.push({label:'Start Date',value:e?.transactionTimeBegin,itemCase:"transactionTime"});
+        arr.push({label:'End Date',value:e?.transactionTimeEnd,itemCase:"transactionTime"});
 
         setDetails(arr);
-        // setBreakDownTitle('Transaction')
+        setMerchantDetails(fillMerchantDetails(e?.merchant))
         setIsMobileTransaction(isMobile);
         setCurrentIndex(3);
-        // openModal(2,isMobile)
+
+    }
+
+    function fillMerchantDetails(e){
+        console.log('e,e',e)
+      let arr = [];
+        arr.push({label:'Merchant Name',value:e?.merchantName});
+        arr.push({label:'Card Acceptor Id',value:e?.cardAcceptorId});
+        arr.push({label:'Phone Number',value:e?.phoneNumber});
+        arr.push({label:'mainEmail',value:e?.mainEmail});
+        arr.push({label:'disputeEmail',value:e?.disputeEmail});
+        arr.push({label:'merchantId',value:e?.merchantId});
+        arr.push({label:'Settlement Email',value:e?.settlementEmail});
+        arr.push({label:'Date Created',value:e?.createdTime,itemCase:'transactionTime'});
+        console.log('arrrr',arr);
+        return arr;
     }
 
 
-    function getTransactions(){
+    function getBulkSettlement(){
         setTransactions([]);
         let params = {
             page:0,
-            size:10
+            size:10,
+            cardAcceptorId:'',
+            startDate:'',
+            endDate:'',
+            status:''
         }
         params = HELPER.TO_URL_STRING(params);
-        SERVICES.GET_TRANSACTION( params )
+        SERVICES.GET_BULK_SETTLEMENT( params )
             .then(data=>{
                 const result = data?.result?.content;
                 if(!result.length){
-                    setEmptyText('No transaction yet ...')
+                    setEmptyText('No item yet ...')
                 }
                 else{
                     let arr = [];
-                    setTotalItems(data?.result.totalItems);//need adjustment
+                    setTotalItems(data?.result.totalElements);//need adjustment
                     setTotalPages(data?.result.totalPages);//need adjustment
                     result.forEach(e=>{
                         arr.push({...e,actions:'CR',detailsFunction:openAction});
@@ -123,7 +145,7 @@ export function Transaction (){
                 setLoading(false)
             })
             .catch(error=>{
-                setError('Unable to get request');
+                setError(HELPER.PROCESS_ERROR(error));
                 setCurrentIndex(1);
                 setLoading(false)
             })
@@ -147,7 +169,7 @@ export function Transaction (){
         setLoading(true);
         setSearch(false);
         setCurrentIndex(0);
-        getTransactions();
+        getBulkSettlement();
     }
 
     function closeModal(isReload?){
@@ -167,9 +189,9 @@ export function Transaction (){
         // eslint-disable-next-line default-case
         switch (currentModalIndex){
             case 1:
-                return <SearchTransaction searchFunction={searchTransaction} closeModal={closeModal}/>
+                return <BulkSettlementSearch searchFunction={searchTransaction} closeModal={closeModal}/>
             case 2:
-                return <DetailsBreakDown mobile={true} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
+                return <DetailsBreakDown merchantDetails={merchantDetails} mobile={true} bulkSettlementKey={bulkSettlementKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
         }
     }
 
@@ -201,7 +223,7 @@ export function Transaction (){
             case 3:
                 return (
                     <div className="p-mt-2">
-                    <TransactionBreakdown transactionSearchKey={transactionSearchKey} goBack={goBack} detials={details} mobile={isMobileTransaction}/>
+                        <BulkSettlementBreakDown merchantDetails={merchantDetails} bulkSettlementKey={bulkSettlementKey} goBack={goBack} detials={details} mobile={isMobileTransaction}/>
                     </div>
                 )
 
@@ -257,9 +279,9 @@ export function Transaction (){
         // eslint-disable-next-line default-case
         switch (currentModalIndex){
             case 1:
-                return <SearchTransaction searchFunction={searchTransaction} closeModal={closeModal}/>
+                return <BulkSettlement searchFunction={searchTransaction} closeModal={closeModal}/>
             case 2:
-                return <DetailsBreakDown footer={modalFooter} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
+                return <DetailsBreakDown footer={modalFooter} transactionSearchKey={bulkSettlementKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
         }
     }
 
@@ -275,9 +297,9 @@ export function Transaction (){
             <div>
                 <CustomModal onHide={onHide} visible={visible} modalContent={modalContent}/>
             </div>
-            <div className="page-title p-text-left">Transactions</div>
+            <div className="page-title p-text-left">Bulk Settlement</div>
             <div className="p-mt-2">
-                <CustomBreadcrumb  page="Manage Transactions"/>
+                <CustomBreadcrumb  page="Manage Bulk Settlement"/>
             </div>
             <div className="floating-buttons desktop-screen">
                 <div className="p-grid">
@@ -294,10 +316,10 @@ export function Transaction (){
                             </div>
                             <div className="p-col-6">
                                 <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions') && currentIndex === 1?'dcir-show':'dcir-hide'}>
-                                <button disabled={(loading||transactions?.length === 0)} onClick={()=>openModal(1,false)} className="primary-button">
-                                    <i className="pi pi-filter"/>
-                                    <span className="hide-btn-text"> Filter</span>
-                                </button>
+                                    <button disabled={(loading||transactions?.length === 0)} onClick={()=>openModal(1,false)} className="primary-button">
+                                        <i className="pi pi-filter"/>
+                                        <span className="hide-btn-text"> Filter</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -312,12 +334,12 @@ export function Transaction (){
                     <div className="p-col-3">
                         <div  className="floating-mobile-buttons add-cursor">
                             <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions') && currentIndex === 1?'dcir-show':'dcir-hide'}>
-                            <i onClick={(e) => op.current.toggle(e)} className="pi pi-ellipsis-v" style={{'fontSize': '1.5em','color':'#464DF2'}}/>
-                            <OverlayPanel ref={op} id="overlay_panel" style={{width: '100px'}} className="overlaypanel-demo">
+                                <i onClick={(e) => op.current.toggle(e)} className="pi pi-ellipsis-v" style={{'fontSize': '1.5em','color':'#464DF2'}}/>
+                                <OverlayPanel ref={op} id="overlay_panel" style={{width: '100px'}} className="overlaypanel-demo">
 
-                                {/*<div className="p-mb-3 p-ml-1"><span onClick={()=>openModal(0,true)} className="custom-over-flow-text"><i className="pi pi-plus"/> New</span></div>*/}
-                                <div className="p-mb-2 p-ml-1"><span onClick={()=>openModal(1,true)} className="custom-over-flow-text"><i className="pi pi-filter"/> Filter</span></div>
-                            </OverlayPanel>
+                                    {/*<div className="p-mb-3 p-ml-1"><span onClick={()=>openModal(0,true)} className="custom-over-flow-text"><i className="pi pi-plus"/> New</span></div>*/}
+                                    <div className="p-mb-2 p-ml-1"><span onClick={()=>openModal(1,true)} className="custom-over-flow-text"><i className="pi pi-filter"/> Filter</span></div>
+                                </OverlayPanel>
                             </div>
                         </div>
                     </div>
@@ -327,7 +349,7 @@ export function Transaction (){
                 {chargeTypeView()}
             </div>
             <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-hide':'dcir-show'}>
-               <AccessDenied/>
+                <AccessDenied/>
             </div>
         </div>
     )

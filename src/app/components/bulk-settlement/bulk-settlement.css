@@ -1,13 +1,13 @@
 
 
 .p-tabview-selected{
- background-color: var(--primary-custom-color);
-  border-top-right-radius:8px!important;
-  margin-bottom:.5em;
+    background-color: var(--primary-custom-color);
+    border-top-right-radius:8px!important;
+    margin-bottom:.5em;
 }
 
 .p-tabview-ink-bar{
-  background-color: var(--primary-custom-color)!important;
+    background-color: var(--primary-custom-color)!important;
 }
 
 .p-tabview-nav-link{
@@ -46,13 +46,28 @@
 
 .dispute-title{
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 18px;
     line-height: 21px;
     letter-spacing: 0.0115367em;
     /* Text Blue */
     color: var(--primary-text-color);
 }
+.custom-tab-icon-position{
+    margin-top:1.15em
+}
+
+.custom-tab-icon{
+    font-style: normal;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 15px;
+    letter-spacing: 0.713333px;
+    /* Primary Blue */
+    color: var(--primary-custom-color);
+}
+
 .dcir-row:after {
     content: "";
     display: table;

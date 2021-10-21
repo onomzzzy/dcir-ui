@@ -42,7 +42,7 @@ export const NavItems = [
         route: '/disputes',
         icon: 'dispute',
         authority: 'dcir_view_disputes',
-        index:6,
+        index:4,
         roles: '',
         children:[]
     },
@@ -52,7 +52,7 @@ export const NavItems = [
         icon: 'charge-type',
         authority: 'dcir_configure_charges',
         roles: '',
-        index:4,
+        index:5,
         children:[ ]
     },
     {
@@ -61,7 +61,16 @@ export const NavItems = [
         icon: 'settlement',
         authority: 'dcir_configure_participant',
         roles: '',
-        index:5,
+        index:6,
+        children:[]
+    },
+    {
+        text: 'Bulk Settlement',
+        route: '/bulk-settlement',
+        icon: 'terminals',
+        authority: 'all',
+        roles: '',
+        index:7,
         children:[]
     }
 

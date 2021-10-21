@@ -20,6 +20,8 @@ export const chargeTypeMenus = [
 
 export const SpecialLabelCases = [
     {case:"transactionAmount",action:HELPER.TO_CURRENCY_FORMAT},
+    {case:"transactionMerchantAmount",action:HELPER.TO_CURRENCY_FORMAT},
+    {case:"transactionChargeAmount",action:HELPER.TO_CURRENCY_FORMAT},
     {case: "transactionTime",action:HELPER.FORMAT_DATE},
     {case:"transactionDate",action:HELPER.FORMAT_DATE},
     {case: 'chargeAmount',action:HELPER.TO_CURRENCY_FORMAT},

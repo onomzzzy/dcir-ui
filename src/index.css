@@ -11,12 +11,23 @@ body {
   src: url(./font/Rubik.ttf) format("truetype");
   font-weight: 300;
 }
+@font-face {
+  font-family: "Andika";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Andika"), local("Andika"), url("./font/Rubik.ttf") format("truetype");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 
 :root {
   --primary-custom-color:#464DF2;
   --primary-dark-color:#221ED9;
   --primary-light-color:#777BF1;
   --primary-text-color:#063A4F;
+  --text-color:#063A4F;
+  --text-color-secondary:#063A4F;
+  --primary-color:#464DF2;
+  --primary-color-text:#ffffff;
   --primary-grey:rgba(157, 161, 171, 1.0);
   --primary-light-grey:rgba(157, 161, 171, .4);
   --primary-font-family:"Rubik", sans-serif;
@@ -487,19 +498,22 @@ a{
 
 .secondary-button{
   width: 100%;
-  background: var(--primary-light-grey);
-  opacity: 0.6;
+  background-color: rgba(235, 87, 87, .2);
+  opacity: 0.5;
   border:0!important;
   cursor: pointer;
   border-radius: 4px;
   font-style: normal;
-  font-weight: 600;
   font-size: 15px;
   height: 56px;
   box-shadow: none!important;
   outline:none!important;
-  line-height: 20px;
-  color: var(--primary-grey);
+  font-weight: 600;
+  line-height: 18px;
+  /* identical to box height */
+  letter-spacing: 0.000909091em;
+  /* #EB5757 */
+  color: rgba(235, 87, 87, 1);
 }
 
 .custom-modal-content  .error-toast-text-container{

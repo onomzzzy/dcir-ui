@@ -282,6 +282,54 @@ function getTransactions(params){
     });
 }
 
+function getBulkSettlement(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_BULK_SETTLEMENT}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function getBulkSettlementTransactions(params,bulkSettlementKey){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_BULK_SETTLEMENT_TRANSACTION}/${bulkSettlementKey}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function getPaymentRequest(params,bulkSettlementKey){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_PAYMENT_REQUEST}/${bulkSettlementKey}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function getDisputes(params){
     const url = `${CONFIG.DCIR_HOST}${API.CREATE_DISPUTE}?${params}`;
     const header = getBasicHeader();
@@ -549,5 +597,8 @@ export const SERVICES = {
   GET_MERCHANT_USER: getMerchantUsers,
   CREATE_MERCHANT_USER: createMerchantUsers,
   VIEW_PARTICIPANT: viewParticipant,
-  VIEW_MERCHANT_USER: viewMerchantUser
+  VIEW_MERCHANT_USER: viewMerchantUser,
+  GET_BULK_SETTLEMENT: getBulkSettlement,
+  GET_BULK_SETTLEMENT_TRANSACTION:getBulkSettlementTransactions,
+  GET_PAYMENT_REQUEST: getPaymentRequest
 }

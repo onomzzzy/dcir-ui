@@ -70,7 +70,6 @@ export function ConfigureSettlement(props){
     function validateForm(){
         const validForm = CUSTOM_VALIDATION.VALID_OBJ(settlementInfo,props.isUpdate?6:5);
         const validErrorForm = CUSTOM_VALIDATION.VALID_OBJ_ANY(settlementErrorForm);
-        console.log(' validForm validErrorForm', validForm,validErrorForm,settlementInfo,settlementErrorForm)
         setValidForm(validForm && !validErrorForm);
     }
 
@@ -315,7 +314,7 @@ export function ConfigureSettlement(props){
                     <div className="p-col-6">
                         <div className="p-mt-2">
                             <FormDropdown required={true} field="chargeType" error={settlementErrorForm['chargeType']}
-                                          disabled={loading} label="code" value={settlementInfo['chargeType']}
+                                          disabled={loading} label="desc" value={settlementInfo['chargeType']}
                                           fn={validateDropdown} options={chargeTypes}
                                           placeholder="Select a charge type"/>
                         </div>
