@@ -24,6 +24,7 @@ export const reducer = (state, action) => {
                 selectedSideNavIndex: action?.loginData?.selectedSideNavIndex,
                 isAuthenticated:action?.loginData?.isAuthenticated
             };
+            console.log('state ',state);
             return state;
         case "LOG_OUT":
             state = {

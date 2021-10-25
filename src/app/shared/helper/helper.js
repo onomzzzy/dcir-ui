@@ -138,6 +138,17 @@ function hasAuthority(authority){
     return authorities.includes(authority);
 }
 
+function hasRole(rolesArray){
+    let hasRole = false;
+    const roles = LOCAL_STORAGE_SERVICE.GET_ROLES();
+    rolesArray.forEach(e=>{
+       if(roles.includes(e)) {
+           hasRole = true;
+       }
+    })
+    return hasRole
+}
+
 function canPerformAction(authorities,action){
     let authority = '';
     authorities.forEach(e=>{
@@ -159,6 +170,7 @@ export const HELPER = {
     TO_URL_STRING:toUrlString,
     GET_ROLE:getRefineRole,
     HAS_AUTHORITY:hasAuthority,
+    HAS_ROLE:hasRole,
     CAN_PERFORM_ACTION:canPerformAction
 }
 

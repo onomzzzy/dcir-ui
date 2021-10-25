@@ -8,7 +8,6 @@ import {CustomModal}       from "../../shared/components/custom-modal/custom-mod
 import {DetailsBreakDown}  from "../../shared/components/details-break-down/details-break-down";
 import {Toast}             from "primereact/toast";
 import {MainContext}       from "../../../App";
-import {CUSTOM_VALIDATION} from "../../shared/validation/validation";
 import {OverlayPanel}      from "primereact/overlaypanel";
 import {DisputeBreakdown}  from "./dispute-breakdown";
 import {DisputeSearch}     from "./dispute-search";

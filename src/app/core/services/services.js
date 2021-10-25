@@ -298,6 +298,22 @@ function getBulkSettlement(params){
     });
 }
 
+function getFrontOfficeBulkSettlement(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_FRONT_OFFICE_BULK_SETTLEMENT}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function getBulkSettlementTransactions(params,bulkSettlementKey){
     const url = `${CONFIG.DCIR_HOST}${API.GET_BULK_SETTLEMENT_TRANSACTION}${bulkSettlementKey}?${params}`;
     const header = getBasicHeader();
@@ -314,7 +330,39 @@ function getBulkSettlementTransactions(params,bulkSettlementKey){
     });
 }
 
+function getFrontOfficeBulkSettlementTransactions(params,bulkSettlementKey){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_FRONT_OFFICE_BULK_SETTLEMENT_TRANSACTION}${bulkSettlementKey}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function getPaymentRequest(params,bulkSettlementKey){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_PAYMENT_REQUEST}${bulkSettlementKey}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function getFrontOfficePaymentRequest(params,bulkSettlementKey){
     const url = `${CONFIG.DCIR_HOST}${API.GET_PAYMENT_REQUEST}${bulkSettlementKey}?${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
@@ -394,6 +442,22 @@ function getMerchantUsers(params){
     });
 }
 
+function getFrontOfficeMerchantUsers(params){
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_FRONT_OFFICE_MERCHANT_USER}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function viewMerchantUser(params){
     const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}`;
     const header = getBasicHeader();
@@ -412,6 +476,22 @@ function viewMerchantUser(params){
 
 function getMerchant(e){
     const url = `${CONFIG.DCIR_HOST}${API.CREATE_MERCHANT}/${e}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function getFrontOfficeUserRoles(){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_FRONT_OFFICE_MERCHANT_ROLES}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -493,6 +573,22 @@ function createDispute(params){
 
 function createMerchantUsers(params){
     const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.post(url,params,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function createFrontOfficeMerchantUsers(params){
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_FRONT_OFFICE_MERCHANT_USER}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.post(url,params,{headers:header})
@@ -596,9 +692,15 @@ export const SERVICES = {
   GET_DISPUTE: getDisputes,
   GET_MERCHANT_USER: getMerchantUsers,
   CREATE_MERCHANT_USER: createMerchantUsers,
+  CREATE_FRONT_OFFICE_MERCHANT_USER: createFrontOfficeMerchantUsers,
   VIEW_PARTICIPANT: viewParticipant,
   VIEW_MERCHANT_USER: viewMerchantUser,
   GET_BULK_SETTLEMENT: getBulkSettlement,
+  GET_FRONT_OFFICE_BULK_SETTLEMENT: getFrontOfficeBulkSettlement,
   GET_BULK_SETTLEMENT_TRANSACTION:getBulkSettlementTransactions,
-  GET_PAYMENT_REQUEST: getPaymentRequest
+  GET_FRONT_OFFICE_BULK_SETTLEMENT_TRANSACTION: getFrontOfficeBulkSettlementTransactions,
+  GET_PAYMENT_REQUEST: getPaymentRequest,
+  GET_FRONT_OFFICE_PAYMENT_REQUEST: getFrontOfficePaymentRequest,
+  GET_FRONT_OFFICE_MERCHANT_ROLES: getFrontOfficeUserRoles,
+  GET_FRONT_OFFICE_MERCHANT_USERS: getFrontOfficeMerchantUsers
 }

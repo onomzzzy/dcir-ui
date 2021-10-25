@@ -25,8 +25,6 @@ i
 9src/app/shared/components/custom-loader/custom-loader.css,8/1/810e4ffab717afdbd8f0c5e5d0569282457cc1d5
 q
 Asrc/app/shared/components/custom-pagination/custom-pagination.css,a/f/af79007aebacfc95371f7b10e393674fe848c023
-y
-Isrc/app/shared/components/custom-confirm-dialog/custom-confirm-dialog.css,1/f/1f90eac1bc5d07a71c9629cb8a5b07300ee9ca2e
 Z
 *src/app/components/dashboard/dashboard.css,b/8/b82bb21945b2a036a4d49c25262aee3182e44f1c
 P
@@ -55,8 +53,6 @@ b
 2src/app/components/merchant-user/merchant-user.css,b/f/bf705a2e3ff21fe6bcdcc5aa6f33da7813b77484
 <
 package.json,7/0/7030d0b2f71b999ff89a343de08c414af32fc93a
-O
-src/app/general/sider/sider.css,b/4/b4bc3c22ab70a3889310003423fecc04a93b3aa0
 q
 Asrc/app/shared/components/custom-breadcrumb/custom-breadcrumb.css,c/6/c64b400e42a160a56527f2920a1840edcb3502ea
 p
@@ -75,8 +71,6 @@ s
 Csrc/app/shared/components/details-break-down/details-break-down.css,2/4/24dfd9a8bfa87eee32470a6cab555377077e4b1e
 d
 4src/app/shared/components/custom-table/new-table.css,e/4/e48338272307f0d3f9a541a72f341e57094a6889
-x
-Hsrc/app/shared/components/custom-confirm-dialog/custom-confirm-dialog.js,6/f/6f1aa52826c75d70ae185dfabfd77e7084b7d545
 a
 1src/app/shared/components/alert/custom-message.js,f/8/f8d4b711a140e343d4815d0613df9c51732b8c22
 P
@@ -91,8 +85,6 @@ l
 <src/app/components/configuration/configurations-component.js,5/7/57e50fae5263df22969fa346a2d8d293ebc646e7
 l
 <src/app/components/configuration/custom-charge-type-model.js,7/b/7b3ca389ea3f210921fe27da4679cbf915a68733
-w
-Gsrc/app/components/configuration/custom-settlement-participant-model.js,e/1/e1b1614afc805164943ba7614ce0bc18e50d4cd5
 c
 3src/app/components/dashboard/dashboard-component.js,b/b/bbe732fe4bd1ae386e18f44a1c2b8bca2381b1e7
 \
@@ -101,19 +93,23 @@ c
 ,src/app/components/dispute/update-dispute.js,7/0/700943991808ada117fef664fc8a71453d260d2b
 ^
 .src/app/components/merchant/merchant-search.js,9/7/97c3e5f7b90b96e06960ddb1e50b0301e44a8060
-h
-8src/app/components/merchant-user/create-merchant-user.js,0/c/0c757c8cb9d5861c2033dffd41d264147f7b6aa1
-f
-6src/app/shared/components/custom-table/custom-table.js,3/9/39f7c98cda747b387a3d52eff7e924b42346fc3f
-c
-3src/app/shared/components/custom-table/new-table.js,a/7/a7cb582b4d5e3ddf914aa0bc903dbdd807e2d0b5
-]
--src/app/components/charge-type/charge-type.js,c/c/cc05fa56f0626b4c56160c437aa8f6b91e3f736a
 [
 +src/app/components/error/error-component.js,9/4/94d454e1a94601d78d1d7186847ad844be016088
 a
 1src/app/components/access-denied/access-denied.js,1/3/134793a7a052a709c68f21afe148ea86f3a566e3
-a
-1src/app/components/merchant-user/merchant-user.js,9/7/9759d37282df333e946094c43e5f9c5abac0985a
-[
-+src/app/components/settlement/settlement.js,8/0/80f12b656a2d1604324b4f97940509d757f60462
+]
+-src/app/components/merchant/merchant-table.js,5/9/59d33507275f3de0ed291b30a06455a47ff89832
+Q
+!src/app/core/redux/state/state.js,9/4/944d1d70f6e843b3bde02dc15819936edec99364
+_
+/src/app/components/dispute/dispute-breakdown.js,f/1/f13fcafb665d58c35e803dffaba7ae6f70c9826f
+r
+Bsrc/app/shared/components/details-break-down/details-break-down.js,a/e/aee8e89b023be3961a4bc717e8122cf65882eee9
+Y
+)src/app/components/dispute/new-dispute.js,d/c/dc18d382be9753c6b9e75cc643222f777230eaf8
+^
+.src/app/components/transaction/transaction.css,6/0/60801ee247fc1b2f495bdf5fcc446fd677f13e1b
+L
+src/app/shared/icons/icon.js,a/5/a533ffda8e3ab0650c576cf396059e314999db01
+W
+'src/app/shared/validation/validation.js,5/1/518b64447a7d553a2c0e1062b8bb1daf2a792310

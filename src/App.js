@@ -29,11 +29,10 @@ function App() {
     isAuthenticated = LOCAL_STORAGE_SERVICE.IS_LOGIN();
     if(isAuthenticated){
       const credentials = LOCAL_STORAGE_SERVICE.GET_USER_CREDENTIALS();
-      console.log('credentials',credentials)
+      console.log('credentials  ,,.....',credentials)
       dispatch({type:'PERSIST_LOGIN_DATA',loginData:credentials});
     }
   }
-    console.log('isAuthenticated from end ',isAuthenticated);
   return isAuthenticated;
 
   }

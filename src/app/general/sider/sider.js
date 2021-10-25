@@ -24,7 +24,7 @@ function Sider(){
     useEffect(() => {
             let mounted = true
             if(mounted) {
-                console.log('mainContext?.mainState?.selectedSideNav ',mainContext?.mainState?.selectedSideNav)
+             console.log('mainContext?.mainState?.selectedSideNav ',mainContext?.mainState)
                setMenuClicked(mainContext?.mainState?.selectedSideNav);
                setColorIndex(mainContext?.mainState?.selectedSideNavIndex);
                 setColor('#464DF2')
@@ -60,13 +60,13 @@ function Sider(){
          return(
         NavItems.map((navItem,index) =>{
            if(navItem.children.length === 0){
-               const hasAuthority = navItem.authority === 'all' ? true: HELPER.HAS_AUTHORITY(navItem.authority);
+               const hasAuthority = navItem.authority === 'all' ? true: (HELPER.HAS_AUTHORITY(navItem.authority) && HELPER.HAS_ROLE(navItem.roles));
               return(
-                  <div key={navItem.text.toString()} className={hasAuthority?'dcir-show':'dcir-hide'}>
-                  <div onClick={()=>setNavColorOnClicked(navItem.index,navItem.text,navItem.route)} onMouseLeave={()=>setNavColorOnMouseLeave(navItem.index,navItem.text)} onMouseEnter={()=>setNavColorOnMouseEnter(navItem.index,navItem.text)} className={menuClicked === navItem.text?'singleNavContainer singleNavContainer-active':'singleNavContainer'}>
+                  <div key={navItem.uniqueId.toString()} className={hasAuthority?'dcir-show':'dcir-hide'}>
+                  <div onClick={()=>setNavColorOnClicked(navItem.uniqueId,navItem.text,navItem.route)} onMouseLeave={()=>setNavColorOnMouseLeave(navItem.uniqueId,navItem.text)} onMouseEnter={()=>setNavColorOnMouseEnter(navItem.uniqueId,navItem.text)} className={menuClicked === navItem.text?'singleNavContainer singleNavContainer-active':'singleNavContainer'}>
                       <div className="p-grid">
-                        <div className="p-col-2"><div className="singleNavContainer-icon"><Icon color={(menuClicked === navItem.text)? defaultActiveColor:(colorIndex === navItem.index? defaultActiveColor:defaultColor)} icon={navItem.icon}/></div></div>
-                        <div className="p-col-10"><span style={{color:(menuClicked === navItem.text)? defaultActiveColor:(colorIndex === navItem.index? defaultActiveColor:defaultColor)}} className="singleNavContainer-text adjust-single-nav">{navItem.text}</span></div>
+                        <div className="p-col-2"><div className="singleNavContainer-icon"><Icon color={(menuClicked === navItem.text)? defaultActiveColor:(colorIndex === navItem.uniqueId? defaultActiveColor:defaultColor)} icon={navItem.icon}/></div></div>
+                        <div className="p-col-10"><span style={{color:(menuClicked === navItem.text)? defaultActiveColor:(colorIndex === navItem.uniqueId? defaultActiveColor:defaultColor)}} className="singleNavContainer-text adjust-single-nav">{navItem.text}</span></div>
                       </div>
                   </div>
                   </div>

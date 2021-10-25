@@ -1,13 +1,14 @@
 
 import {useEffect, useState} from "react";
-import {CustomLoader}        from "../../shared/components/custom-loader/custom-loader";
-import {FormInput}           from "../../shared/components/form-component/form-input";
-import {SERVICES}            from "../../core/services/services";
-import {CustomToast}         from "../../shared/components/alert/custom-toast";
-import {CUSTOM_VALIDATION}   from "../../shared/validation/validation";
-import {FormDropdown}        from "../../shared/components/form-component/form-dropdown";
-import {CustomMessage}       from "../../shared/components/alert/custom-message";
-import {HELPER}              from "../../shared/helper/helper";
+import {CustomToast}         from "../../../shared/components/alert/custom-toast";
+import {SERVICES}            from "../../../core/services/services";
+import {HELPER}              from "../../../shared/helper/helper";
+import {CUSTOM_VALIDATION}   from "../../../shared/validation/validation";
+import {CustomLoader}        from "../../../shared/components/custom-loader/custom-loader";
+import {FormInput}           from "../../../shared/components/form-component/form-input";
+import {CustomMessage}       from "../../../shared/components/alert/custom-message";
+import {FormDropdown}        from "../../../shared/components/form-component/form-dropdown";
+
 
 export function CreateMerchantUser(props){
     const [loading,setLoading] = useState(false);
@@ -37,9 +38,7 @@ export function CreateMerchantUser(props){
         }
     )
     const [merchants,setMerchants] = useState([])
-    const roles = [
-        {desc:'Super admin',code:'DCIR_MERCHANT_SUPER_ADMIN'}
-    ]
+    const [roles,setRoles] = useState([])
 
     const viewAlert = () =>{
         if(messageTitle){
@@ -61,6 +60,7 @@ export function CreateMerchantUser(props){
     useEffect(() => {
             let mounted = true
             if(mounted) {
+                getMerchantUserRoles()
                 getMerchants();
             }
             return () => {
@@ -68,6 +68,20 @@ export function CreateMerchantUser(props){
             }
         },[]
     );
+
+    function getMerchantUserRoles(){
+        SERVICES.GET_FRONT_OFFICE_MERCHANT_ROLES()
+            .then(data=>{
+                let arr = []
+              data?.result?.forEach(e=>{
+                 arr.push({desc:e,code:e});
+              })
+                setRoles(arr);
+            })
+            .catch(error=>{
+             console.log(' error ',error);
+            })
+    }
 
     function getMerchants(){
         const params = HELPER.TO_URL_STRING({
@@ -155,6 +169,14 @@ export function CreateMerchantUser(props){
 
     }
 
+    /*
+ private String firstname;
+private String lastname;
+private String email;
+private String merchantId;
+private String name;
+private String role;
+ */
     function submit(){
         setLoading(true);
         const payload ={
@@ -162,10 +184,10 @@ export function CreateMerchantUser(props){
             lastname: merchantUser['lastname'],
             email: merchantUser['email'],
             name: merchantUser['name'],
-            role: merchantUser['role']?.code,
+            role:merchantUser['role']?.code,
             merchantId: merchantUser['merchantId']?.id
         }
-        SERVICES.CREATE_MERCHANT_USER(payload)
+        SERVICES.CREATE_FRONT_OFFICE_MERCHANT_USER(payload)
             .then(data=>{
                 console.log('Merchant user created successfully',data);
                 setMessageTitle(null)
