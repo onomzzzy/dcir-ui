@@ -237,6 +237,10 @@ export function BulkSettlement (){
         const params = e;
         const pageParam = HELPER.TO_URL_STRING( {
             page: 0,
+            status: e?.status || '',
+            startDate : e?.startDate || '',
+            endDate: e?.endDate || '',
+            cardAcceptorId: e?.cardAcceptorId || '',
             size:1
         });
         SERVICES.SEARCH_TRANSACTIONS(params,pageParam)
@@ -261,7 +265,7 @@ export function BulkSettlement (){
                 }
             })
             .catch(error=>{
-                setError('Unable to get request');
+                setError(HELPER.PROCESS_ERROR(error));
                 // setCurrentIndex(1);
                 setLoading(false)
             })
@@ -279,7 +283,7 @@ export function BulkSettlement (){
         // eslint-disable-next-line default-case
         switch (currentModalIndex){
             case 1:
-                return <BulkSettlement searchFunction={searchTransaction} closeModal={closeModal}/>
+                return <BulkSettlementSearch searchFunction={searchTransaction} closeModal={closeModal}/>
             case 2:
                 return <DetailsBreakDown footer={modalFooter} transactionSearchKey={bulkSettlementKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
         }

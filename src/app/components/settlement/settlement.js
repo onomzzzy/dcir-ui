@@ -117,9 +117,9 @@ export function SettlementComponent (){
             })
     }
 
-    function openAction(e,action,isMobile){
+       function openAction(e,action,isMobile){
         // eslint-disable-next-line default-case
-        switch (action) {
+         switch (action) {
             case 'VIEW': {
                 viewParticipant(e.participantId,isMobile);
                 break;
@@ -165,7 +165,7 @@ export function SettlementComponent (){
                     setTotalItems(data?.result?.totalElements);
                     setTotalPages(data?.result?.totalPages);
                     result?.forEach(e=>{
-                        arr.push({...e,global:e.global?'GLOBAL':'NON GLOBAL',chargeType:e.chargeType?.code,actions:'CRUD',detailsFunction:openAction});
+                        arr.push({...e,global:e.global?'GLOBAL':'NON GLOBAL',chargeType:e.chargeType?.chargeTypeName,actions:'CRUD',detailsFunction:openAction});
                     })
                     setParticipants(arr)
                 }

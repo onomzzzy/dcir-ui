@@ -221,6 +221,7 @@ export function ConfigureSettlement(props){
         }
         SERVICES.CREATE_MERCHANT(payload)
             .then(data=>{
+              props.callAlert(null,HELPER.PROCESS_ERROR(''));
               console.log('Merchant created successfully',data)
               setSuccessMessage('Merchant created successfully');
               props.offTitle();

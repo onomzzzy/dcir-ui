@@ -15,7 +15,7 @@ const authPassword = 'secret';
 const grant_type = 'password';
 
 // const authenticationDomain = 'DCIR-BACKOFFICE';
-const authenticationDomain = 'DCIR-MANAGEMENT-SERVICE';
+const authenticationDomain = 'DCIR';
 
 const app_data = "mock";
 

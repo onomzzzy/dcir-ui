@@ -1,0 +1,18 @@
+.custom-accordion-title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0.0115367em;
+    /* Text Blue */
+    color: var(--primary-text-color);
+}
+
+.custom-tab-icon-position{
+    margin-top:1.15em
+}
+
+.custom-tab-icon{
+    position: relative;
+    top:.1em;
+}

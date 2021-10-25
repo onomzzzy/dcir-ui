@@ -8,8 +8,9 @@ import {SpecialLabelCases}          from "../../shared/models/utilities";
 import {CustomModal}                from "../../shared/components/custom-modal/custom-modal";
 import {NewDispute}                 from "../dispute/new-dispute";
 import {HELPER}                     from "../../shared/helper/helper";
-import {Accordion, AccordionTab}    from "primereact/accordion";
 import {Divider}                    from "primereact/divider";
+import {BulkTransactions}           from "./bulk-transactions";
+import {RepaymentRequest}           from "./repayment-request";
 
 
 
@@ -31,7 +32,6 @@ export function BulkSettlementBreakDown(props){
             let mounted = true
             if(mounted) {
                 setDetailsContent(props?.detials)
-                console.log(props?.merchantDetails);
                 setMerchantDetails(props?.merchantDetails)
                 getTransactionTiedToSettlement();
                 getPaymentRequest();
@@ -43,6 +43,7 @@ export function BulkSettlementBreakDown(props){
     );
 
     function setTabIndex(action,index){
+        // eslint-disable-next-line default-case
         switch (action){
             case 'SUMMARY':
              setSummaryIndex(index);
@@ -231,10 +232,14 @@ export function BulkSettlementBreakDown(props){
                         </div>
                     </TabPanel>
                     <TabPanel header={props?.mobile?'TS':'Transaction Summary'}>
-                        <p>Transaction Reversal Attempt!!!</p>
+                        <div>
+                            <BulkTransactions bulkSettlementKey={props.bulkSettlementKey} />
+                        </div>
                     </TabPanel>
                     <TabPanel header={props?.mobile?'PR':'PaymentRequest'}>
-                        <p>POS Transaction status!!!</p>
+                        <div>
+                            <RepaymentRequest bulkSettlementKey={props.bulkSettlementKey} />
+                        </div>
                     </TabPanel>
                 </TabView>
             </div>

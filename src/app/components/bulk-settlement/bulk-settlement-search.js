@@ -5,6 +5,7 @@ import {CustomLoader}        from "../../shared/components/custom-loader/custom-
 import {FormInput}           from "../../shared/components/form-component/form-input";
 import {CUSTOM_VALIDATION}   from "../../shared/validation/validation";
 import moment                from "moment";
+import {FormDropdown}        from "../../shared/components/form-component/form-dropdown";
 
 export function BulkSettlementSearch(props){
     const [loading,setLoading] = useState(false);
@@ -12,11 +13,9 @@ export function BulkSettlementSearch(props){
     const [transaction,setTransaction] = useState(
         {
             cardAcceptorId: null,
+            status:null,
             endDate: moment().format('YYYY-MM-DD'),
-            maskedPan: null,
-            rrn: null,
             startDate:moment().subtract(6, 'days').format('YYYY-MM-DD'),
-            terminalId: null
         }
 
     )
@@ -25,12 +24,15 @@ export function BulkSettlementSearch(props){
         {
             cardAcceptorId: null,
             endDate: null,
-            maskedPan: null,
-            rrn: null,
+            status:null,
             startDate:null,
-            terminalId: null
         }
     )
+
+    const status = [
+        {desc:'PENDING',code:'PENDING'},
+        {desc:'COMPLETED',code:'COMPLETED'},
+    ]
 
     useEffect(() => {
             let mounted = true
@@ -70,17 +72,13 @@ export function BulkSettlementSearch(props){
         if(transaction['endDate']){
             payload.endDate = transaction['endDate'];
         }
-        if(transaction['maskedPan']){
-            payload.maskedPan = transaction['maskedPan'];
+
+        if(transaction['status']){
+            payload.status = transaction['status']?.code;
         }
-        if(transaction['rrn']){
-            payload.rrn = transaction['rrn'];
-        }
+
         if(transaction['startDate']){
             payload.startDate = transaction['startDate'];
-        }
-        if(transaction['terminalId']){
-            payload.terminalId = transaction['terminalId'];
         }
 
         return payload;
@@ -161,13 +159,10 @@ export function BulkSettlementSearch(props){
                         <FormInput value={transaction['cardAcceptorId']} required={false} field="cardAcceptorId" type="INPUT" error={transactionError['cardAcceptorId']} fn={validateForm} loading={loading}  placeholder="Card acceptor id"/>
                     </div>
                     <div className="p-col-12">
-                        <FormInput value={transaction['maskedPan']} required={true} field="maskedPan" type="INPUT" error={transactionError['maskedPan']} fn={validateForm} loading={loading}  placeholder="Masked Pan"/>
-                    </div>
-                    <div className="p-col-12">
-                        <FormInput value={transaction['rrn']} required={true} field="rrn" type="INPUT" error={transactionError['rrn']} fn={validateForm} loading={loading}  placeholder="Rrn"/>
-                    </div>
-                    <div className="p-col-12">
-                        <FormInput value={transaction['terminalId']} required={false} field="terminalId" type="INPUT" error={transactionError['terminalId']} fn={validateForm} loading={loading}  placeholder="Terminal id"/>
+                    <FormDropdown required={true} label="code" field="status"
+                    error={transactionError['status']} disabled={loading}
+                    value={transaction['status']} fn={validateDropdown}
+                    options={status} placeholder="Select a status"/>
                     </div>
                     <div className="p-col-6">
                         <FormInput inputType="date" value={transaction['startDate']} required={false} field="startDate" type="INPUT" error={transactionError['startDate']} fn={validateForm} loading={loading}  placeholder="Start date"/>

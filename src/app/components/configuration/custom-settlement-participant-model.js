@@ -65,20 +65,19 @@ export function CustomSettlementParticipantModel(props){
         SERVICES.GET_CHARGE_MODELS()
             .then(data=>{
                 let arr = []
+                let newChargeType = null;
                 data.result.forEach(e=>{
-                  arr.push(e);
+                  if(props.isUpdate && (e.chargeTypeName === props?.editParticipant?.chargeType)){
+                      newChargeType = {desc:e.chargeTypeName,code:e.code}
+                  }
+                  arr.push({desc:e.chargeTypeName,code:e.code});
                 })
-               setChargeTypes(arr);
-                if(props.isUpdate) {
+                if(props.isUpdate){
                     const global = getGlobalCharge(props?.editParticipant?.global);
-                    data?.result.forEach(e => {
-                        if (e.code === props?.editParticipant?.chargeType) {
-                            setParticipant({...props.editParticipant,chargeType: e});
-                        }
-                    })
-                    setParticipant({...participant,global:global});
+                    setParticipant({...props.editParticipant,global:global,chargeType: newChargeType});
                 }
-              setLoading(false)
+               setChargeTypes(arr);
+               setLoading(false)
             })
             .catch(error=>{
                 console.log('error ',error);
@@ -194,7 +193,7 @@ export function CustomSettlementParticipantModel(props){
                    </div>
                    <div className="p-col-6">
                        <div className="p-mt-1">
-                           <FormDropdown required={true} label="code" field="chargeType"
+                           <FormDropdown required={true} label="desc" field="chargeType"
                            error={participantError['chargeType']} disabled={loading}
                            value={participant['chargeType']} fn={validateDropdown}
                            options={chargeTypes} placeholder="Select a charge type"/>

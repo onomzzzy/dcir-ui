@@ -9,6 +9,7 @@ import {CustomModal}                from "../../shared/components/custom-modal/c
 import {HELPER}                     from "../../shared/helper/helper";
 import {NewDispute}                 from "../dispute/new-dispute";
 import {NewTable}                   from "../../shared/components/custom-table/new-table";
+import {CustomAccordion}            from "../../shared/components/custom-accordion/custom-accordion";
 
 
 
@@ -135,21 +136,19 @@ export function TransactionBreakdown(props){
 
                             </div>
                             <div className="p-grid">
-                            <div className="p-col-12 p-lg-6">
+                            <div className="p-col-12">
                             <div>
-                                <p className="dispute-title">Transaction Details</p>
-                            </div>
-                            <div style={{border:'solid 1px #E0E8F4',borderRadius:'4px'}}>
-                                {detailsView()}
+                                <div>
+                                    <CustomAccordion currentView={detailsView}  title="Transaction Details" open={true}/>
+                                </div>
                             </div>
                             </div>
 
-                                <div className="p-col-12 p-lg-6">
-                                    <div>
-                                        <p className="dispute-title">Additional Information</p>
-                                    </div>
-                                    <div style={{border:'solid 1px #E0E8F4',borderRadius:'4px'}}>
-                                        {detailsView()}
+                                <div className="p-col-12">
+                                    <div style={{marginTop:'-2.2em'}}>
+                                        <div>
+                                            <CustomAccordion currentView={detailsView}  title="Additional Information" open={false}/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -299,7 +299,7 @@ function getBulkSettlement(params){
 }
 
 function getBulkSettlementTransactions(params,bulkSettlementKey){
-    const url = `${CONFIG.DCIR_HOST}${API.GET_BULK_SETTLEMENT_TRANSACTION}/${bulkSettlementKey}?${params}`;
+    const url = `${CONFIG.DCIR_HOST}${API.GET_BULK_SETTLEMENT_TRANSACTION}${bulkSettlementKey}?${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -315,7 +315,7 @@ function getBulkSettlementTransactions(params,bulkSettlementKey){
 }
 
 function getPaymentRequest(params,bulkSettlementKey){
-    const url = `${CONFIG.DCIR_HOST}${API.GET_PAYMENT_REQUEST}/${bulkSettlementKey}?${params}`;
+    const url = `${CONFIG.DCIR_HOST}${API.GET_PAYMENT_REQUEST}${bulkSettlementKey}?${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
