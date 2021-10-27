@@ -14,23 +14,23 @@ import {MainContext}                                    from "../../../../App";
 
 export function RepaymentRequest (props){
     const toast = useRef(null);
-    const op = useRef(null);
+    // const op = useRef(null);
     const mainContext = useContext(MainContext);
     const [loading,setLoading] = useState(true)
-    const [visible,setVisible] = useState(false)
+    // const [visible,setVisible] = useState(false)
     const [currentIndex,setCurrentIndex] = useState(0);
     const [error,setError] = useState('');
     const [search,setSearch] = useState(false);
-    const [modalLoading,setModalLoading] = useState(false);
-    const [modalLoadingText,setModalLoadingText] = useState('');
+    // const [modalLoading,setModalLoading] = useState(false);
+    // const [modalLoadingText,setModalLoadingText] = useState('');
     const [totalPages,setTotalPages] = useState(0);
     const [totalItems,setTotalItems] = useState(0);
     const [isMobileTransaction,setIsMobileTransaction] = useState(false);
     const [currentPage,setCurrentPage] = useState(mainContext?.mainState?.currentPage);
     const [range,setRange] = useState(5);
-    const [breakDownTitle,setBreakDownTitle] = useState('')
+    // const [breakDownTitle,setBreakDownTitle] = useState('')
     const [emptyText,setEmptyText] = useState('');
-    const [currentModalIndex,setCurrentModalIndex] = useState(0);
+    // const [currentModalIndex,setCurrentModalIndex] = useState(0);
     const [transactionSearchKey,setTransactionSearchKey] = useState('');
 
     const tableHeaders = [
@@ -55,7 +55,7 @@ export function RepaymentRequest (props){
     useEffect(() => {
             let mounted = true
             if(mounted) {
-                getTransactions();
+                getRepaymentRequests();
             }
             return () => {
                 mounted = false;
@@ -88,7 +88,7 @@ export function RepaymentRequest (props){
         arr.push({label:'Debit Account:',value:e?.debitAccount});
         arr.push({label:'Narration',value:e?.narration});
         arr.push({label:'status',value:e?.status,itemCase:'status'});
-        arr.push({label:'Transaction amount',value:e?.amount,itemCase:"transactionAmount"});
+        arr.push({label:'FrontOfficeTransaction amount',value:e?.amount,itemCase:"transactionAmount"});
         arr.push({label:'Created On',value:e?.createdAt,itemCase:"transactionTime"});
         arr.push({label:'completed On',value:e?.completedAt,itemCase:"transactionTime"});
 
@@ -110,14 +110,12 @@ export function RepaymentRequest (props){
         setDetails(arr);
         setParticipantDetails(participant);
         setChargeTypeDetails(chargeType);
-        // setBreakDownTitle('Transaction')
         setIsMobileTransaction(isMobile);
         setCurrentIndex(3);
-        // openModal(2,isMobile)
     }
 
 
-    function getTransactions(){
+    function getRepaymentRequests(){
         setTransactions([]);
         let params = {
             page:0,
@@ -128,7 +126,7 @@ export function RepaymentRequest (props){
             .then(data=>{
                 const result = data?.result?.content;
                 if(!result.length){
-                    setEmptyText('No transaction yet ...')
+                    setEmptyText('No payment request yet ...')
                 }
                 else{
                     let arr = [];
@@ -144,81 +142,81 @@ export function RepaymentRequest (props){
                 setLoading(false)
             })
             .catch(error=>{
-                setError('Unable to get request');
+                setError(HELPER.PROCESS_ERROR(error));
                 setCurrentIndex(1);
                 setLoading(false)
             })
     }
 
-    function onHide(){
+    // function onHide(){
+    //
+    // }
 
-    }
-
-    function openModal(index,isMobile?){
-        setCurrentModalIndex(index);
-        if(isMobile){
-            setCurrentIndex(2);
-        }
-        else {
-            setVisible(true);
-        }
-    }
+    // function openModal(index,isMobile?){
+    //     setCurrentModalIndex(index);
+    //     if(isMobile){
+    //         setCurrentIndex(2);
+    //     }
+    //     else {
+    //         setVisible(true);
+    //     }
+    // }
 
     function reload(){
         setLoading(true);
         setSearch(false);
         setCurrentIndex(0);
-        getTransactions();
+        getRepaymentRequests();
     }
+    //
+    // function closeModal(isReload?){
+    //     if(visible){
+    //         setVisible(false);
+    //     }
+    //     if(currentIndex === 2){
+    //         setCurrentIndex(1)
+    //     }
+    //
+    //     if(isReload){
+    //         reload();
+    //     }
+    // }
 
-    function closeModal(isReload?){
-        if(visible){
-            setVisible(false);
-        }
-        if(currentIndex === 2){
-            setCurrentIndex(1)
-        }
+    // const mobileModal = () => {
+    //     // eslint-disable-next-line default-case
+    //     switch (currentModalIndex){
+    //         case 1:
+    //             return ''
+    //         case 2:
+    //             return <DetailsBreakDown mobile={true} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
+    //     }
+    // }
 
-        if(isReload){
-            reload();
-        }
-    }
+    // function goBack(){
+    //     setCurrentIndex(1);
+    // }
 
-    const mobileModal = () => {
-        // eslint-disable-next-line default-case
-        switch (currentModalIndex){
-            case 1:
-                return ''
-            case 2:
-                return <DetailsBreakDown mobile={true} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
-        }
-    }
-
-    function goBack(){
-        setCurrentIndex(1);
-    }
-
-    const chargeTypeView = () =>{
+    const paymentRequestView = () =>{
         // eslint-disable-next-line default-case
         switch (currentIndex){
             case 0:
                 return (
-                    <div className="loading-container">
-                        <CustomLoader  loadingText="loading charge models..."/>
+                    <div>
+                        <CustomLoader  loadingText="loading payment requests..."/>
                     </div>
                 )
             case 1:
                 return <CustomTable isReload={true} totalPages={totalPages} totalItems={totalItems} currentPage={currentPage} range={range}  emptyText={emptyText} search={search} reload={reload} error={error} items={transactions} headers={tableHeaders}/>
-            case 2:
-                return(
-                    <div className="mobile-modal-container">
-                        <div className="custom-card">
-                            <div className="mobile-card-position">
-                                {mobileModal()}
-                            </div>
-                        </div>
-                    </div>
-                )
+            // case 2:
+            //     return(
+            //         <div className="mobile-modal-container">
+            //             <div className="custom-card">
+            //                 <div className="mobile-card-position">
+            //                     {mobileModal()}
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     )
             case 3:
                 return (
                     <div className="p-mt-2">
@@ -229,60 +227,59 @@ export function RepaymentRequest (props){
         }
     }
 
-    function searchTransaction (e){
-        setVisible(false);
-        setLoading(true);
-        setTransactions([]);
-        const params = e;
-        const pageParam = HELPER.TO_URL_STRING( {
-            page: 0,
-            size:1
-        });
-        SERVICES.SEARCH_TRANSACTIONS(params,pageParam)
-            .then(data=>{
-                const result = data.result.content;
-                if(!result.length){
-                    setEmptyText('No charge type model yet ...')
-                    setSearch(true);
-                    setLoading(false);
-                }
-                else{
-                    let arr = [];
-                    setTotalItems(data.result.totalItems);
-                    setTotalPages(data.result.totalPages);
-                    result.forEach(e=>{
-                        arr.push({...e,actions:'CR',detailsFunction:openAction});
-                    })
-                    setTransactions(arr)
-                    setError(null);
-                    // setCurrentIndex(1);
-                    setLoading(false)
-                }
-            })
-            .catch(error=>{
-                setError('Unable to get request');
-                // setCurrentIndex(1);
-                setLoading(false)
-            })
-
-    }
+    // function searchTransaction (e){
+    //     setVisible(false);
+    //     setLoading(true);
+    //     setTransactions([]);
+    //     const params = e;
+    //     const pageParam = HELPER.TO_URL_STRING( {
+    //         page: 0,
+    //         size:1
+    //     });
+    //     SERVICES.SEARCH_TRANSACTIONS(params,pageParam)
+    //         .then(data=>{
+    //             const result = data.result.content;
+    //             if(!result.length){
+    //                 setEmptyText('No payment request yet ...')
+    //                 setSearch(true);
+    //                 setLoading(false);
+    //             }
+    //             else{
+    //                 let arr = [];
+    //                 setTotalItems(data.result.totalItems);
+    //                 setTotalPages(data.result.totalPages);
+    //                 result.forEach(e=>{
+    //                     arr.push({...e,actions:'CR',detailsFunction:openAction});
+    //                 })
+    //                 setTransactions(arr)
+    //                 setError(null);
+    //                 setLoading(false)
+    //             }
+    //         })
+    //         .catch(error=>{
+    //             setError(HELPER.PROCESS_ERROR(error));
+    //             setLoading(false)
+    //         })
+    //
+    // }
 
 
 
-    function modalFooter(footer){
+    // function modalFooter(footer){
+    //
+    // }
 
-    }
 
+    // const modalContent = () =>{
+    //     // eslint-disable-next-line default-case
+    //     switch (currentModalIndex){
+    //         case 1:
+    //             return ''
+    //         case 2:
+    //             return <DetailsBreakDown footer={modalFooter} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
+    //     }
+    // }
 
-    const modalContent = () =>{
-        // eslint-disable-next-line default-case
-        switch (currentModalIndex){
-            case 1:
-                return ''
-            case 2:
-                return <DetailsBreakDown footer={modalFooter} transactionSearchKey={transactionSearchKey} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
-        }
-    }
 
     function onHide(){
 
@@ -293,14 +290,14 @@ export function RepaymentRequest (props){
     return(
         <div>
             <Toast ref={toast} />
-            <div>
-                <CustomModal onHide={onHide} visible={visible} modalContent={modalContent}/>
-            </div>
-            <div className={currentIndex !==3?'dcir-show page-title p-text-left':'dcir-hide'}>Payment Request</div>
+            {/*<div>*/}
+            {/*    <CustomModal onHide={onHide} visible={visible} modalContent={modalContent}/>*/}
+            {/*</div>*/}
+            <div className={currentIndex !==3 && currentIndex !== 0?'dcir-show page-title-sm p-text-left':'dcir-hide'}>Payment Request</div>
             <div className="p-mt-6">
             </div>
             <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-show':'dcir-hide'}>
-                {chargeTypeView()}
+                {paymentRequestView()}
             </div>
             <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-hide':'dcir-show'}>
                 <AccessDenied/>

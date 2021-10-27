@@ -64,6 +64,13 @@ function getRoles(){
      return JSON.parse(localStorage.getItem(LOCAL_STORAGE.ROLES));
 }
 
+function getCurrentSideNav(){
+    return {
+        selectedSideNav: localStorage.getItem(LOCAL_STORAGE.CURRENT_PAGE_STORAGE_NAME),
+        selectedSideNavIndex:Number(localStorage.getItem(LOCAL_STORAGE.CURRENT_PAGE_INDEX))
+    }
+}
+
 function getAuthorities(){
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE.AUTHORITIES));
 }
@@ -77,5 +84,6 @@ export const LOCAL_STORAGE_SERVICE = {
     IS_TOKEN_EXPIRE:isTokenExpire,
     GET_ROLES:getRoles,
     GET_AUTHORITIES:getAuthorities,
-    STORE_CURRENT_PAGE:storeCurrentPage
+    STORE_CURRENT_PAGE:storeCurrentPage,
+    GET_CURRENT_NAV:getCurrentSideNav
 }

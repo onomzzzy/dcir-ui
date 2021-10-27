@@ -1,4 +1,4 @@
-
+import './bulk-settlement.css';
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {Toast}                                          from "primereact/toast";
 import {BulkTransactionBreakDown}                       from "./bulk-transaction-break-down";
@@ -83,11 +83,11 @@ export function BulkTransactions (props){
         arr.push({label:'Rrn',value:e?.rrn});
         arr.push({label:'Stan',value:e?.stan});
         arr.push({label:'Terminal id',value:e?.terminalId});
-        arr.push({label:'Transaction amount',value:e?.transactionAmount,itemCase:"transactionAmount"});
-        arr.push({label:'Transaction time',value:e?.transactionTime,itemCase:"transactionTime"});
+        arr.push({label:'FrontOfficeTransaction amount',value:e?.transactionAmount,itemCase:"transactionAmount"});
+        arr.push({label:'FrontOfficeTransaction time',value:e?.transactionTime,itemCase:"transactionTime"});
 
         setDetails(arr);
-        // setBreakDownTitle('Transaction')
+        // setBreakDownTitle('FrontOfficeTransaction')
         setIsMobileTransaction(isMobile);
         console.log('arr... ',arr)
         setCurrentIndex(3);
@@ -182,8 +182,8 @@ export function BulkTransactions (props){
         switch (currentIndex){
             case 0:
                 return (
-                    <div className="loading-container">
-                        <CustomLoader loadingText="loading charge models..."/>
+                    <div>
+                        <CustomLoader loadingText="loading transactions..."/>
                     </div>
                 )
             case 1:
@@ -235,13 +235,11 @@ export function BulkTransactions (props){
                     })
                     setTransactions(arr)
                     setError(null);
-                    // setCurrentIndex(1);
                     setLoading(false)
                 }
             })
             .catch(error=>{
                 setError(HELPER.PROCESS_ERROR(error));
-                // setCurrentIndex(1);
                 setLoading(false)
             })
 
@@ -276,7 +274,7 @@ export function BulkTransactions (props){
             <div>
                 <CustomModal onHide={onHide} visible={visible} modalContent={modalContent}/>
             </div>
-            <div className={currentIndex !== 3?'dcir-show page-title p-text-left':'dcir-hide'}>Transactions</div>
+            <div className={currentIndex !== 3 && currentIndex !== 0?'dcir-show page-title-sm p-text-left':'dcir-hide'}>Transactions</div>
             <div className="p-mt-6">
             </div>
             <div className={HELPER.HAS_AUTHORITY('dcir_view_transactions')?'dcir-show':'dcir-hide'}>

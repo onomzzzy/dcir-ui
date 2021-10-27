@@ -156,6 +156,16 @@ export function CustomTable(props) {
                        className="add-cursor table-action-icon-delete"><i className="pi pi-trash"/></span></span>
                  </span>
                 )
+            case 'CRUDE':
+                return (
+                 <span className="dcir-tb-action-position">
+                 <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'UPDATE')?'dcir-show':'dcir-hide'}>
+                 <span onClick={()=>item?.detailsFunction(item,'UPDATE',true)} className="add-cursor table-action-icon"><i className="pi pi-pencil"/></span></span>
+                 <span onClick={()=>item?.detailsFunction(item,'VIEW',true)} className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-eye"/></span>
+                   <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'DEACTIVATE')?'dcir-show':'dcir-hide'}>
+                   <span onClick={()=>item?.detailsFunction(item,'DEACTIVATE',true)} className="p-ml-4 add-cursor table-action-icon-delete"><i className="pi pi-eye-slash"/></span></span>
+                 </span>
+                )
             case  'CRU':
                     return (
                  <span className="dcir-tb-action-position">

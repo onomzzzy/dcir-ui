@@ -10,8 +10,10 @@ const get_charge_type = '/api/v1/backoffice/charge-model/types';//remember to re
 const get_settlement_type = '/api/v1/backoffice/merchant/settlement/types';
 const create_settlement = '/api/v1/backoffice/settlement-participant';
 const delete_settlement = '/api/v1/backoffice/settlement-participant/remove';
+const deactivate_merchant = '/api/v1/frontoffice/user/status/change';
 const create_dispute = '/api/v1/backoffice/dispute';
 const get_transactions = '/api/v1/backoffice/transaction';
+const get_front_office_transactions = '/api/v1/frontoffice/transaction';
 const get_bulk_settlement = '/api/v1/backoffice/settlement/bulk';
 const get_front_office_bulk_settlement = '/api/v1/frontoffice/settlement/bulk';
 const get_bulk_settlement_transactions = '/api/v1/backoffice/settlement/';
@@ -50,5 +52,7 @@ export const API = {
     GET_PAYMENT_REQUEST:`${get_payment_request}`,
     GET_FRONT_OFFICE_PAYMENT_REQUEST: `${get_front_office_payment_request}`,
     CREATE_FRONT_OFFICE_MERCHANT_USER: `${create_front_office_merchant_user}`,
-    GET_FRONT_OFFICE_MERCHANT_ROLES: `${get_front_office_merchant_roles}`
+    GET_FRONT_OFFICE_MERCHANT_ROLES: `${get_front_office_merchant_roles}`,
+    GET_FRONT_OFFICE_TRANSACTIONS: `${get_front_office_transactions}`,
+    DEACTIVATE_MERCHANT: `${deactivate_merchant}`
 }

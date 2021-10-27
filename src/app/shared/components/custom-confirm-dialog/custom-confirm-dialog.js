@@ -1,7 +1,6 @@
 import './custom-confirm-dialog.css'
 import {CustomLoader}  from "../custom-loader/custom-loader";
 import {CustomToast}   from "../alert/custom-toast";
-import {useState}      from "react";
 import {CustomMessage} from "../alert/custom-message";
 
 

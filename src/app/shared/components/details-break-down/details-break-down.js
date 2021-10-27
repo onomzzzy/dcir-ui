@@ -1,7 +1,7 @@
 import './details-break-down.css'
 import {SpecialLabelCases}   from "../../models/utilities";
 import {useEffect, useState} from "react";
-import {NewDispute}          from "../../../components/dispute/new-dispute";
+import {NewDispute}          from "../../../components/back-office/dispute/new-dispute";
 import {SERVICES}            from "../../../core/services/services";
 import {ScrollPanel}         from "primereact/scrollpanel";
 import {Icon}                from "../../icons/icon";

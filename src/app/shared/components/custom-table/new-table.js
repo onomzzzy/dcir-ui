@@ -53,6 +53,16 @@ export function NewTable(props) {
                  <span onClick={()=>item?.detailsFunction(item,'VIEW',props.isMobile)} className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-eye"/></span>
                  </span>
                 )
+            case 'CRUDE':
+                return (
+                    <span className="dcir-tb-action-position">
+                    <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'UPDATE')?'dcir-show':'dcir-hide'}>
+                   <span onClick={()=>item?.detailsFunction(item,'UPDATE',props.isMobile)} className="add-cursor table-action-icon"><i className="pi pi-pencil"/></span></span>
+                 <span onClick={()=>item?.detailsFunction(item,'VIEW',props.isMobile)} className="p-ml-4 add-cursor table-action-icon"><i className="pi pi-eye"/></span>
+                   <span className={HELPER.CAN_PERFORM_ACTION(props?.authorities,'DEACTIVATE')?'dcir-show':'dcir-hide'}>
+                   <span onClick={()=>item?.detailsFunction(item,'DEACTIVATE',props.isMobile)} className="p-ml-4 add-cursor table-action-icon-delete"><i className="pi pi-eye-slash"/></span></span>
+                 </span>
+                )
             case 'CR':
                 return (
                     <span onClick={()=>item?.detailsFunction(item,'VIEW',props.isMobile)} className="mobile-table-icon add-cursor">

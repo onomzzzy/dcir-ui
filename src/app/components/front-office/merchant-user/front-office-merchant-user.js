@@ -6,7 +6,7 @@ import {CreateMerchantUser}    from "./create-merchant-user";
 import {MainContext}           from "../../../../App";
 import {HELPER}                from "../../../shared/helper/helper";
 import {SERVICES}              from "../../../core/services/services";
-import {CustomChargeTypeModel} from "../../configuration/custom-charge-type-model";
+import {CustomChargeTypeModel} from "../../back-office/configuration/custom-charge-type-model";
 import {DetailsBreakDown}      from "../../../shared/components/details-break-down/details-break-down";
 import {CustomConfirmDialog}   from "../../../shared/components/custom-confirm-dialog/custom-confirm-dialog";
 import {CustomLoader}          from "../../../shared/components/custom-loader/custom-loader";
@@ -41,6 +41,7 @@ export function FrontOfficeMerchantUser (){
 
     const [emptyText,setEmptyText] = useState('');
     const [currentModalIndex,setCurrentModalIndex] = useState(0)
+    const [merchantId,setMerchantId] = useState(null);
 
     const tableHeaders = [
         {label:'Firstname',value:'firstname'},
@@ -80,30 +81,22 @@ export function FrontOfficeMerchantUser (){
         setDetailsId(e);
         setDetailsMobile(isMobile);
         setDetailsLoading(true);
-        openModal(2,isMobile)
         let arr = [];
-        SERVICES.VIEW_MERCHANT_USER(e.username)
-            .then(data=>{
-                const result = data.result;
-                setDetails([]);
-                arr.push({label: 'First name', value: result?.firstname});
-                arr.push({label: 'Last name', value: result?.lastname});
-                arr.push({label: 'Username', value: result?.username});
-                arr.push({label: 'Email', value: result?.email});
-                arr.push({label: 'Created Date', value: result?.createdAt,itemCase:"transactionTime"});
-                arr.push({label: 'Merchant Name', value: result?.merchant?.merchantName});
-                arr.push({label: 'Merchant Id', value: result?.merchant?.merchantId});
-                arr.push({label: 'Merchant Email', value: result?.merchant?.mainEmail});
-                arr.push({label: 'Merchant Phone No', value: result?.merchant?.phoneNumber});
-                setDetails(arr);
-                setBreakDownTitle('Merchant User')
-                setDetailsLoading(false);
-            })
-            .catch(error=>{
-                setDetailsError(HELPER.PROCESS_ERROR(error));
-                setDetailsLoading(false);
-            })
-
+        const result = e;
+        setDetails([]);
+        arr.push({label: 'First name', value: result?.firstname});
+        arr.push({label: 'Last name', value: result?.lastname});
+        arr.push({label: 'Username', value: result?.username});
+        arr.push({label: 'Email', value: result?.email});
+        arr.push({label: 'Created Date', value: result?.createdAt,itemCase:"transactionTime"});
+        arr.push({label: 'Merchant Name', value: result?.merchant?.merchantName});
+        arr.push({label: 'Merchant Id', value: result?.merchant?.merchantId});
+        arr.push({label: 'Merchant Email', value: result?.merchant?.mainEmail});
+        arr.push({label: 'Merchant Phone No', value: result?.merchant?.phoneNumber});
+        setDetails(arr);
+        setBreakDownTitle('Merchant User')
+        setDetailsLoading(false);
+        openModal(2,isMobile)
     }
 
     function openAction(e,action,isMobile){
@@ -134,8 +127,11 @@ export function FrontOfficeMerchantUser (){
                     setTotalItems(data.result.totalElements);
                     setTotalPages(data.result.totalPages);
                     result.forEach(e=>{
-                        arr.push({...e,merchant:e?.merchant?.merchantName,
-                            merchantId:e?.merchant?.merchantId,
+                        if(e.username === mainContext?.mainState?.username){
+                            setMerchantId(e?.merchantId);
+                        }
+                        arr.push({...e,merchant:e?.merchantName,
+                            merchantId:e?.merchantId,
                             actions:'CR',detailsFunction:openAction});
                     })
                     setMerchantUsers(arr)
@@ -190,16 +186,14 @@ export function FrontOfficeMerchantUser (){
         // eslint-disable-next-line default-case
         switch (currentModalIndex){
             case 0:
-                return <CustomChargeTypeModel closeModal={closeModal}/>
+                return <CreateMerchantUser merchantId={merchantId} closeModal={closeModal}/>
             case 1:
-                return <CustomChargeTypeModel searchFunction={searchChargeType} isSearch={true} closeModal={closeModal}/>
+                return <CreateMerchantUser searchFunction={searchChargeType} isSearch={true} closeModal={closeModal}/>
             case 2:
                 return <DetailsBreakDown reload={reloadDetails} error={detailsError} loading={detailsLoading} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
             case 3:
                 return <CustomConfirmDialog itemId={itemIdForDelete} confirmText={confirmText} loading={modalLoading} loadingText="Deleting charge type..." fn={deleteChargeType} closeModal={closeModal}/>
-            case 4:
-                return <CustomChargeTypeModel editChargeType={chargeTypeForEdit} isUpdate={true}  closeModal={closeModal}/>
-        }
+            }
     }
 
     const chargeTypeView = () =>{
@@ -264,15 +258,13 @@ export function FrontOfficeMerchantUser (){
         // eslint-disable-next-line default-case
         switch (currentModalIndex){
             case 0:
-                return <CreateMerchantUser closeModal={closeModal}/>
+                return <CreateMerchantUser merchantId={merchantId} closeModal={closeModal}/>
             case 1:
                 return <CreateMerchantUser searchFunction={searchChargeType} isSearch={true} closeModal={closeModal}/>
             case 2:
                 return <DetailsBreakDown reload={reloadDetails} error={detailsError} loading={detailsLoading} title={breakDownTitle} breakDown={details} closeModal={closeModal}/>
             case 3:
                 return <CustomConfirmDialog itemId={itemIdForDelete} confirmText={confirmText} loading={modalLoading} loadingText="Deleting charge type..." fn={deleteChargeType} closeModal={closeModal}/>
-            case 4:
-                return <CustomChargeTypeModel editChargeType={chargeTypeForEdit} isUpdate={true}  closeModal={closeModal}/>
         }
     }
 

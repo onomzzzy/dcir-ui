@@ -16,7 +16,7 @@ function Sider(){
     const [color,setColor] = useState('#6D8C98');
     const defaultColor = '#6D8C98';
     const defaultActiveColor = '#464DF2';
-    const [menuClicked,setMenuClicked] = useState('');
+    const [menuClicked,setMenuClicked] = useState(mainContext?.mainState?.selectedSideNav);
     const [subMenuClicked,setSubMenuClicked] = useState('Dashboard');
     const role = HELPER.GET_ROLE();
 
@@ -24,10 +24,10 @@ function Sider(){
     useEffect(() => {
             let mounted = true
             if(mounted) {
-             console.log('mainContext?.mainState?.selectedSideNav ',mainContext?.mainState)
-               setMenuClicked(mainContext?.mainState?.selectedSideNav);
-               setColorIndex(mainContext?.mainState?.selectedSideNavIndex);
-                setColor('#464DF2')
+              const sideNav = LOCAL_STORAGE_SERVICE.GET_CURRENT_NAV();
+               setMenuClicked(sideNav.selectedSideNav);
+               setColorIndex(sideNav.selectedSideNavIndex);
+               setColor('#464DF2')
             }
             return () => {
                 mounted = false;
@@ -64,7 +64,7 @@ function Sider(){
               return(
                   <div key={navItem.uniqueId.toString()} className={hasAuthority?'dcir-show':'dcir-hide'}>
                   <div onClick={()=>setNavColorOnClicked(navItem.uniqueId,navItem.text,navItem.route)} onMouseLeave={()=>setNavColorOnMouseLeave(navItem.uniqueId,navItem.text)} onMouseEnter={()=>setNavColorOnMouseEnter(navItem.uniqueId,navItem.text)} className={menuClicked === navItem.text?'singleNavContainer singleNavContainer-active':'singleNavContainer'}>
-                      <div className="p-grid">
+                      <div className="p-grid p-text-left">
                         <div className="p-col-2"><div className="singleNavContainer-icon"><Icon color={(menuClicked === navItem.text)? defaultActiveColor:(colorIndex === navItem.uniqueId? defaultActiveColor:defaultColor)} icon={navItem.icon}/></div></div>
                         <div className="p-col-10"><span style={{color:(menuClicked === navItem.text)? defaultActiveColor:(colorIndex === navItem.uniqueId? defaultActiveColor:defaultColor)}} className="singleNavContainer-text adjust-single-nav">{navItem.text}</span></div>
                       </div>

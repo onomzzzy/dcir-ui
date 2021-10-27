@@ -33,7 +33,8 @@ export const SpecialLabelCases = [
     {case: 'status',action:HELPER.RESPONSE_STATUS},
     {case: 'createdOn',action:HELPER.FORMAT_DATE},
     {case: 'active',action:HELPER.RESPONSE_STATUS},
-    {case: 'createdAt',action:HELPER.FORMAT_DATE}
+    {case: 'createdAt',action:HELPER.FORMAT_DATE},
+    {case: 'completedAt',action:HELPER.FORMAT_DATE}
 
 ]
 

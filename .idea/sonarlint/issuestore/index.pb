@@ -9,8 +9,6 @@ M
 src/app/main-app/main-app.css,8/e/8e857f3da1b33d832efe242b6e5dcce71169ab5c
 ;
 src/App.css,a/a/aa7165aefcf8ee3d73539e99ab007daf1aa18d8d
-Q
-!src/app/general/header/header.css,a/2/a2a0299ffebe576c6ea6b8975b27799e325e785a
 R
 "src/app/components/login/login.css,2/7/27c874d5dc2c6e64665ca5ad8e90cdce9c4ab0d5
 M
@@ -37,22 +35,14 @@ p
 @src/app/shared/components/custom-pagination/custom-pagination.js,4/d/4dd507a01287e55b5c6a1c05eb8a3e848a1461d4
 `
 0src/app/components/configuration/charge-type.css,3/2/32223f7b0968e0f7a49530c48d0961e96250a1a8
-i
-9src/app/shared/components/custom-upload/custom-upload.css,2/2/222cbfd7e50e5411cdcdc13209d1c676be67dc34
 9
 	mock.json,9/e/9e7b63791b972beb0e84ce9c6248043d02569b3f
-h
-8src/app/shared/components/custom-upload/custom-upload.js,5/0/5019e74153512da0f336d86c4871e2ffe0ddee5a
 j
 :src/app/shared/components/form-component/form-text-area.js,a/7/a76b3eae4410b66452da0d9f70b1fe8182dc1de6
 h
 8src/app/components/charge-type/charge-type-component.css,8/b/8b93e30054d508c90511c6ee7f02063f02fcb07c
 O
 src/app/shared/models/mock.json,3/a/3a7ed3dcccbb5d552169d9802594d43f93c56ad2
-b
-2src/app/components/merchant-user/merchant-user.css,b/f/bf705a2e3ff21fe6bcdcc5aa6f33da7813b77484
-<
-package.json,7/0/7030d0b2f71b999ff89a343de08c414af32fc93a
 q
 Asrc/app/shared/components/custom-breadcrumb/custom-breadcrumb.css,c/6/c64b400e42a160a56527f2920a1840edcb3502ea
 p
@@ -73,8 +63,6 @@ d
 4src/app/shared/components/custom-table/new-table.css,e/4/e48338272307f0d3f9a541a72f341e57094a6889
 a
 1src/app/shared/components/alert/custom-message.js,f/8/f8d4b711a140e343d4815d0613df9c51732b8c22
-P
- src/app/general/header/header.js,e/1/e12bd1991968ed177d3e4b5a580e908043f9f059
 h
 8src/app/shared/components/custom-loader/custom-loader.js,a/6/a6ea58690b0f2cd4f4d7b8bad71e66814d314e21
 _
@@ -87,29 +75,13 @@ l
 <src/app/components/configuration/custom-charge-type-model.js,7/b/7b3ca389ea3f210921fe27da4679cbf915a68733
 c
 3src/app/components/dashboard/dashboard-component.js,b/b/bbe732fe4bd1ae386e18f44a1c2b8bca2381b1e7
-\
-,src/app/components/dispute/dispute-search.js,b/3/b3121d478a317efe708c5e9884e8f8ef883ebbd9
-\
-,src/app/components/dispute/update-dispute.js,7/0/700943991808ada117fef664fc8a71453d260d2b
 ^
 .src/app/components/merchant/merchant-search.js,9/7/97c3e5f7b90b96e06960ddb1e50b0301e44a8060
 [
 +src/app/components/error/error-component.js,9/4/94d454e1a94601d78d1d7186847ad844be016088
 a
 1src/app/components/access-denied/access-denied.js,1/3/134793a7a052a709c68f21afe148ea86f3a566e3
-]
--src/app/components/merchant/merchant-table.js,5/9/59d33507275f3de0ed291b30a06455a47ff89832
 Q
 !src/app/core/redux/state/state.js,9/4/944d1d70f6e843b3bde02dc15819936edec99364
-_
-/src/app/components/dispute/dispute-breakdown.js,f/1/f13fcafb665d58c35e803dffaba7ae6f70c9826f
-r
-Bsrc/app/shared/components/details-break-down/details-break-down.js,a/e/aee8e89b023be3961a4bc717e8122cf65882eee9
-Y
-)src/app/components/dispute/new-dispute.js,d/c/dc18d382be9753c6b9e75cc643222f777230eaf8
 ^
 .src/app/components/transaction/transaction.css,6/0/60801ee247fc1b2f495bdf5fcc446fd677f13e1b
-L
-src/app/shared/icons/icon.js,a/5/a533ffda8e3ab0650c576cf396059e314999db01
-W
-'src/app/shared/validation/validation.js,5/1/518b64447a7d553a2c0e1062b8bb1daf2a792310

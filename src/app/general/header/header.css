@@ -1,6 +1,18 @@
 .header{
     height:60px;
+    position: fixed;
+    top:0;
+    width:100%;
+    max-width:1400px;
+    z-index:5000;
     background: #ffffff!important;
+}
+
+#sub-header-id{
+    display:block;
+}
+#main-header-id{
+    display:none;
 }
 
 .header-icon{

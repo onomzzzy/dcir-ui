@@ -8,9 +8,10 @@ import {SpecialLabelCases}          from "../../../shared/models/utilities";
 import {Icon}                       from "../../../shared/icons/icon";
 import {HELPER}                     from "../../../shared/helper/helper";
 import {SERVICES}                   from "../../../core/services/services";
-import {CustomLoader}               from "../../../shared/components/custom-loader/custom-loader";
-import {NewDispute}                 from "../../dispute/new-dispute";
-import {CustomModal}                from "../../../shared/components/custom-modal/custom-modal";
+import {CustomLoader} from "../../../shared/components/custom-loader/custom-loader";
+import {NewDispute}   from "../../back-office/dispute/new-dispute";
+import {CustomModal}  from "../../../shared/components/custom-modal/custom-modal";
+import {useWindowSize}              from "../../../core/custom-hook/use-widows-resize";
 
 
 
@@ -26,6 +27,11 @@ export function BulkSettlementBreakDown(props){
     const [disputeCodes,setDisputeCodes] = useState([]);
     const [summaryIndex,setSummaryIndex] = useState(1);
     const [merchantTabIndex,setMerchantTabIndex] = useState(0);
+    const windowSize = useWindowSize();
+
+    function isTabMobile (){
+        return windowSize.width <= 945
+    }
 
 
     useEffect(() => {
@@ -120,7 +126,7 @@ export function BulkSettlementBreakDown(props){
         arr.push({label:'Log code',value:e?.logCode});
         arr.push({label:'Customer account name',value:e?.customerAccountName});
         arr.push({label:'Customer account no',value:e?.customerAccountNumber});
-        arr.push({label:'Transaction amount',value:e?.transactionAmount,itemCase:'transactionAmount'})
+        arr.push({label:'FrontOfficeTransaction amount',value:e?.transactionAmount,itemCase:'transactionAmount'})
         arr.push({label:'Response Code',value:e?.transactionResponseCode,itemCase:'responseCode'});
         arr.push({label:"Resolution Status",value:e?.resolutionStatus,itemCase:'resolutionStatus'});
         arr.push({label:"Status",value:e?.status,itemCase:'status'});
@@ -162,7 +168,7 @@ export function BulkSettlementBreakDown(props){
                     <span onClick={props?.goBack} className="add-cursor"><span><Icon icon="go-back-icon"/></span></span>
                 </div>
                 <TabView>
-                    <TabPanel header={props?.mobile?'BS':'Bulk Settlement Summary'}>
+                    <TabPanel header={isTabMobile()?'BS':'Bulk Settlement Summary'}>
                         <div className="p-text-left">
                             <div className="p-grid p-mt-2">
                                 <div className="p-col-8"/>
@@ -215,12 +221,12 @@ export function BulkSettlementBreakDown(props){
                             </div>
                         </div>
                     </TabPanel>
-                    <TabPanel header={props?.mobile?'TS':'Transaction Summary'}>
+                    <TabPanel header={isTabMobile()?'TS':'FrontOfficeTransaction Summary'}>
                         <div>
                             <BulkTransactions bulkSettlementKey={props.bulkSettlementKey} />
                         </div>
                     </TabPanel>
-                    <TabPanel header={props?.mobile?'PR':'PaymentRequest'}>
+                    <TabPanel header={isTabMobile()?'PR':'PaymentRequest'}>
                         <div>
                             <RepaymentRequest bulkSettlementKey={props.bulkSettlementKey} />
                         </div>

@@ -153,8 +153,8 @@ left:-1.25em
 }
 .adjust-single-nav{
     position:relative;
-    top:.15em;
-    left:-3.5em;
+    /*top:.15em;*/
+    /*left:-3.5em;*/
 }
 .singleNavContainer-icon{
     width: 21px;

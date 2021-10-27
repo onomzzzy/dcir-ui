@@ -93,7 +93,10 @@ export function CreateMerchantUser(props){
                 const result = data.result.content
                 let arr = [];
                 result.forEach(e=>{
-                   arr.push({desc:e?.merchantName,code:e?.merchantName,id:e.merchantId});
+                   if(props.merchantId === e.merchantId)
+                {
+                    arr.push({desc: e?.merchantName, code: e?.merchantName, id: e.merchantId});
+                }
                 })
                 setMerchants(arr);
             })

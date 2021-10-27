@@ -1,4 +1,7 @@
-
+.loading-container{
+    position: relative;
+    top:-5em;
+}
 
 .p-tabview-selected{
     background-color: var(--primary-custom-color);

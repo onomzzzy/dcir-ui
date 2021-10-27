@@ -138,6 +138,22 @@ function deleteMerchant(e){
     });
 }
 
+function deactivateMerchant(params){
+    const url = `${CONFIG.DCIR_HOST}${API.DEACTIVATE_MERCHANT}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.put(url,params,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function getSettlementType(){
     const url = `${CONFIG.DCIR_HOST}${API.GET_SETTLEMENT_TYPE}`;
     const header = getBasicHeader();
@@ -234,22 +250,6 @@ function viewParticipant(params){
     });
 }
 
-function geMerchantUsers(){
-    const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}`;
-    const header = getBasicHeader();
-    return new Promise((resolve, reject) => {
-        axios.get(url,{headers:header})
-            .then(function (data) {
-                resolve(data.data);
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    reject(error.response);
-                }
-            });
-    });
-}
-
 function getParticipants(params){
     const url = `${CONFIG.DCIR_HOST}${API.CREATE_PARTICIPANT}?${params}`;
     const header = getBasicHeader();
@@ -268,6 +268,22 @@ function getParticipants(params){
 
 function getTransactions(params){
     const url = `${CONFIG.DCIR_HOST}${API.GET_TRANSACTIONS}?${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
+function getFrontOfficeTransactions(params){
+    const url = `${CONFIG.DCIR_HOST}${API.GET_FRONT_OFFICE_TRANSACTIONS}?${params}`;
     const header = getBasicHeader();
     return new Promise((resolve, reject) => {
         axios.get(url,{headers:header})
@@ -571,6 +587,22 @@ function createDispute(params){
     });
 }
 
+function updateDispute(params){
+    const url = `${CONFIG.DCIR_HOST}${API.CREATE_DISPUTE}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.put(url,params,{headers:header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function createMerchantUsers(params){
     const url = `${CONFIG.DCIR_HOST}${API.GET_MERCHANT_USER}`;
     const header = getBasicHeader();
@@ -655,10 +687,10 @@ function updateParticipant(params){//re work if needed
 
 const getBasicHeader = () =>{
     const token = LOCAL_STORAGE_SERVICE.GET_TOKEN();
-    // const tokenBearer = `Bearer ${token}`
+    const tokenBearer = `Bearer ${token}`
     return {
         'Content-Type': 'application/json',
-         // Authorization: tokenBearer,
+         Authorization: tokenBearer,
         'Access-Control-Allow-Origin': '*',
     }
 }
@@ -689,6 +721,7 @@ export const SERVICES = {
   SEARCH_TRANSACTIONS: searchTransactions,
   GET_DISPUTE_CODES:getDisputeCodes,
   CREATE_DISPUTE: createDispute,
+  UPDATE_DISPUTE: updateDispute,
   GET_DISPUTE: getDisputes,
   GET_MERCHANT_USER: getMerchantUsers,
   CREATE_MERCHANT_USER: createMerchantUsers,
@@ -702,5 +735,7 @@ export const SERVICES = {
   GET_PAYMENT_REQUEST: getPaymentRequest,
   GET_FRONT_OFFICE_PAYMENT_REQUEST: getFrontOfficePaymentRequest,
   GET_FRONT_OFFICE_MERCHANT_ROLES: getFrontOfficeUserRoles,
-  GET_FRONT_OFFICE_MERCHANT_USERS: getFrontOfficeMerchantUsers
+  GET_FRONT_OFFICE_MERCHANT_USERS: getFrontOfficeMerchantUsers,
+  GET_FRONT_OFFICE_TRANSACTIONS: getFrontOfficeTransactions,
+  DEACTIVATE_MERCHANT: deactivateMerchant
 }

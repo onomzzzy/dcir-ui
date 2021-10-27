@@ -73,6 +73,7 @@ export function FrontOfficeBulkSettlement(){
 
 
     function getSettlementDetails(e,isMobile){
+        console.log('e ',e)
         let arr = [];
         setMerchantDetails([]);
         setDetails([]);
@@ -85,10 +86,10 @@ export function FrontOfficeBulkSettlement(){
         arr.push({label:'Report Status',value:e?.reportStatus,itemCase:'status'});
         arr.push({label:'Settlement Type',value:e?.settlementType});
         arr.push({label:'Status',value:e?.status,itemCase:'status'});
-        arr.push({label:'Transaction Charge Amount',value:e?.transactionChargeAmount,itemCase:"transactionAmount"});
-        arr.push({label:'Transaction Count',value:e?.transactionCount});
-        arr.push({label:'Merchant Transaction Amount',value:e?.transactionMerchantAmount,itemCase:'transactionMerchantAmount'});
-        arr.push({label:'Transaction Total Amount',value:e?.transactionTotalAmount,itemCase:'transactionAmount'});
+        arr.push({label:'FrontOfficeTransaction Charge Amount',value:e?.transactionChargeAmount,itemCase:"transactionAmount"});
+        arr.push({label:'FrontOfficeTransaction Count',value:e?.transactionCount});
+        arr.push({label:'Merchant FrontOfficeTransaction Amount',value:e?.transactionMerchantAmount,itemCase:'transactionMerchantAmount'});
+        arr.push({label:'FrontOfficeTransaction Total Amount',value:e?.transactionTotalAmount,itemCase:'transactionAmount'});
         arr.push({label:'Start Date',value:e?.transactionTimeBegin,itemCase:"transactionTime"});
         arr.push({label:'End Date',value:e?.transactionTimeEnd,itemCase:"transactionTime"});
 
@@ -100,7 +101,6 @@ export function FrontOfficeBulkSettlement(){
     }
 
     function fillMerchantDetails(e){
-        console.log('e,e',e)
       let arr = [];
         arr.push({label:'Merchant Name',value:e?.merchantName});
         arr.push({label:'Card Acceptor Id',value:e?.cardAcceptorId});
@@ -110,7 +110,6 @@ export function FrontOfficeBulkSettlement(){
         arr.push({label:'merchantId',value:e?.merchantId});
         arr.push({label:'Settlement Email',value:e?.settlementEmail});
         arr.push({label:'Date Created',value:e?.createdTime,itemCase:'transactionTime'});
-        console.log('arrrr',arr);
         return arr;
     }
 

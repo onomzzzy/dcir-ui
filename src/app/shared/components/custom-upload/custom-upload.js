@@ -45,7 +45,7 @@ function onUpload(e){
                ref={fileInput}
            />
            <div onClick={() => fileInput.current.click()} className="custom-upload-container">
-            <div className="p-grid">
+            <div className="p-grid p-text-left">
                 <span className="p-col-3"><Icon icon="upload"/></span>
                 <span className="p-col-9">
                     <span className="p-grid upload-grid-position">
