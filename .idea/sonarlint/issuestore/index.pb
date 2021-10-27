@@ -13,10 +13,6 @@ R
 "src/app/components/login/login.css,2/7/27c874d5dc2c6e64665ca5ad8e90cdce9c4ab0d5
 M
 src/app/shared/icons/icon.css,7/6/76e01b9c1913c4049fff1b6b93bb0d790e5619b1
-U
-%src/app/core/services/mock-service.js,7/a/7aa7512d5b296457de19910009069be32e9ff304
-h
-8src/app/shared/components/form-component/custom-form.css,e/3/e3a360e28d1cf57ee0e420a87f2e81a863d72cc3
 l
 <src/app/shared/components/form-component/form-multiselect.js,b/b/bba143bee40c1a1c4265948e0b629f1bd2349858
 i
@@ -51,8 +47,6 @@ i
 9src/app/shared/components/form-component/form-dropdown.js,c/0/c09a9ab35edf7cfb80ea090728879c4765598c74
 `
 0src/app/shared/components/alert/custom-toast.css,5/7/57c0109b642159aa9ef44a52f83b29ff118058b2
-f
-6src/app/shared/components/form-component/form-input.js,5/b/5bb6e1f5287fc2e8ebb71e82cbc2230f05948b58
 U
 %build/static/css/2.8562e91d.chunk.css,d/8/d84108ec03497cce4ed000167fd0b33ab5f8de28
 f

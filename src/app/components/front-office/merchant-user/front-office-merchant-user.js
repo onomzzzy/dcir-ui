@@ -6,7 +6,7 @@ import {CreateMerchantUser}    from "./create-merchant-user";
 import {MainContext}           from "../../../../App";
 import {HELPER}                from "../../../shared/helper/helper";
 import {SERVICES}              from "../../../core/services/services";
-import {CustomChargeTypeModel} from "../../back-office/configuration/custom-charge-type-model";
+import {CustomChargeTypeModel} from "../../back-office/charge-type/custom-charge-type-model";
 import {DetailsBreakDown}      from "../../../shared/components/details-break-down/details-break-down";
 import {CustomConfirmDialog}   from "../../../shared/components/custom-confirm-dialog/custom-confirm-dialog";
 import {CustomLoader}          from "../../../shared/components/custom-loader/custom-loader";

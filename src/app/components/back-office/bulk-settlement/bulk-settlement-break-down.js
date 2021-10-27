@@ -1,24 +1,21 @@
 import './bulk-settlement.css';
 import {TabPanel, TabView}          from "primereact/tabview";
 import React, {useEffect, useState} from "react";
-import {CustomLoader}               from "../../../shared/components/custom-loader/custom-loader";
-import {SERVICES}                   from "../../../core/services/services";
-import {Icon}                       from "../../../shared/icons/icon";
-import {SpecialLabelCases}          from "../../../shared/models/utilities";
-import {CustomModal} from "../../../shared/components/custom-modal/custom-modal";
-import {NewDispute}  from "../dispute/new-dispute";
-import {HELPER}      from "../../../shared/helper/helper";
-import {Divider}                    from "primereact/divider";
-import {BulkTransactions}           from "./bulk-transactions";
-import {RepaymentRequest}           from "./repayment-request";
-import {useWindowSize}              from "../../../core/custom-hook/use-widows-resize";
+import {CustomLoader}      from "../../../shared/components/custom-loader/custom-loader";
+import {Icon}              from "../../../shared/icons/icon";
+import {SpecialLabelCases} from "../../../shared/models/utilities";
+import {CustomModal}       from "../../../shared/components/custom-modal/custom-modal";
+import {NewDispute}        from "../dispute/new-dispute";
+import {BulkTransactions}  from "./bulk-transactions";
+import {RepaymentRequest}  from "./repayment-request";
+import {useWindowSize}     from "../../../core/custom-hook/use-widows-resize";
+import {CustomAccordion}   from "../../../shared/components/custom-accordion/custom-accordion";
 
 
 
 
 export function BulkSettlementBreakDown(props){
     const [currentIndex,setCurrentIndex] = useState(0);
-    const [dispute,setDispute] = useState(null);
     const [visible,setVisible] = useState(false);
     const [currentModalIndex,setCurrentModalIndex] = useState(1);
     const [error,setError] = useState(null);
@@ -26,7 +23,6 @@ export function BulkSettlementBreakDown(props){
     const [merchantDetails,setMerchantDetails] = useState([]);
     const [disputeCodes,setDisputeCodes] = useState([]);
     const [summaryIndex,setSummaryIndex] = useState(1);
-    const [merchantTabIndex,setMerchantTabIndex] = useState(0);
     const windowSize = useWindowSize();
 
 
@@ -41,25 +37,12 @@ export function BulkSettlementBreakDown(props){
             if(mounted) {
                 setDetailsContent(props?.detials)
                 setMerchantDetails(props?.merchantDetails)
-                getTransactionTiedToSettlement();
-                getPaymentRequest();
             }
             return () => {
                 mounted = false;
             }
         },[]
     );
-
-    function setTabIndex(action,index){
-        // eslint-disable-next-line default-case
-        switch (action){
-            case 'SUMMARY':
-             setSummaryIndex(index);
-             break;
-            case 'MERCHANT':
-             setMerchantTabIndex(index);
-        }
-    }
 
 
     const transformView = (itemCase,value) =>{
@@ -124,49 +107,6 @@ export function BulkSettlementBreakDown(props){
         )
     }
 
-    function populateDetails(e){
-        const arr = [];
-        arr.push({label:'Log code',value:e?.logCode});
-        arr.push({label:'Customer account name',value:e?.customerAccountName});
-        arr.push({label:'Customer account no',value:e?.customerAccountNumber});
-        arr.push({label:'FrontOfficeTransaction amount',value:e?.transactionAmount,itemCase:'transactionAmount'})
-        arr.push({label:'Response Code',value:e?.transactionResponseCode,itemCase:'responseCode'});
-        arr.push({label:"Resolution Status",value:e?.resolutionStatus,itemCase:'resolutionStatus'});
-        arr.push({label:"Status",value:e?.status,itemCase:'status'});
-        arr.push({label:'Created date',value:e?.createdOn,itemCase:'createdOn'});
-        setDetailsContent(arr);
-    }
-
-    function getTransactionTiedToSettlement() {
-        const params = HELPER.TO_URL_STRING({
-            page:0,
-            size:10,
-        })
-
-        SERVICES.GET_BULK_SETTLEMENT_TRANSACTION(params,props.bulkSettlementKey)
-            .then(data =>{
-
-            })
-            .catch(error=>{
-                console.log('Error getting transaction tied to settlement codes ',error);
-            })
-    }
-
-    function getPaymentRequest() {
-        const params = HELPER.TO_URL_STRING({
-            page:0,
-            size:10,
-        })
-
-        SERVICES.GET_PAYMENT_REQUEST(params,props.bulkSettlementKey)
-            .then(data =>{
-
-            })
-            .catch(error=>{
-                console.log('Error getting transaction tied to settlement codes ',error);
-            })
-    }
-
 
     const showResolvedButton = () =>{
         if(!disputeCodes?.includes(detailsContent[3]?.value)){
@@ -198,41 +138,16 @@ export function BulkSettlementBreakDown(props){
                             </div>
                             <div className="p-grid">
                                 <div className="p-col-12">
-                                    <div className="p-grid">
-                                        <div className="p-col-10">
-                                        <p className="dispute-title">Settlement Details</p>
-                                        </div>
-                                        <div className="p-col-2">
-                                            <div className="custom-tab-icon-position">
-                                           <span className={summaryIndex?'dcir-hide':'dcir-show custom-tab-icon'} onClick={()=>setTabIndex('SUMMARY',1)}>Expand</span>
-                                           <span className={summaryIndex?'dcir-show custom-tab-icon':'dcir-hide'} onClick={()=>setTabIndex('SUMMARY',0)}>Close</span>
+                                            <div>
+                                                <CustomAccordion open={true} title="Settlement Details" currentView={detailsView}/>
                                             </div>
-                                            </div>
-                                    </div>
-                                    <div className={summaryIndex?'dcir-show':'dcir-hide'}>
-                                        {detailsView()}
-                                    </div>
-                                    <div className={summaryIndex?'dcir-hide':'dcir-show'}>
-                                        <div style={{marginTop:'-2.2em'}}>
-                                            <Divider/>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div className="p-col-12">
-                                    <div style={{marginTop:summaryIndex? '0px':'-3.3em'}} className="p-grid">
-                                        <div className="p-col-10">
-                                            <p className="dispute-title">Merchant Information</p>
-                                        </div>
-                                        <div className="p-col-2">
-                                            <div className="custom-tab-icon-position">
-                                                <span className={merchantTabIndex?'dcir-hide':'dcir-show custom-tab-icon'} onClick={()=>setTabIndex('MERCHANT',1)}>Expand</span>
-                                                <span className={merchantTabIndex?'dcir-show custom-tab-icon':'dcir-hide'} onClick={()=>setTabIndex('MERCHANT',0)}>Close</span>
+                                    <div style={{marginTop:'-3.1em'}}>
+                                            <div>
+                                                <CustomAccordion open={false} title="Merchant Information" currentView={merchantView}/>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className={merchantTabIndex?'dcir-show':'dcir-hide'}>
-                                        {merchantView()}
                                     </div>
                                 </div>
                             </div>
@@ -301,7 +216,6 @@ export function BulkSettlementBreakDown(props){
         }
         if(reload){
             setCurrentIndex(0);
-            getTransactionTiedToSettlement();
         }
     }
 

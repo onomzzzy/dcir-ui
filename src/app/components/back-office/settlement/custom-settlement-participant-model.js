@@ -7,6 +7,7 @@ import {CUSTOM_VALIDATION}   from "../../../shared/validation/validation";
 import {SERVICES}            from "../../../core/services/services";
 import {CustomMessage}       from "../../../shared/components/alert/custom-message";
 import {CustomToast}         from "../../../shared/components/alert/custom-toast";
+import {HELPER}              from "../../../shared/helper/helper";
 
 export function CustomSettlementParticipantModel(props){
     const [loading,setLoading] = useState(false);
@@ -16,6 +17,8 @@ export function CustomSettlementParticipantModel(props){
     const [message,setMessage] = useState(null);
     const [successMessage,setSuccessMessage] = useState(null);
     const [currentIndex,setCurrentIndex] = useState(null);
+    const [accountName,setAccountName] = useState(null);
+    const [verifyingAccountNumber,setVerifyingAccountNumber] = useState(false)
     const [participant,setParticipant] = useState(
         {
             accountName: null,
@@ -41,6 +44,22 @@ export function CustomSettlementParticipantModel(props){
             name: null
         }
     )
+
+    function verifyAccountNumber(accNo){
+        setVerifyingAccountNumber(true);
+        setAccountName(null);
+        setParticipantError({...participantError, accountNumber:null});
+        SERVICES.VERIFY_ACCOUNT_NUMBER(accNo)
+            .then(data=>{
+                setParticipant({...participant, accountNumber: accNo});
+                setAccountName(data?.result?.accountName);
+                setVerifyingAccountNumber(false);
+            })
+            .catch(error=>{
+                setParticipantError({...participantError, accountNumber: HELPER.PROCESS_ERROR(error)});
+                setVerifyingAccountNumber(false);
+            })
+    }
 
     function getGlobalCharge(global){
        if(global){
@@ -207,7 +226,7 @@ export function CustomSettlementParticipantModel(props){
                    {searchView()}
                    <div className="p-col-12">
                        <div className="p-mt-2">
-                           <FormInput value={participant['accountNumber']} required={true} field="accountNumber" type="NUBAN"
+                           <FormInput verifyingField="account no" verifying={verifyingAccountNumber} verified={accountName}  value={participant['accountNumber']} required={true} field="accountNumber" type="NUBAN"
                                       error={participantError['accountNumber']} fn={validateForm} loading={loading}  placeholder="Account no"/>
                        </div>
                    </div>
@@ -356,8 +375,13 @@ export function CustomSettlementParticipantModel(props){
             const isEmpty = CUSTOM_VALIDATION.IS_EMPTY(value);
             const isValidInput = !isEmpty ? CUSTOM_VALIDATION.BASIC_VALIDATION(value, type) : false;
             if (isValidInput) {
-                setParticipant({...participant, [name]: value});
-                setParticipantError({...participantError, [name]: null});
+                if(name === 'accountNumber') {
+                    verifyAccountNumber(value);
+                }
+                else {
+                    setParticipant({...participant, [name]: value});
+                    setParticipantError({...participantError, [name]: null});
+                }
             }
             else {
                 let errorMessage = required && isEmpty ? `${refineName} is required` : null;

@@ -1,11 +1,14 @@
 .header{
     height:60px;
-    position: fixed;
     top:0;
     width:100%;
-    max-width:1400px;
-    z-index:5000;
+    z-index:50;
     background: #ffffff!important;
+}
+
+.header-container{
+ margin:0 auto;
+ max-width:1400px;
 }
 
 #sub-header-id{

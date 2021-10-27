@@ -18,6 +18,8 @@ export function ConfigureSettlement(props){
     const [participants,setParticipates] = useState([])
     const [validForm,setValidForm] = useState(false)
     const [chargeTypes,setChargeTypes] = useState([])
+    const [accountName,setAccountName] = useState(null);
+    const [verifyingAccountNumber,setVerifyingAccountNumber] = useState(false)
     const [settlementInfo,setSettlementInfo] = useState(
         {
             accountName: null,
@@ -102,14 +104,35 @@ export function ConfigureSettlement(props){
         }
     }
 
+    function verifyAccountNumber(accNo){
+        setVerifyingAccountNumber(true);
+        setAccountName(null);
+        setSettlementErrorForm({...settlementErrorForm, accountNumber:null});
+        SERVICES.VERIFY_ACCOUNT_NUMBER(accNo)
+            .then(data=>{
+                setSettlementInfo({...settlementInfo, accountNumber: accNo});
+                setAccountName(data?.result?.accountName);
+                setVerifyingAccountNumber(false);
+            })
+            .catch(error=>{
+                setSettlementErrorForm({...settlementErrorForm, accountNumber: HELPER.PROCESS_ERROR(error)});
+                setVerifyingAccountNumber(false);
+            })
+    }
+
 
     function fillForm (e,name,type,refineName,required){
         const value = e.target.value
         const isEmpty = CUSTOM_VALIDATION.IS_EMPTY(value);
         const isValidInput = !isEmpty? CUSTOM_VALIDATION.BASIC_VALIDATION(value,type):false;
         if(isValidInput){
-            setSettlementInfo({...settlementInfo,[name]:value});
-            setSettlementErrorForm({...settlementErrorForm,[name]:null});
+            if(name === 'accountNumber'){
+                verifyAccountNumber(value);
+            }
+            else {
+                setSettlementInfo({...settlementInfo, [name]: value});
+                setSettlementErrorForm({...settlementErrorForm, [name]: null});
+            }
         }
         else {
             let errorMessage = required && isEmpty? `${refineName} is required`:null;
@@ -155,15 +178,6 @@ export function ConfigureSettlement(props){
          })
     }
 
-    function getSettlementParticipantNonGlobal(){
-        SERVICES.GET_SETTLEMENT_PARTICIPANT_NON_GLOBAL()
-            .then(data=>{
-
-            })
-            .catch(error=>{
-
-            })
-    }
 
     function getChargeTypes(){
       SERVICES.GET_CHARGE_MODELS()
@@ -178,32 +192,6 @@ export function ConfigureSettlement(props){
            
           })
     }
-
-    // function upDateMerchant(){
-    //     setLoading(true);
-    //     let participants = []
-    //     if(Array.isArray(settlementInfo.participants))
-    //         settlementInfo.participants.forEach(e=>{
-    //             participants.push(e.desc);
-    //         })
-    //     setSettlementInfo({...settlementInfo,'participants':participants});
-    //     const payload = {
-    //         basicInfo:props.basicInfo,
-    //         id:props.merchantId,
-    //         settlementInfo:settlementInfo
-    //     }
-    //     SERVICES.UPDATE_PARTICIPANT(payload)
-    //         .then(data=>{
-    //             setSuccessMessage('Merchant updated successfully');
-    //             setCurrentIndex(1)
-    //             setLoading(false);
-    //         })
-    //         .catch(error=>{
-    //             props.callAlert(error.error,error.error_description);
-    //             setLoading(false);
-    //         })
-    // }
-
     function submit(){
         setLoading(true);
         let participants = []
@@ -299,8 +287,8 @@ export function ConfigureSettlement(props){
                         </div>
                     </div>
                     <div className="p-col-6">
-                        <div className="p-mt-1">
-                            <FormInput value={settlementInfo['accountNumber']} required={true} field="accountNumber"
+                        <div className="p-mt-2">
+                            <FormInput verifyingField="account no" verifying={verifyingAccountNumber} verified={accountName} value={settlementInfo['accountNumber']} required={true} field="accountNumber"
                                        type="NUBAN" error={settlementErrorForm['accountNumber']} fn={fillForm}
                                        loading={loading} placeholder="Account number"/>
                         </div>

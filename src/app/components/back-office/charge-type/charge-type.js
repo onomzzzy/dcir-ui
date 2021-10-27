@@ -5,7 +5,7 @@ import {SERVICES}                                       from "../../../core/serv
 import './charge-type-component.css'
 import {CustomLoader}                                   from "../../../shared/components/custom-loader/custom-loader";
 import {CustomModal}           from "../../../shared/components/custom-modal/custom-modal";
-import {CustomChargeTypeModel} from "../configuration/custom-charge-type-model";
+import {CustomChargeTypeModel} from "./custom-charge-type-model";
 import {DetailsBreakDown}      from "../../../shared/components/details-break-down/details-break-down";
 import {CustomConfirmDialog}                            from "../../../shared/components/custom-confirm-dialog/custom-confirm-dialog";
 import {Toast}                                          from "primereact/toast";

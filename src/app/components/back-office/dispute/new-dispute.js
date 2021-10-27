@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {FormInput}           from "../../../shared/components/form-component/form-input";
 import {CUSTOM_VALIDATION}   from "../../../shared/validation/validation";
-import {CustomUpload}        from "../../../shared/components/custom-upload/custom-upload";
 import {CustomLoader}        from "../../../shared/components/custom-loader/custom-loader";
 import {SERVICES}            from "../../../core/services/services";
 import {CustomMessage}       from "../../../shared/components/alert/custom-message";
@@ -15,6 +14,8 @@ export function NewDispute(props){
     const[successMessage,setSuccessMessage] = useState(null);
     const[currentIndex,setCurrentIndex] = useState(0);
     const [message,setMessage] = useState(null);
+    const [verifyingAccountNumber,setVerifyingAccountNumber] = useState(false);
+    const [accountName,setAccountName] = useState(null)
 
     const[dispute,setDispute] = useState({
         customerAccountName: null,
@@ -27,6 +28,24 @@ export function NewDispute(props){
         customerAccountNumber: null,
     })
 
+    function verifyAccountNumber(accNo){
+        setVerifyingAccountNumber(true);
+        setAccountName(null);
+        setDisputeError({...disputeError, customerAccountNumber:null});
+        SERVICES.VERIFY_ACCOUNT_NUMBER(accNo)
+            .then(data=>{
+                setDispute({...dispute, customerAccountNumber: accNo});
+                setAccountName(data?.result?.accountName);
+                setVerifyingAccountNumber(false);
+            })
+            .catch(error=>{
+                setDisputeError({...disputeError, customerAccountNumber: HELPER.PROCESS_ERROR(error)});
+                setVerifyingAccountNumber(false);
+            })
+    }
+
+
+
     useEffect(() => {
             let mounted = true
             if(mounted) {
@@ -37,6 +56,7 @@ export function NewDispute(props){
             }
         },[dispute,disputeError]
     );
+
 
     function checkValidForm(){
         const validForm = CUSTOM_VALIDATION.VALID_OBJ(dispute,3);
@@ -49,8 +69,13 @@ export function NewDispute(props){
             const isEmpty = CUSTOM_VALIDATION.IS_EMPTY(value);
             const isValidInput = !isEmpty ? CUSTOM_VALIDATION.BASIC_VALIDATION(value, type) : false;
             if (isValidInput) {
-                setDispute({...dispute, [name]: value});
-                setDisputeError({...disputeError, [name]: null});
+                if(name === 'customerAccountNumber'){
+                    verifyAccountNumber(value);
+                }
+                else {
+                    setDispute({...dispute, [name]: value});
+                    setDisputeError({...disputeError, [name]: null});
+                }
             }
             else {
                 let errorMessage = required && isEmpty ? `${refineName} is required` : null;
@@ -132,10 +157,6 @@ export function NewDispute(props){
         }
     }
 
-    function getUploadFile(e){
-        setDispute({...dispute,receiptDataBase64:e});
-    }
-
     const disputeForm = () =>{
         return(
             <div>
@@ -153,7 +174,7 @@ export function NewDispute(props){
                         <FormInput value={dispute['customerAccountName']} required={true} field="customerAccountName" type="NAME" error={disputeError['customerAccountName']} fn={validateForm} loading={loading}  placeholder="Customer account name"/>
                     </div>
                     <div className="p-col-12">
-                        <FormInput value={dispute['customerAccountNumber']} required={true} field="customerAccountNumber" type="NUBAN" error={disputeError['customerAccountNumber']} fn={validateForm} loading={loading}  placeholder="Customer account number"/>
+                        <FormInput verifyingField="customer acc no" verifying={verifyingAccountNumber} verified={accountName}  value={dispute['customerAccountNumber']} required={true} field="customerAccountNumber" type="NUBAN" error={disputeError['customerAccountNumber']} fn={validateForm} loading={loading}  placeholder="Customer account number"/>
                     </div>
                     {/*<div className="p-col-12">*/}
                     {/*    <CustomUpload getUploadedFile={getUploadFile} title="Receipt"/>*/}

@@ -4,9 +4,9 @@ import {CustomBreadcrumb}                               from "../../../shared/co
 import {CustomTable}                                    from "../../../shared/components/custom-table/custom-table";
 import {SERVICES}                                       from "../../../core/services/services";
 import {CustomLoader}                                   from "../../../shared/components/custom-loader/custom-loader";
-import {CustomModal}                                    from "../../../shared/components/custom-modal/custom-modal";
-import {CustomChargeTypeModel}                          from "../configuration/custom-charge-type-model";
-import {DetailsBreakDown}                               from "../../../shared/components/details-break-down/details-break-down";
+import {CustomModal}           from "../../../shared/components/custom-modal/custom-modal";
+import {CustomChargeTypeModel} from "../charge-type/custom-charge-type-model";
+import {DetailsBreakDown}      from "../../../shared/components/details-break-down/details-break-down";
 import {CustomConfirmDialog}                            from "../../../shared/components/custom-confirm-dialog/custom-confirm-dialog";
 import {Toast}                                          from "primereact/toast";
 import {MainContext}                                    from "../../../../App";

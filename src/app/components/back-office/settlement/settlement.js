@@ -11,9 +11,9 @@ import {CustomConfirmDialog}                            from "../../../shared/co
 import {Toast}                                          from "primereact/toast";
 import {MainContext}                                    from "../../../../App";
 import {CUSTOM_VALIDATION}                              from "../../../shared/validation/validation";
-import {OverlayPanel}                                   from "primereact/overlaypanel";
-import {CustomSettlementParticipantModel}               from "../configuration/custom-settlement-participant-model";
-import {HELPER}                                         from "../../../shared/helper/helper";
+import {OverlayPanel}                     from "primereact/overlaypanel";
+import {CustomSettlementParticipantModel} from "./custom-settlement-participant-model";
+import {HELPER}                           from "../../../shared/helper/helper";
 
 
 export function SettlementComponent (){

@@ -1,9 +1,8 @@
 import './merchant.css'
-import {useContext, useEffect, useState} from "react";
-import {CustomToast}                     from "../../../shared/components/alert/custom-toast";
-import {MainContext}                     from "../../../../App";
-import {ConfigureSettlement}             from "../configuration/configure-settlement";
-import {FormInput}                       from "../../../shared/components/form-component/form-input";
+import {useEffect, useState} from "react";
+import {CustomToast}         from "../../../shared/components/alert/custom-toast";
+import {ConfigureSettlement} from "./configure-settlement";
+import {FormInput}           from "../../../shared/components/form-component/form-input";
 import {CUSTOM_VALIDATION}               from "../../../shared/validation/validation";
 import {CustomLoader}                    from "../../../shared/components/custom-loader/custom-loader";
 import {SERVICES}                        from "../../../core/services/services";
@@ -11,7 +10,6 @@ import {CustomMessage}                   from "../../../shared/components/alert/
 import {HELPER}                          from "../../../shared/helper/helper";
 
 export function CreateMerchantComponent(props){
-    const mainContext = useContext(MainContext);
     const [currentIndex,setCurrentIndex] = useState(0);
     const [loading,setLoading] = useState(false);
     const [messageTitle,setMessageTitle] = useState(null);
