@@ -4,7 +4,8 @@ const create_merchant_user ='/api/v1/backoffice/merchant-user';
 const create_front_office_merchant_user ='/api/v1/frontoffice/user';
 const get_front_office_merchant_roles ='/api/v1/frontoffice/user/roles';
 const create_charge_type_model = '/api/v1/backoffice/charge-model';
-const verify_account_number ='/api/v1/common/account/name-enquiry/'
+const verify_account_number ='/api/v1/common/account/name-enquiry/';
+const get_dispute_by_transaction_key ='/api/v1/backoffice/dispute/transaction/';
 const get_charge_model = '/api/v1/backoffice/charge-model';
 const delete_charge_model = '/api/v1/backoffice/charge-model/remove';
 const get_charge_type = '/api/v1/backoffice/charge-model/types';//remember to remove the s from backoffice
@@ -56,5 +57,6 @@ export const API = {
     GET_FRONT_OFFICE_MERCHANT_ROLES: `${get_front_office_merchant_roles}`,
     GET_FRONT_OFFICE_TRANSACTIONS: `${get_front_office_transactions}`,
     DEACTIVATE_MERCHANT: `${deactivate_merchant}`,
-    VERIFY_ACCOUNT_NUMBER: `${verify_account_number}`
+    VERIFY_ACCOUNT_NUMBER: `${verify_account_number}`,
+    GET_DISPUTE_BY_TRANSACTION_KEY: `${get_dispute_by_transaction_key}`
 }

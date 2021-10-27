@@ -121,6 +121,22 @@ function verifyAccountNumber(params) {
     });
 }
 
+function getDisputeByTransactionKey(params) {
+    const url = `${CONFIG.DCIR_HOST}${API.GET_DISPUTE_BY_TRANSACTION_KEY}${params}`;
+    const header = getBasicHeader();
+    return new Promise((resolve, reject) => {
+        axios.get(url, {headers: header})
+            .then(function (data) {
+                resolve(data.data);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    reject(error.response);
+                }
+            });
+    });
+}
+
 function deleteParticipant(e) {
     const url = `${CONFIG.DCIR_HOST}${API.DELETE_PARTICIPANT}/${e}`;
     const header = getBasicHeader();
@@ -751,4 +767,5 @@ export const SERVICES = {
     GET_FRONT_OFFICE_TRANSACTIONS: getFrontOfficeTransactions,
     DEACTIVATE_MERCHANT: deactivateMerchant,
     VERIFY_ACCOUNT_NUMBER: verifyAccountNumber,
+    GET_DISPUTE_BY_TRANSACTION_KEY: getDisputeByTransactionKey
 }

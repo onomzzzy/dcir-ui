@@ -22,6 +22,7 @@ export function TransactionBreakdown(props){
     const [error,setError] = useState(null);
     const [detailsContent,setDetailsContent] = useState([]);
     const [disputeCodes,setDisputeCodes] = useState([]);
+    const [showLogDisputeButton,setShowLogDisputeButton] = useState(false)
     const windowSize = useWindowSize();
 
     function isMobileTab(){
@@ -34,12 +35,28 @@ export function TransactionBreakdown(props){
             if(mounted) {
                 setDetailsContent(props.detials)
                 getDisputeCodes();
+                getDisputeByTransactionKey();
             }
             return () => {
                 mounted = false;
             }
         },[]
     );
+
+    function getDisputeByTransactionKey(){
+        setShowLogDisputeButton(false);
+        SERVICES.GET_DISPUTE_BY_TRANSACTION_KEY(props.transactionSearchKey)
+            .then(data=>{
+                if(!data.result){
+                    if(disputeCodes?.includes(props.responseCode)){
+                        setShowLogDisputeButton(true);
+                    }
+                }
+            })
+            .catch(error=>{
+                console.log('error check if dispute is already logged ',error);
+            })
+    }
 
 
     const transformView = (itemCase,value) =>{
@@ -101,7 +118,7 @@ export function TransactionBreakdown(props){
 
 
     const showResolvedButton = () =>{
-        if(!disputeCodes?.includes(detailsContent[3]?.value)){
+        if(!showLogDisputeButton){
             return <div/>
         }
         else{
